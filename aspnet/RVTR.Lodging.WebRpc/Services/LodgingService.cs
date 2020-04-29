@@ -11,9 +11,9 @@ namespace RVTR.Lodging.WebRpc
   public class LodgingService : Lodging.LodgingBase
   {
     private readonly ILogger<LodgingService> _logger;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly UnitOfWork _unitOfWork;
 
-    public LodgingService(ILogger<LodgingService> logger, IUnitOfWork unitOfWork)
+    public LodgingService(ILogger<LodgingService> logger, UnitOfWork unitOfWork)
     {
       _logger = logger;
       _unitOfWork = unitOfWork;

@@ -1,9 +1,32 @@
-using System;
+using System.Threading.Tasks;
+using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {
-  public class UnitOfWork : IUnitOfWork
+  /// <summary>
+  /// Represents the _UnitOfWork_ repository
+  /// </summary>
+  public class UnitOfWork
   {
-    public void Commit() => throw new NotImplementedException();
+    private readonly LodgingContext _context;
+
+    public Repository<LodgingModel> Lodging { get; }
+    public Repository<RentalModel> Rental { get; set; }
+    public Repository<ReviewModel> Review { get; set; }
+
+    public UnitOfWork(LodgingContext context)
+    {
+      _context = context;
+
+      Lodging = new Repository<LodgingModel>(context);
+      Rental = new Repository<RentalModel>(context);
+      Review = new Repository<ReviewModel>(context);
+    }
+
+    /// <summary>
+    /// Represents the _UnitOfWork_ `Commit` method
+    /// </summary>
+    /// <returns></returns>
+    public async Task<int> CommitAsync() => await _context.SaveChangesAsync();
   }
 }
