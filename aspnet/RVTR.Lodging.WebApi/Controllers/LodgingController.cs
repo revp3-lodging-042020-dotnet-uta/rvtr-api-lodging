@@ -16,9 +16,9 @@ namespace RVTR.Lodging.WebApi.Controllers
   public class LodgingController : ControllerBase
   {
     private readonly ILogger<LodgingController> _logger;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly UnitOfWork _unitOfWork;
 
-    public LodgingController(ILogger<LodgingController> logger, IUnitOfWork unitOfWork)
+    public LodgingController(ILogger<LodgingController> logger, UnitOfWork unitOfWork)
     {
       _logger = logger;
       _unitOfWork = unitOfWork;

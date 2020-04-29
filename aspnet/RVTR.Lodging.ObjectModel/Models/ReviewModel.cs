@@ -11,17 +11,16 @@ namespace RVTR.Lodging.ObjectModel.Models
   {
     public int Id { get; set; }
 
-    [Required]
     public int AccountId { get; set; }
 
-    [Required]
     public string Comment { get; set; }
 
-    [Required]
     public DateTime DateCreated { get; set; }
 
-    [Required]
     public int Rating { get; set; }
+
+    public int? LodgingId { get; set; }
+    public LodgingModel Lodging { get; set; }
 
     /// <summary>
     /// Represents the _Review_ `Validate` method

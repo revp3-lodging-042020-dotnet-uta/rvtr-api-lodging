@@ -10,10 +10,8 @@ namespace RVTR.Lodging.ObjectModel.Models
   {
     public int Id { get; set; }
 
-    [Required]
     public string BedType { get; set; }
 
-    [Required]
     public int Count { get; set; }
 
     /// <summary>

@@ -19,7 +19,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
           Country = "country",
           PostalCode = "postalcode",
           StateProvince = "stateprovince",
-          Street = "street"
+          Street = "street",
+          LocationId = 0,
+          Location = null
         }
       }
     };

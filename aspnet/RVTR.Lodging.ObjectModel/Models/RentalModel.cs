@@ -10,10 +10,13 @@ namespace RVTR.Lodging.ObjectModel.Models
   {
     public int Id { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
     public RentalUnitModel RentalUnit { get; set; }
+
+    public int? LodgingId { get; set; }
+
+    public LodgingModel Lodging { get; set; }
 
     /// <summary>
     /// Represents the _Rental_ `Validate` method
