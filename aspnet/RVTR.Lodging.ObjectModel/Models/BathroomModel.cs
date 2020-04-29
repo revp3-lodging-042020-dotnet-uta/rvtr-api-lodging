@@ -10,7 +10,6 @@ namespace RVTR.Lodging.ObjectModel.Models
   {
     public int Id { get; set; }
 
-    [Required]
     public double Fixture { get; set; }
 
     /// <summary>

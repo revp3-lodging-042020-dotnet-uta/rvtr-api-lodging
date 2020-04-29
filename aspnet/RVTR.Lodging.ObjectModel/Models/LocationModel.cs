@@ -12,13 +12,10 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public AddressModel Address { get; set; }
 
-    [Required]
     public string Latitude { get; set; }
 
-    [Required]
     public string Locale { get; set; }
 
-    [Required]
     public string Longitude { get; set; }
 
     /// <summary>

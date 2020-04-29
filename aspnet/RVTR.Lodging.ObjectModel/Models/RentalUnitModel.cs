@@ -14,14 +14,14 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public IEnumerable<BedroomModel> Bedrooms { get; set; }
 
-    [Required]
     public string Name { get; set; }
 
-    [Required]
     public int Occupancy { get; set; }
 
-    [Required]
     public string RentalUnitType { get; set; }
+
+    public int? RentalId { get; set; }
+    public RentalModel Rental { get; set; }
 
     /// <summary>
     /// Represents the _RentalUnit_ `Validate` method

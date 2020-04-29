@@ -10,20 +10,19 @@ namespace RVTR.Lodging.ObjectModel.Models
   {
     public int Id { get; set; }
 
-    [Required]
     public string City { get; set; }
 
-    [Required]
     public string Country { get; set; }
 
-    [Required]
     public string PostalCode { get; set; }
 
-    [Required]
     public string StateProvince { get; set; }
 
-    [Required]
     public string Street { get; set; }
+
+    public int? LocationId { get; set; }
+
+    public LocationModel Location { get; set; }
 
     /// <summary>
     /// Represents the _Address_ `Validate` method

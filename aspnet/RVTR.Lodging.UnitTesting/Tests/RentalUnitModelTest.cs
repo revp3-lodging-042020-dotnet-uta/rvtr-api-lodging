@@ -19,7 +19,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
           Bedrooms = new List<BedroomModel>(),
           Name = "name",
           Occupancy = 0,
-          RentalUnitType = "unit"
+          RentalUnitType = "unit",
+          RentalId = 0,
+          Rental = null
         }
       }
     };
