@@ -215,5 +215,70 @@ namespace RVTR.Lodging.UnitTesting.Tests
         await _connection.CloseAsync();
       }
     }
+
+    [Theory]
+    [MemberData(nameof(_records))]
+    public async void Test_Repository_Update(LodgingModel lodging, RentalModel rental, ReviewModel review)
+    {
+      await _connection.OpenAsync();
+
+      try
+      {
+        using (var ctx = new LodgingContext(_options))
+        {
+          await ctx.Database.EnsureCreatedAsync();
+          await ctx.Lodgings.AddAsync(lodging);
+          await ctx.Rentals.AddAsync(rental);
+          await ctx.Reviews.AddAsync(review);
+          await ctx.SaveChangesAsync();
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var lodgings = new Repository<LodgingModel>(ctx);
+          var expected = await ctx.Lodgings.FirstAsync();
+
+          expected.Name = "name";
+          lodgings.Update(expected);
+          await ctx.SaveChangesAsync();
+
+          var actual = await ctx.Lodgings.FirstAsync();
+
+          Assert.Equal(expected, actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var rentals = new Repository<RentalModel>(ctx);
+          var expected = await ctx.Rentals.FirstAsync();
+
+          expected.Name = "name";
+          rentals.Update(expected);
+          await ctx.SaveChangesAsync();
+
+          var actual = await ctx.Rentals.FirstAsync();
+
+          Assert.Equal(expected, actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var reviews = new Repository<ReviewModel>(ctx);
+          var expected = await ctx.Reviews.FirstAsync();
+
+          expected.Comment = "comment";
+          reviews.Update(expected);
+          await ctx.SaveChangesAsync();
+
+          var actual = await ctx.Reviews.FirstAsync();
+
+          Assert.Equal(expected, actual);
+        }
+      }
+      finally
+      {
+        await _connection.CloseAsync();
+      }
+    }
   }
 }
