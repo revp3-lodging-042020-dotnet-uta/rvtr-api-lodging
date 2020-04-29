@@ -92,9 +92,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var Lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new Repository<LodgingModel>(ctx);
 
-          await Lodgings.InsertAsync(lodging);
+          await lodgings.InsertAsync(lodging);
           await ctx.SaveChangesAsync();
 
           Assert.NotEmpty(await ctx.Lodgings.ToListAsync());
@@ -118,6 +118,96 @@ namespace RVTR.Lodging.UnitTesting.Tests
           await ctx.SaveChangesAsync();
 
           Assert.NotEmpty(await ctx.Reviews.ToListAsync());
+        }
+      }
+      finally
+      {
+        await _connection.CloseAsync();
+      }
+    }
+
+    [Fact]
+    public async void Test_Repository_SelectAsync()
+    {
+      await _connection.OpenAsync();
+
+      try
+      {
+        using (var ctx = new LodgingContext(_options))
+        {
+          await ctx.Database.EnsureCreatedAsync();
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var lodgings = new Repository<LodgingModel>(ctx);
+
+          var actual = await lodgings.SelectAsync();
+
+          Assert.Empty(actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var rentals = new Repository<RentalModel>(ctx);
+
+          var actual = await rentals.SelectAsync();
+
+          Assert.Empty(actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var reviews = new Repository<ReviewModel>(ctx);
+
+          var actual = await reviews.SelectAsync();
+
+          Assert.Empty(actual);
+        }
+      }
+      finally
+      {
+        await _connection.CloseAsync();
+      }
+    }
+
+    [Fact]
+    public async void Test_Repository_SelectAsync_ById()
+    {
+      await _connection.OpenAsync();
+
+      try
+      {
+        using (var ctx = new LodgingContext(_options))
+        {
+          await ctx.Database.EnsureCreatedAsync();
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var lodgings = new Repository<LodgingModel>(ctx);
+
+          var actual = await lodgings.SelectAsync(1);
+
+          Assert.Null(actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var rentals = new Repository<RentalModel>(ctx);
+
+          var actual = await rentals.SelectAsync(1);
+
+          Assert.Null(actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var reviews = new Repository<ReviewModel>(ctx);
+
+          var actual = await reviews.SelectAsync(1);
+
+          Assert.Null(actual);
         }
       }
       finally
