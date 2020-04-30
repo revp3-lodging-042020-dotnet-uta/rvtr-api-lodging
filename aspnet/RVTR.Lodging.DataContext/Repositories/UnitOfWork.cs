@@ -10,9 +10,9 @@ namespace RVTR.Lodging.DataContext.Repositories
   {
     private readonly LodgingContext _context;
 
-    public Repository<LodgingModel> Lodging { get; }
-    public Repository<RentalModel> Rental { get; set; }
-    public Repository<ReviewModel> Review { get; set; }
+    public virtual Repository<LodgingModel> Lodging { get; }
+    public virtual Repository<RentalModel> Rental { get; set; }
+    public virtual Repository<ReviewModel> Review { get; set; }
 
     public UnitOfWork(LodgingContext context)
     {
