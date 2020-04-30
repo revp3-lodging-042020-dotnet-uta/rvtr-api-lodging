@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +9,7 @@ namespace RVTR.Lodging.WebApi.Controllers
 {
   [ApiController]
   [EnableCors()]
-  [Route("[controller]")]
+  [Route("api/[controller]")]
   public class LodgingController : ControllerBase
   {
     private readonly ILogger<LodgingController> _logger;
@@ -24,10 +21,57 @@ namespace RVTR.Lodging.WebApi.Controllers
       _unitOfWork = unitOfWork;
     }
 
-    [HttpGet]
-    public async Task<LodgingModel> Get()
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
     {
-      return await Task.FromResult<LodgingModel>(new LodgingModel());
+      try
+      {
+        await _unitOfWork.Lodging.DeleteAsync(id);
+        await _unitOfWork.CommitAsync();
+
+        return Ok();
+      }
+      catch
+      {
+        return NotFound(id);
+      }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+      return Ok(await _unitOfWork.Lodging.SelectAsync());
+    }
+
+    [HttpGet("{id")]
+    public async Task<IActionResult> Get(int id)
+    {
+      try
+      {
+        return Ok(await _unitOfWork.Lodging.SelectAsync(id));
+      }
+      catch
+      {
+        return NotFound(id);
+      }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post(LodgingModel lodging)
+    {
+      await _unitOfWork.Lodging.InsertAsync(lodging);
+      await _unitOfWork.CommitAsync();
+
+      return Accepted(lodging);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Put(LodgingModel lodging)
+    {
+      _unitOfWork.Lodging.Update(lodging);
+      await _unitOfWork.CommitAsync();
+
+      return Accepted(lodging);
     }
   }
 }
