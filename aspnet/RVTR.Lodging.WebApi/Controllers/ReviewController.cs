@@ -10,12 +10,12 @@ namespace RVTR.Lodging.WebApi.Controllers
   [ApiController]
   [EnableCors()]
   [Route("api/[controller]")]
-  public class LodgingController : ControllerBase
+  public class ReviewController : ControllerBase
   {
-    private readonly ILogger<LodgingController> _logger;
+    private readonly ILogger<ReviewController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
-    public LodgingController(ILogger<LodgingController> logger, UnitOfWork unitOfWork)
+    public ReviewController(ILogger<ReviewController> logger, UnitOfWork unitOfWork)
     {
       _logger = logger;
       _unitOfWork = unitOfWork;
@@ -26,7 +26,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     {
       try
       {
-        await _unitOfWork.Lodging.DeleteAsync(id);
+        await _unitOfWork.Review.DeleteAsync(id);
         await _unitOfWork.CommitAsync();
 
         return Ok();
@@ -40,7 +40,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      return Ok(await _unitOfWork.Lodging.SelectAsync());
+      return Ok(await _unitOfWork.Review.SelectAsync());
     }
 
     [HttpGet("{id")]
@@ -48,7 +48,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     {
       try
       {
-        return Ok(await _unitOfWork.Lodging.SelectAsync(id));
+        return Ok(await _unitOfWork.Review.SelectAsync(id));
       }
       catch
       {
@@ -57,21 +57,21 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(LodgingModel lodging)
+    public async Task<IActionResult> Post(ReviewModel review)
     {
-      await _unitOfWork.Lodging.InsertAsync(lodging);
+      await _unitOfWork.Review.InsertAsync(review);
       await _unitOfWork.CommitAsync();
 
-      return Accepted(lodging);
+      return Accepted(review);
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put(LodgingModel lodging)
+    public async Task<IActionResult> Put(ReviewModel review)
     {
-      _unitOfWork.Lodging.Update(lodging);
+      _unitOfWork.Review.Update(review);
       await _unitOfWork.CommitAsync();
 
-      return Accepted(lodging);
+      return Accepted(review);
     }
   }
 }
