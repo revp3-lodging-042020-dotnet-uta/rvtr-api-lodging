@@ -20,8 +20,12 @@ namespace RVTR.Lodging.WebApi
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddControllers();
+      services.AddApiVersioning(options =>
+      {
+        options.ReportApiVersions = true;
+      });
 
+      services.AddControllers();
       services.AddCors(options =>
       {
         options.AddPolicy("public", policy =>
@@ -36,6 +40,11 @@ namespace RVTR.Lodging.WebApi
       });
 
       services.AddScoped<UnitOfWork>();
+      services.AddVersionedApiExplorer(options =>
+      {
+        options.GroupNameFormat = "'v'V";
+        options.SubstituteApiVersionInUrl = true;
+      });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

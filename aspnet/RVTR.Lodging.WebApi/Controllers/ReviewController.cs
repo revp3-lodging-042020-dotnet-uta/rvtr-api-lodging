@@ -8,8 +8,9 @@ using RVTR.Lodging.ObjectModel.Models;
 namespace RVTR.Lodging.WebApi.Controllers
 {
   [ApiController]
+  [ApiVersion("0.0")]
   [EnableCors("public")]
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   public class ReviewController : ControllerBase
   {
     private readonly ILogger<ReviewController> _logger;
