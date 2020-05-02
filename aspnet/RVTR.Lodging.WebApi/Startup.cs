@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 
 namespace RVTR.Lodging.WebApi
@@ -26,6 +28,11 @@ namespace RVTR.Lodging.WebApi
         {
           policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
         });
+      });
+
+      services.AddDbContext<LodgingContext>(options =>
+      {
+        options.UseNpgsql(Configuration.GetConnectionString("pgsl"));
       });
 
       services.AddScoped<UnitOfWork>();
