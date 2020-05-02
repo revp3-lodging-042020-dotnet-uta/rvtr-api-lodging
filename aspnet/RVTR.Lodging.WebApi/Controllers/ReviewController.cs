@@ -7,6 +7,9 @@ using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.WebApi.Controllers
 {
+  /// <summary>
+  ///
+  /// </summary>
   [ApiController]
   [ApiVersion("0.0")]
   [EnableCors("public")]
@@ -16,12 +19,22 @@ namespace RVTR.Lodging.WebApi.Controllers
     private readonly ILogger<ReviewController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="unitOfWork"></param>
     public ReviewController(ILogger<ReviewController> logger, UnitOfWork unitOfWork)
     {
       _logger = logger;
       _unitOfWork = unitOfWork;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -38,12 +51,21 @@ namespace RVTR.Lodging.WebApi.Controllers
       }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Get()
     {
       return Ok(await _unitOfWork.Review.SelectAsync());
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id")]
     public async Task<IActionResult> Get(int id)
     {
@@ -57,6 +79,11 @@ namespace RVTR.Lodging.WebApi.Controllers
       }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="review"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Post(ReviewModel review)
     {
@@ -66,6 +93,11 @@ namespace RVTR.Lodging.WebApi.Controllers
       return Accepted(review);
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="review"></param>
+    /// <returns></returns>
     [HttpPut]
     public async Task<IActionResult> Put(ReviewModel review)
     {
