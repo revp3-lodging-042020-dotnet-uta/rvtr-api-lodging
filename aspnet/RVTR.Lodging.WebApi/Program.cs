@@ -15,7 +15,7 @@ namespace RVTR.Lodging.WebApi
     ///
     /// </summary>
     /// <returns></returns>
-    public static async void Main()
+    public static async Task Main()
     {
       var host = CreateHostBuilder().Build();
 
