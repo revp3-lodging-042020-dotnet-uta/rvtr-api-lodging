@@ -8,7 +8,7 @@ using RVTR.Lodging.ObjectModel.Models;
 namespace RVTR.Lodging.WebApi.Controllers
 {
   [ApiController]
-  [EnableCors()]
+  [EnableCors("public")]
   [Route("api/[controller]")]
   public class RentalController : ControllerBase
   {
