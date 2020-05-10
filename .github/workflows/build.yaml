@@ -135,7 +135,7 @@ jobs:
           name: drop
       - if: github.event_name == 'pull_request'
         name: docker_build
-        run: docker image build --file .docker/aspnet.dockerfile --tag lodging-api:0.1.0-pr${GITHUB_REF:10:1} drop
+        run: docker image build --file .docker/aspnet.dockerfile --tag lodging-api:0.1.0-pr${${GITHUB_REF%/*}##*/} drop
       - if: github.event_name != 'pull_request'
         name: docker_build
         run: docker image build --file .docker/aspnet.dockerfile --tag lodging-api:0.1.0 drop
