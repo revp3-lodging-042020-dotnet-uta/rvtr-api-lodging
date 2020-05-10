@@ -123,9 +123,6 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
   pack:
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PULL_REQUEST_NUMBER: $(echo ${${GITHUB_REF%/*}##*/})
     name: pack_aspnet
     needs: [analyze]
     runs-on: ubuntu-18.04
@@ -136,11 +133,15 @@ jobs:
         uses: actions/download-artifact@v1.0.0
         with:
           name: drop
-      - name: docker_login
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: docker_login
         run: docker login docker.pkg.github.com
       - name: pr_number
         run: echo ${${GITHUB_REF%/*}##*/}
-      - if: github.event_name == 'pull_request'
+      - env:
+          PULL_REQUEST_NUMBER: $(echo ${${GITHUB_REF%/*}##*/})
+        if: github.event_name == 'pull_request'
         name: docker_build
         run: docker image build --file .docker/aspnet.dockerfile --tag rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
       - if: github.event_name != 'pull_request'
