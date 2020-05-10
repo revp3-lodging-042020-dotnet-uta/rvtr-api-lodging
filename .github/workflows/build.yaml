@@ -134,15 +134,15 @@ jobs:
         with:
           name: drop
       - name: pr_number
-        run: echo ${${GITHUB_REF%/*}##*/}
+        run: sh -c 'parameter=${GITHUB_REF%/*}; echo ${parameter##*/}'
       - env:
-          PULL_REQUEST_NUMBER: $(echo ${${GITHUB_REF%/*}##*/})
+          PULL_REQUEST_NUMBER: sh -c 'parameter=${GITHUB_REF%/*}; echo ${parameter##*/}'
         if: github.event_name == 'pull_request'
         name: docker_build
-        run: docker image build --file .docker/aspnet.dockerfile --tag rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
+        run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
       - if: github.event_name != 'pull_request'
         name: docker_build
-        run: docker image build --file .docker/aspnet.dockerfile --tag rest:0.1.0-aspnet drop
+        run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet drop
 
 name: build
 
