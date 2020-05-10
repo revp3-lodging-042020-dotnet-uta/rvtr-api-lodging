@@ -54,7 +54,7 @@ namespace RVTR.Lodging.WebApi
 
       services.AddDbContext<LodgingContext>(options =>
       {
-        options.UseNpgsql(Configuration.GetConnectionString("pgsl"));
+        options.UseNpgsql(Configuration.GetConnectionString("pgsql"));
       });
 
       services.AddScoped<UnitOfWork>();
