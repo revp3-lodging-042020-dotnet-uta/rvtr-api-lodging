@@ -137,7 +137,7 @@ jobs:
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
         if: github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork
         name: docker_build_pull_request
-        run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER_GITHUB }} drop
+        run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name != 'pull_request'
