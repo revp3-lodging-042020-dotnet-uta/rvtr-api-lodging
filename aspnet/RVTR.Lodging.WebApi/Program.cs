@@ -40,19 +40,12 @@ namespace RVTR.Lodging.WebApi
     /// <returns></returns>
     public static async Task CreateDbContextAsync(IHost host)
     {
-      try
+      using (var scope = host.Services.CreateScope())
       {
-        using (var scope = host.Services.CreateScope())
-        {
-          var provider = scope.ServiceProvider;
-          var context = provider.GetRequiredService<LodgingContext>();
+        var provider = scope.ServiceProvider;
+        var context = provider.GetRequiredService<LodgingContext>();
 
-          await context.Database.EnsureCreatedAsync();
-        }
-      }
-      catch
-      {
-        return;
+        await context.Database.EnsureCreatedAsync();
       }
     }
   }
