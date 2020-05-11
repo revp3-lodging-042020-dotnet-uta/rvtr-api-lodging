@@ -11,10 +11,9 @@ RUN dotnet publish --configuration Debug --output out --no-build RVTR.Lodging.We
 
 # stage - final
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-LABEL maintainer="https://github.com/fredbelotte"
 
 WORKDIR /workspace
 
-COPY --from=base /workspace/out/ /workspace/
+COPY --from=base /workspace/out /workspace
 
 CMD [ "dotnet", "RVTR.Lodging.WebApi.dll" ]
