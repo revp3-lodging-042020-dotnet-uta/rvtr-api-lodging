@@ -123,7 +123,10 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
   pack:
-    if: github.event_name == 'push' || !github.event.pull_request.head.repo.fork
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+    if: github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork
     name: pack_aspnet
     needs: [analyze]
     runs-on: ubuntu-18.04
@@ -134,22 +137,14 @@ jobs:
         uses: actions/download-artifact@v1.0.0
         with:
           name: drop
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-        if: github.event_name == 'pull_request'
-        name: docker_build_push_pull_request
-        run: |
-          docker login --username ${GITHUB_ACTOR} docker.pkg.github.com
-          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
-          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }}
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event_name != 'pull_request'
-        name: docker_build_push
-        run: |
-          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet drop
-          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet
+      - name: docker_login
+        run: ${GITHUB_TOKEN} | docker login --username ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+      - name: docker_build
+        run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
+      - name: docker_push
+        run: docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }}
+      - name: docker_logout
+        run: docker logout
 
 name: build
 
