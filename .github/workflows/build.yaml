@@ -138,7 +138,7 @@ jobs:
         with:
           name: drop
       - name: docker_login
-        run: ${GITHUB_TOKEN} | docker login --username ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        run: echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
       - name: docker_build
         run: docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
       - name: docker_push
