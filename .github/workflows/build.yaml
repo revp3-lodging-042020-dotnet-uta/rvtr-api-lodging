@@ -123,6 +123,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
   pack:
+    if: github.event_name == 'push' || !github.event.pull_request.head.repo.fork
     name: pack_aspnet
     needs: [analyze]
     runs-on: ubuntu-18.04
@@ -136,18 +137,19 @@ jobs:
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-        if: github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork
+        if: github.event_name == 'pull_request'
         name: docker_build_push_pull_request
         run: |
-          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
-          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet-pr${{ env.PULL_REQUEST_NUMBER }}
+          docker login --username ${GITHUB_ACTOR} docker.pkg.github.com
+          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }} drop
+          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet-pr${{ env.PULL_REQUEST_NUMBER }}
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name != 'pull_request'
         name: docker_build_push
         run: |
-          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet drop
-          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:0.1.0-aspnet
+          docker image build --file .docker/aspnet.dockerfile --tag docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet drop
+          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/rest:aspnet
 
 name: build
 
