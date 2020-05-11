@@ -33,15 +33,12 @@ jobs:
       - name: dotnet_build
         run: dotnet build
         working-directory: ${{ env.WORKING_DIRECTORY }}
-      - if: github.event_name == 'pull_request'
-        name: dotnet_publish_debug
-        run: dotnet publish --configuration Debug --output drop --no-build RVTR.Lodging.WebApi/*.csproj
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-      - if: github.event_name != 'pull_request'
+      - if: github.event_name == 'push'
         name: dotnet_publish
-        run: dotnet publish --configuration Release --output drop --no-build RVTR.Lodging.WebApi/*.csproj
+        run: dotnet publish --no-build --output drop RVTR.Lodging.WebApi/*.csproj
         working-directory: ${{ env.WORKING_DIRECTORY }}
-      - name: drop_upload
+      - if: github.event_name == 'push'
+        name: drop_upload
         uses: actions/upload-artifact@v1.0.0
         with:
           name: drop
