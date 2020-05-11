@@ -50,7 +50,10 @@ namespace RVTR.Lodging.WebApi
           await context.Database.EnsureCreatedAsync();
         }
       }
-      catch { }
+      catch
+      {
+        return;
+      }
     }
   }
 }
