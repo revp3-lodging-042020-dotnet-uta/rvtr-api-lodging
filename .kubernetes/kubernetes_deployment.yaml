@@ -22,7 +22,7 @@ spec:
         - env:
             - name: ConnectionStrings__pgsql
               value: 'Host=postgres;Database=LodgingData;Username=postgres;Password=LodgingData@2020;'
-          image: lodging:aspnet-rest
+          image: lodging:0.2.0-aspnet-rest
           imagePullPolicy: Always
           name: lodging
           ports:
