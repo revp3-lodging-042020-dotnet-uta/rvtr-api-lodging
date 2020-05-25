@@ -117,7 +117,7 @@ jobs:
   pack:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PACKAGE_VERSION: current
+      IMAGE_VERSION: '0.2.0'
     name: pack_aspnet
     needs: [analyze]
     runs-on: ubuntu-18.04
@@ -140,8 +140,8 @@ jobs:
       - if: github.ref == 'refs/tags/'
         name: docker_push
         run: |
-          docker image tag lodging docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:${PACKAGE_VERSION}-aspnet-rest
-          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:${PACKAGE_VERSION}-aspnet-rest
+          docker image tag lodging docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:${IMAGE_VERSION}-aspnet-rest
+          docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:${IMAGE_VERSION}-aspnet-rest
       - name: docker_logout
         run: docker logout
 
