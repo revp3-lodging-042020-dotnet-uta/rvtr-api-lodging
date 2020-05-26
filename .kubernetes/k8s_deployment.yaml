@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rvtr-api-lodging
+  name: lodging
 spec:
   replicas: 1
   selector:
