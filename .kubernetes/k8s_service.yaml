@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lodging
+spec:
+  ports:
+    - name: lodging
+      port: 80
+      targetPort: lodging-http
+  selector:
+    app: lodging
+  type: ClusterIP

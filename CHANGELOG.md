@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning][semver].
 
 ## [unreleased]
 
+### added
+
+- configure the project definition for container orchestration
+
 ## [0.1.0] :: 2020-05-12
 
 ### added
