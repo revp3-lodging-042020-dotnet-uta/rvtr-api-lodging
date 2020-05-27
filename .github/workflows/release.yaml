@@ -37,7 +37,7 @@ jobs:
         name: dotnet_publish_head
         run: dotnet publish --configuration Debug --no-build --output drop RVTR.Lodging.WebApi/*.csproj
         working-directory: ${{ env.WORKING_DIRECTORY }}
-      - if: github.ref == 'refs/tags/'
+      - if: startsWith(github.ref, 'refs/tags/')
         name: dotnet_publish
         run: dotnet publish --configuration Release --no-build --output drop RVTR.Lodging.WebApi/*.csproj
         working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -136,7 +136,7 @@ jobs:
         run: |
           docker image tag lodging docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:master-aspnet-rest
           docker image push docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:master-aspnet-rest
-      - if: github.ref == 'refs/tags/'
+      - if: startsWith(github.ref, 'refs/tags/')
         name: docker_push
         run: |
           docker image tag lodging docker.pkg.github.com/rvtr/rvtr-api-lodging/lodging:aspnet-rest
@@ -144,10 +144,9 @@ jobs:
       - name: docker_logout
         run: docker logout
 
-name: build
+name: release
 
 on:
   push:
     branches:
       - master
-    tags:
