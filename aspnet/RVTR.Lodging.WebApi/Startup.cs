@@ -5,10 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using zipkin4net;
+using zipkin4net.Middleware;
+using zipkin4net.Tracers.Zipkin;
+using zipkin4net.Transport.Http;
 
 namespace RVTR.Lodging.WebApi
 {
@@ -73,30 +78,52 @@ namespace RVTR.Lodging.WebApi
     /// <summary>
     ///
     /// </summary>
-    /// <param name="app"></param>
-    /// <param name="env"></param>
+    /// <param name="builder"></param>
+    /// <param name="environment"></param>
+    /// <param name="factory"></param>
     /// <param name="provider"></param>
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+    public void Configure(IApiVersionDescriptionProvider provider, IApplicationBuilder builder, ILoggerFactory factory, IWebHostEnvironment environment)
     {
-      if (env.IsDevelopment())
+      if (environment.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        builder.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
-      app.UseRouting();
-      app.UseSwagger();
-      app.UseSwaggerUI(options =>
+      var lifetime = builder.ApplicationServices.GetService<IHostApplicationLifetime>();
+      var statistics = new Statistics();
+
+      lifetime.ApplicationStarted.Register(() =>
+      {
+        var logger = new TracingLogger(factory, "zipkin.aspnet");
+        var sender = new HttpZipkinSender(Configuration.GetConnectionString("zipkin"), "application/json");
+        var tracer = new ZipkinTracer(sender, new JSONSpanSerializer(), statistics);
+
+        TraceManager.SamplingRate = 1.0f;
+        TraceManager.Trace128Bits = true;
+        TraceManager.RegisterTracer(tracer);
+        TraceManager.Start(logger);
+      });
+
+      lifetime.ApplicationStopped.Register(() =>
+      {
+        TraceManager.Stop();
+      });
+
+      builder.UseHttpsRedirection();
+      builder.UseRouting();
+      builder.UseSwagger();
+      builder.UseSwaggerUI(options =>
       {
         foreach (var description in provider.ApiVersionDescriptions)
         {
           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName);
         }
       });
-      app.UseCors();
-      app.UseAuthorization();
 
-      app.UseEndpoints(endpoints =>
+      builder.UseTracing("LodgingApi");
+      builder.UseCors();
+      builder.UseAuthorization();
+      builder.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
