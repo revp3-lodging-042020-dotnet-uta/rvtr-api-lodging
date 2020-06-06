@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using zipkin4net.Middleware;
 
 namespace RVTR.Lodging.WebApi
 {
@@ -20,8 +21,7 @@ namespace RVTR.Lodging.WebApi
     /// <summary>
     ///
     /// </summary>
-    /// <value></value>
-    public IConfiguration Configuration { get; }
+    private readonly IConfiguration _configuration;
 
     /// <summary>
     ///
@@ -29,7 +29,7 @@ namespace RVTR.Lodging.WebApi
     /// <param name="configuration"></param>
     public Startup(IConfiguration configuration)
     {
-      Configuration = configuration;
+      _configuration = configuration;
     }
 
     /// <summary>
@@ -54,15 +54,16 @@ namespace RVTR.Lodging.WebApi
 
       services.AddDbContext<LodgingContext>(options =>
       {
-        options.UseNpgsql(Configuration.GetConnectionString("pgsql"), options =>
+        options.UseNpgsql(_configuration.GetConnectionString("pgsql"), options =>
         {
           options.EnableRetryOnFailure(3);
         });
       });
 
+      services.AddScoped<ClientZipkinMiddleware>();
       services.AddScoped<UnitOfWork>();
       services.AddSwaggerGen();
-      services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+      services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ClientSwaggerOptions>();
       services.AddVersionedApiExplorer(options =>
       {
         options.GroupNameFormat = "'v'V";
@@ -73,30 +74,32 @@ namespace RVTR.Lodging.WebApi
     /// <summary>
     ///
     /// </summary>
-    /// <param name="app"></param>
-    /// <param name="env"></param>
-    /// <param name="provider"></param>
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+    /// <param name="applicationBuilder"></param>
+    /// <param name="hostEnvironment"></param>
+    /// <param name="descriptionProvider"></param>
+    public void Configure(IApiVersionDescriptionProvider descriptionProvider, IApplicationBuilder applicationBuilder, IWebHostEnvironment hostEnvironment)
     {
-      if (env.IsDevelopment())
+      if (hostEnvironment.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        applicationBuilder.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
-      app.UseRouting();
-      app.UseSwagger();
-      app.UseSwaggerUI(options =>
+      applicationBuilder.UseZipkin();
+      applicationBuilder.UseTracing("lodgingapi.rest");
+      applicationBuilder.UseHttpsRedirection();
+      applicationBuilder.UseRouting();
+      applicationBuilder.UseSwagger();
+      applicationBuilder.UseSwaggerUI(options =>
       {
-        foreach (var description in provider.ApiVersionDescriptions)
+        foreach (var description in descriptionProvider.ApiVersionDescriptions)
         {
           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName);
         }
       });
-      app.UseCors();
-      app.UseAuthorization();
 
-      app.UseEndpoints(endpoints =>
+      applicationBuilder.UseCors();
+      applicationBuilder.UseAuthorization();
+      applicationBuilder.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
