@@ -15,7 +15,7 @@ namespace RVTR.Lodging.WebApi
   /// <summary>
   ///
   /// </summary>
-  public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+  internal class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
   {
     private readonly IApiVersionDescriptionProvider _provider;
     private readonly IConfiguration _configuration;

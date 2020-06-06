@@ -25,8 +25,7 @@ namespace RVTR.Lodging.WebApi
     /// <summary>
     ///
     /// </summary>
-    /// <value></value>
-    public IConfiguration Configuration { get; }
+    private readonly IConfiguration _configuration;
 
     /// <summary>
     ///
@@ -34,7 +33,7 @@ namespace RVTR.Lodging.WebApi
     /// <param name="configuration"></param>
     public Startup(IConfiguration configuration)
     {
-      Configuration = configuration;
+      _configuration = configuration;
     }
 
     /// <summary>
@@ -59,7 +58,7 @@ namespace RVTR.Lodging.WebApi
 
       services.AddDbContext<LodgingContext>(options =>
       {
-        options.UseNpgsql(Configuration.GetConnectionString("pgsql"), options =>
+        options.UseNpgsql(_configuration.GetConnectionString("pgsql"), options =>
         {
           options.EnableRetryOnFailure(3);
         });
@@ -78,52 +77,34 @@ namespace RVTR.Lodging.WebApi
     /// <summary>
     ///
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="environment"></param>
-    /// <param name="factory"></param>
-    /// <param name="provider"></param>
-    public void Configure(IApiVersionDescriptionProvider provider, IApplicationBuilder builder, ILoggerFactory factory, IWebHostEnvironment environment)
+    /// <param name="applicationBuilder"></param>
+    /// <param name="hostEnvironment"></param>
+    /// <param name="loggerFactory"></param>
+    /// <param name="descriptionProvider"></param>
+    public void Configure(IApiVersionDescriptionProvider descriptionProvider, IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory, IWebHostEnvironment hostEnvironment)
     {
-      if (environment.IsDevelopment())
+      if (hostEnvironment.IsDevelopment())
       {
-        builder.UseDeveloperExceptionPage();
+        applicationBuilder.UseDeveloperExceptionPage();
       }
 
-      var lifetime = builder.ApplicationServices.GetService<IHostApplicationLifetime>();
-      var statistics = new Statistics();
+      ConfigureTracingClient.UseZipkin(applicationBuilder, _configuration, loggerFactory);
 
-      lifetime.ApplicationStarted.Register(() =>
+      applicationBuilder.UseTracing("lodgingapi.rest");
+      applicationBuilder.UseHttpsRedirection();
+      applicationBuilder.UseRouting();
+      applicationBuilder.UseSwagger();
+      applicationBuilder.UseSwaggerUI(options =>
       {
-        var logger = new TracingLogger(factory, "zipkin.aspnet");
-        var sender = new HttpZipkinSender(Configuration.GetConnectionString("zipkin"), "application/json");
-        var tracer = new ZipkinTracer(sender, new JSONSpanSerializer(), statistics);
-
-        TraceManager.SamplingRate = 1.0f;
-        TraceManager.Trace128Bits = true;
-        TraceManager.RegisterTracer(tracer);
-        TraceManager.Start(logger);
-      });
-
-      lifetime.ApplicationStopped.Register(() =>
-      {
-        TraceManager.Stop();
-      });
-
-      builder.UseHttpsRedirection();
-      builder.UseRouting();
-      builder.UseSwagger();
-      builder.UseSwaggerUI(options =>
-      {
-        foreach (var description in provider.ApiVersionDescriptions)
+        foreach (var description in descriptionProvider.ApiVersionDescriptions)
         {
           options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName);
         }
       });
 
-      builder.UseTracing("LodgingApi");
-      builder.UseCors();
-      builder.UseAuthorization();
-      builder.UseEndpoints(endpoints =>
+      applicationBuilder.UseCors();
+      applicationBuilder.UseAuthorization();
+      applicationBuilder.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
       });
