@@ -5,15 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using zipkin4net;
 using zipkin4net.Middleware;
-using zipkin4net.Tracers.Zipkin;
-using zipkin4net.Transport.Http;
 
 namespace RVTR.Lodging.WebApi
 {
@@ -64,9 +60,10 @@ namespace RVTR.Lodging.WebApi
         });
       });
 
+      services.AddScoped<ClientZipkinMiddleware>();
       services.AddScoped<UnitOfWork>();
       services.AddSwaggerGen();
-      services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+      services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ClientSwaggerOptions>();
       services.AddVersionedApiExplorer(options =>
       {
         options.GroupNameFormat = "'v'V";
@@ -79,17 +76,15 @@ namespace RVTR.Lodging.WebApi
     /// </summary>
     /// <param name="applicationBuilder"></param>
     /// <param name="hostEnvironment"></param>
-    /// <param name="loggerFactory"></param>
     /// <param name="descriptionProvider"></param>
-    public void Configure(IApiVersionDescriptionProvider descriptionProvider, IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory, IWebHostEnvironment hostEnvironment)
+    public void Configure(IApiVersionDescriptionProvider descriptionProvider, IApplicationBuilder applicationBuilder, IWebHostEnvironment hostEnvironment)
     {
       if (hostEnvironment.IsDevelopment())
       {
         applicationBuilder.UseDeveloperExceptionPage();
       }
 
-      ConfigureTracingClient.UseZipkin(applicationBuilder, _configuration, loggerFactory);
-
+      applicationBuilder.UseZipkin();
       applicationBuilder.UseTracing("lodgingapi.rest");
       applicationBuilder.UseHttpsRedirection();
       applicationBuilder.UseRouting();
