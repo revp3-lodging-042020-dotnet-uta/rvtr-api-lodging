@@ -1,6 +1,7 @@
 # readme
 
 [![build status](https://github.com/RVTR/rvtr-api-lodging/workflows/build/badge.svg)](https://github.com/RVTR/rvtr-api-lodging/actions?query=workflow%3Abuild)
+[![release status](https://github.com/RVTR/rvtr-api-lodging/workflows/release/badge.svg)](https://github.com/RVTR/rvtr-api-lodging/actions?query=workflow%3Arelease)
 [![coverage status](https://sonarcloud.io/api/project_badges/measure?project=rvtr_api_lodging&metric=coverage)](https://sonarcloud.io/dashboard?id=rvtr_api_lodging)
 [![maintainability rating](https://sonarcloud.io/api/project_badges/measure?project=rvtr_api_lodging&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=rvtr_api_lodging)
 [![reliability rating](https://sonarcloud.io/api/project_badges/measure?project=rvtr_api_lodging&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=rvtr_api_lodging)
