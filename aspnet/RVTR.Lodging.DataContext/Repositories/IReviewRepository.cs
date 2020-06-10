@@ -13,6 +13,6 @@ namespace RVTR.Lodging.DataContext.Repositories
     Task InsertAsync(ReviewModel entry);
     Task<IEnumerable<ReviewModel>> GetAsync();
     Task GetAsync(int id);
-    void Update();
+    Task Update(ReviewModel entry);
   }
 }
