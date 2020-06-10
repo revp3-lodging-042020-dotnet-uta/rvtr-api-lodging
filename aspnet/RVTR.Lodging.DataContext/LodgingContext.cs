@@ -12,7 +12,14 @@ namespace RVTR.Lodging.DataContext
     public DbSet<RentalModel> Rentals { get; set; }
     public DbSet<ReviewModel> Reviews { get; set; }
 
+    public LodgingContext() {}
     public LodgingContext(DbContextOptions<LodgingContext> options) : base(options) { }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+      if (!options.IsConfigured)
+        options.UseNpgsql("Host=localhost;Database=LodgingDb;Username=postgres;Password=postgres;");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
