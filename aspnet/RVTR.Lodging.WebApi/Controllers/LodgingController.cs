@@ -41,7 +41,6 @@ namespace RVTR.Lodging.WebApi.Controllers
       try
       {
         await _unitOfWork.Lodging.DeleteAsync(id);
-        await _unitOfWork.CommitAsync();
 
         return Ok();
       }
@@ -58,7 +57,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      return Ok(await _unitOfWork.Lodging.SelectAsync());
+      return Ok(await _unitOfWork.Lodging.GetAsync());
     }
 
     /// <summary>
@@ -71,7 +70,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     {
       try
       {
-        return Ok(await _unitOfWork.Lodging.SelectAsync(id));
+        return Ok(await _unitOfWork.Lodging.GetAsync(id));
       }
       catch
       {
@@ -88,7 +87,6 @@ namespace RVTR.Lodging.WebApi.Controllers
     public async Task<IActionResult> Post(LodgingModel lodging)
     {
       await _unitOfWork.Lodging.InsertAsync(lodging);
-      await _unitOfWork.CommitAsync();
 
       return Accepted(lodging);
     }
@@ -102,7 +100,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     public async Task<IActionResult> Put(LodgingModel lodging)
     {
       _unitOfWork.Lodging.Update(lodging);
-      await _unitOfWork.CommitAsync();
+
 
       return Accepted(lodging);
     }
