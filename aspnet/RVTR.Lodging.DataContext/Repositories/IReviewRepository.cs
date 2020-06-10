@@ -9,10 +9,13 @@ namespace RVTR.Lodging.DataContext.Repositories
 {
   public interface IReviewRepository
   {
+    /// <summary>
+    /// Represents the Review repository interface
+    /// </summary>
     Task<bool> DeleteAsync(int id);
     Task<ReviewModel> InsertAsync(ReviewModel entry);
     Task<IEnumerable<ReviewModel>> GetAsync();
     Task<ReviewModel> GetAsync(int id);
-    Task<ReviewModel> Update();
+    Task<ReviewModel> Update(ReviewModel entry);
   }
 }
