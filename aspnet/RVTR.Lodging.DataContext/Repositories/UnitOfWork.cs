@@ -10,17 +10,17 @@ namespace RVTR.Lodging.DataContext.Repositories
   {
     private readonly LodgingContext _context;
 
-    public virtual Repository<LodgingModel> Lodging { get; }
-    public virtual Repository<RentalModel> Rental { get; set; }
-    public virtual Repository<ReviewModel> Review { get; set; }
+    public virtual LodgingRepository Lodging { get; }
+    public virtual RentalRepository Rental { get; set; }
+    public virtual ReviewRepository Review { get; set; }
 
     public UnitOfWork(LodgingContext context)
     {
       _context = context;
 
-      Lodging = new Repository<LodgingModel>(context);
-      Rental = new Repository<RentalModel>(context);
-      Review = new Repository<ReviewModel>(context);
+      Lodging = new LodgingRepository(context);
+      Rental = new RentalRepository(context);
+      Review = new ReviewRepository(context);
     }
 
     /// <summary>
