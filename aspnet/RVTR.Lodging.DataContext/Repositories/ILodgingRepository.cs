@@ -14,11 +14,11 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// <typeparam name="TEntity"></typeparam>
   public interface ILodgingRepository
   {
-    Task DeleteAsync(int id);
-    Task InsertAsync(LodgingModel entry);
+    Task<bool> DeleteAsync(int id);
+    Task<LodgingModel> InsertAsync(LodgingModel entry);
     Task<IEnumerable<LodgingModel>> GetAsync();
-    Task GetAsync(int id);
-    Task Update(LodgingModel entry);
+    Task<LodgingModel> GetAsync(int id);
+    Task<LodgingModel> Update();
   }
 }
 //  public class LodgingRepository : ILodgingRepository

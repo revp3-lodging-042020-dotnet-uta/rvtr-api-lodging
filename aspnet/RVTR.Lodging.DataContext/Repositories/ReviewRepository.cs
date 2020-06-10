@@ -13,7 +13,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 
     }
 
-    public async Task DeleteAsync(int id)
+    public Task<bool> DeleteAsync(int id)
     {
       throw new NotImplementedException();
     }
@@ -23,17 +23,17 @@ namespace RVTR.Lodging.DataContext.Repositories
       throw new NotImplementedException();
     }
 
-    public async Task GetAsync(int id)
+    public Task<ReviewModel> GetAsync(int id)
     {
       throw new NotImplementedException();
     }
 
-    public async Task InsertAsync(ReviewModel entry)
+    public Task<ReviewModel> InsertAsync(ReviewModel entry)
     {
       throw new NotImplementedException();
     }
 
-    public async Task Update(ReviewModel entry)
+    public Task<ReviewModel> Update()
     {
       throw new NotImplementedException();
     }

@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,10 +14,10 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// </summary>
   public interface IRentalRepository
   {
-    Task DeleteAsync(int id);
-    Task InsertAsync(RentalModel entry);
-    Task <IEnumerable<RentalModel>> GetAsync();
-    Task GetAsync(int id);
-    Task Update(RentalModel entry);
+    Task<bool> DeleteAsync(int id);
+    Task<RentalModel> InsertAsync(RentalModel entry);
+    Task<IEnumerable<RentalModel>> GetAsync();
+    Task<RentalModel> GetAsync(int id);
+    Task<RentalModel> Update();
   }
 }
