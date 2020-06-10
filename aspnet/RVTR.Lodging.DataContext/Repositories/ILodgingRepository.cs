@@ -9,7 +9,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 {
 
   /// <summary>
-  /// Represents the lodging context
+  /// Represents the lodging repository interface
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
   public interface ILodgingRepository
@@ -18,7 +18,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     Task<LodgingModel> InsertAsync(LodgingModel entry);
     Task<IEnumerable<LodgingModel>> GetAsync();
     Task<LodgingModel> GetAsync(int id);
-    Task<LodgingModel> Update();
+    Task<LodgingModel> Update(LodgingModel entry);
   }
 }
 //  public class LodgingRepository : ILodgingRepository

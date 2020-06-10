@@ -12,3 +12,6 @@ appsettings*
 
 # sonarcloud
 .sonarqube/
+
+# Visual studio
+**/.vs/
