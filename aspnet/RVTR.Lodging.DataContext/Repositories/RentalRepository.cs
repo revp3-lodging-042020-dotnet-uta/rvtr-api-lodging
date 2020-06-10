@@ -3,40 +3,51 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {
+  /// <summary>
+  /// Implements the Rental repository functions of the respective interface
+  /// </summary>
   public class RentalRepository : IRentalRepository
   {
+    public readonly LodgingContext _db;
 
     public RentalRepository(LodgingContext context)
     {
-
+      _db = context;
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-      throw new NotImplementedException();
+      var rental = await _db.Rentals.FindAsync(id);
+      _db.Remove(rental);
+      return await _db.SaveChangesAsync() > 0;
     }
 
     public async Task<IEnumerable<RentalModel>> GetAsync()
     {
-      throw new NotImplementedException();
+      return await _db.Rentals.ToListAsync();
     }
 
-    public Task<RentalModel> GetAsync(int id)
+    public async Task<RentalModel> GetAsync(int id)
     {
-      throw new NotImplementedException();
+      return await _db.Rentals.FindAsync(id);
     }
 
-    public Task<RentalModel> InsertAsync(RentalModel entry)
+    public async Task<RentalModel> InsertAsync(RentalModel entry)
     {
-      throw new NotImplementedException();
+      await _db.AddAsync(entry);
+      await _db.SaveChangesAsync();
+      return entry;
     }
 
-    public Task<RentalModel> Update()
+    public async Task<RentalModel> Update(RentalModel entry)
     {
-      throw new NotImplementedException();
+      _db.Update(entry);
+      await _db.SaveChangesAsync();
+      return entry;
     }
   }
 }

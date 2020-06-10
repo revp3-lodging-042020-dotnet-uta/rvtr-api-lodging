@@ -18,6 +18,6 @@ namespace RVTR.Lodging.DataContext.Repositories
     Task<RentalModel> InsertAsync(RentalModel entry);
     Task<IEnumerable<RentalModel>> GetAsync();
     Task<RentalModel> GetAsync(int id);
-    Task<RentalModel> Update();
+    Task<RentalModel> Update(RentalModel entry);
   }
 }
