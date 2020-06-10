@@ -14,27 +14,27 @@ namespace RVTR.Lodging.DataContext.Repositories
 
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
       throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<RentalModel>> GetAsync()
+    public async Task<IEnumerable<RentalModel>> GetAsync()
     {
       throw new NotImplementedException();
     }
 
-    public Task GetAsync(int id)
+    public async Task GetAsync(int id)
     {
       throw new NotImplementedException();
     }
 
-    public Task InsertAsync(RentalModel entry)
+    public async Task InsertAsync(RentalModel entry)
     {
       throw new NotImplementedException();
     }
 
-    public void Update()
+    public async Task Update(RentalModel entry)
     {
       throw new NotImplementedException();
     }
