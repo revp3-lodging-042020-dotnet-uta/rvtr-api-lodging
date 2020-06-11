@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,71 +15,136 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class LodgingControllerTest
-  {
-    private static readonly SqliteConnection _connection = new SqliteConnection("Data Source=:memory:");
-    private static readonly DbContextOptions<LodgingContext> _options = new DbContextOptionsBuilder<LodgingContext>().UseSqlite(_connection).Options;
-    private readonly LodgingController _controller;
-    private readonly ILogger<LodgingController> _logger;
-    private readonly UnitOfWork _unitOfWork;
-
-    public LodgingControllerTest()
+    public class LodgingControllerTest
     {
-      var contextMock = new Mock<LodgingContext>(_options);
-      var loggerMock = new Mock<ILogger<LodgingController>>();
-      var repositoryMock = new Mock<Repository<LodgingModel>>(new LodgingContext(_options));
-      var unitOfWorkMock = new Mock<UnitOfWork>(contextMock.Object);
+        private static readonly SqliteConnection _connection = new SqliteConnection("Data Source=:memory:");
+        private static readonly DbContextOptions<LodgingContext> _options = new DbContextOptionsBuilder<LodgingContext>().UseSqlite(_connection).Options;
 
-      repositoryMock.Setup(m => m.DeleteAsync(0)).Throws(new Exception());
-      repositoryMock.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(1));
-      repositoryMock.Setup(m => m.InsertAsync(It.IsAny<LodgingModel>())).Returns(Task.FromResult<LodgingModel>(null));
-      repositoryMock.Setup(m => m.SelectAsync()).Returns(Task.FromResult<IEnumerable<LodgingModel>>(null));
-      repositoryMock.Setup(m => m.SelectAsync(0)).Throws(new Exception());
-      repositoryMock.Setup(m => m.SelectAsync(1)).Returns(Task.FromResult<LodgingModel>(null));
-      repositoryMock.Setup(m => m.Update(It.IsAny<LodgingModel>()));
-      unitOfWorkMock.Setup(m => m.Lodging).Returns(repositoryMock.Object);
+        private class Mocks
+        {
+            public Mock<LodgingContext> _lodgingContext;
+            public Mock<ILogger<LodgingController>> _logger;
+            public Mock<ILodgingRepository> _repository;
+            public Mock<UnitOfWork> _unitOfWork;
 
-      _logger = loggerMock.Object;
-      _unitOfWork = unitOfWorkMock.Object;
-      _controller = new LodgingController(_logger, _unitOfWork);
+            public Mocks()
+            {
+                this._lodgingContext = new Mock<LodgingContext>(_options);
+                this._logger = new Mock<ILogger<LodgingController>>();
+                this._repository = new Mock<ILodgingRepository>();
+                this._unitOfWork = new Mock<UnitOfWork>(_lodgingContext.Object);
+                this._unitOfWork.Setup(m => m.Lodging).Returns(this._repository.Object);
+            }
+
+        }
+
+        private LodgingController NewLodgingController(Mocks mocks)
+        {
+            return new LodgingController(mocks._logger.Object, mocks._unitOfWork.Object);
+        }
+
+        [Fact]
+        public async void Delete_UsingValidId()
+        {
+            var mocks = new Mocks();
+            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(true));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Delete(1);
+            Assert.IsType(typeof(OkResult), result);
+        }
+
+        [Fact]
+        public async void Delete_UsingInvalidId()
+        {
+            var mocks = new Mocks();
+            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(false));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Delete(1);
+            Assert.IsType(typeof(NotFoundObjectResult), result);
+        }
+
+        [Fact]
+        public async void GetAll()
+        {
+            var mocks = new Mocks();
+
+            mocks._repository.Setup(m => m.GetAsync()).Returns(
+              Task.FromResult<IEnumerable<LodgingModel>>(
+                new List<LodgingModel>() { null, null }
+              )
+            );
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Get();
+            Assert.IsType(typeof(OkObjectResult), result);
+
+            var items = (result as OkObjectResult).Value as IEnumerable<LodgingModel>;
+            Assert.Equal(2, items.Count());
+        }
+
+        [Fact]
+        public async void Get_UsingValidId()
+        {
+            var mocks = new Mocks();
+
+            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+              Task.FromResult<LodgingModel>(
+                new LodgingModel{ Id = 1 }
+              )
+            );
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Get(1);
+            Assert.IsType(typeof(OkObjectResult), result);
+
+            var value = (result as OkObjectResult).Value as LodgingModel;
+            Assert.Equal(1, value.Id);
+        }
+
+        [Fact]
+        public async void Get_UsingInvalidId()
+        {
+            var mocks = new Mocks();
+
+            mocks._repository.Setup(m => m.GetAsync(1)).Returns(Task.FromResult<LodgingModel>(null));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Get(1);
+            Assert.IsType(typeof(NotFoundObjectResult), result);
+        }
+
+        [Fact]
+        public async void Post()
+        {
+            var mocks = new Mocks();
+            var submittedModel = new LodgingModel();
+
+            mocks._repository.Setup(m => m.InsertAsync(submittedModel)).Returns(Task.FromResult(submittedModel));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Post(submittedModel);
+            Assert.IsType(typeof(AcceptedResult), result);
+        }
+
+        [Fact]
+        public async void Post_GarbageModelIsRejected()
+        {
+            var mocks = new Mocks();
+
+            mocks._repository.Setup(m => m.InsertAsync(null)).Returns(Task.FromResult<LodgingModel>(null));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Post(null);
+            Assert.IsType(typeof(BadRequestObjectResult), result);
+        }
     }
-
-    [Fact]
-    public async void Test_Controller_Delete()
-    {
-      var resultFail = await _controller.Delete(0);
-      var resultPass = await _controller.Delete(1);
-
-      Assert.NotNull(resultFail);
-      Assert.NotNull(resultPass);
-    }
-
-    [Fact]
-    public async void Test_Controller_Get()
-    {
-      var resultMany = await _controller.Get();
-      var resultFail = await _controller.Get(0);
-      var resultOne = await _controller.Get(1);
-
-      Assert.NotNull(resultMany);
-      Assert.NotNull(resultFail);
-      Assert.NotNull(resultOne);
-    }
-
-    [Fact]
-    public async void Test_Controller_Post()
-    {
-      var resultPass = await _controller.Post(new LodgingModel());
-
-      Assert.NotNull(resultPass);
-    }
-
-    [Fact]
-    public async void Test_Controller_Put()
-    {
-      var resultPass = await _controller.Put(new LodgingModel());
-
-      Assert.NotNull(resultPass);
-    }
-  }
 }
