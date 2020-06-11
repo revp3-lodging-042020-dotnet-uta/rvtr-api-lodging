@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-    public class LodgingRepoTest
+    public class ReviewRepoTest
     {
 
         private async Task<DbContextOptions<LodgingContext>> NewDb()
@@ -22,7 +22,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
                 .Options;
         }
 
-        // Sample test if there is LodgingRepo specific functionality to test.
+        // Sample test if there is ReviewRepo specific functionality to test.
         [Fact]
         public async void Test_InstantiatesRepo()
         {
@@ -40,7 +40,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             using (var ctx = new LodgingContext(dbOptions))
             {
-                var repo = new LodgingRepository(ctx);
+                var repo = new ReviewRepository(ctx);
 
                 // Add repo-specific method calls here.
                 // Add Asserts here.
