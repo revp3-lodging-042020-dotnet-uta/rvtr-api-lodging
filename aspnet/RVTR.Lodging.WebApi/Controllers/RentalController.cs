@@ -38,16 +38,8 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      try
-      {
         await _unitOfWork.Rental.DeleteAsync(id);
-
         return Ok();
-      }
-      catch
-      {
-        return NotFound(id);
-      }
     }
 
     /// <summary>
@@ -68,14 +60,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-      try
-      {
-        return Ok(await _unitOfWork.Rental.GetAsync(id));
-      }
-      catch
-      {
-        return NotFound(id);
-      }
+      return Ok(await _unitOfWork.Rental.GetAsync(id));
     }
 
     /// <summary>
