@@ -1,6 +1,8 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using RVTR.Lodging.DataContext.Repositories;
 using RVTR.Lodging.ObjectModel.Models;
@@ -38,6 +40,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+      System.Console.WriteLine("It also went to Delete");
       await _unitOfWork.Lodging.DeleteAsync(id);
       return Ok();
     }
@@ -60,7 +63,11 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        return Ok(await _unitOfWork.Lodging.GetAsync(id));
+      //System.Console.WriteLine("It went into the GET");
+      //throw new System.Exception("Here is the exception");
+      throw new DirectoryNotFoundException();
+      //_unitOfWork.Lodging.GetAsync(id);
+      return Ok(await _unitOfWork.Lodging.GetAsync(id));
     }
 
     /// <summary>
