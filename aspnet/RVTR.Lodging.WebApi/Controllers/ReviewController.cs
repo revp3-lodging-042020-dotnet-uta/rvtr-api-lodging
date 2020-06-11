@@ -84,7 +84,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpPut]
     public async Task<IActionResult> Put(ReviewModel review)
     {
-      await _unitOfWork.Review.Update(review);
+      _unitOfWork.Review.Update(review);
 
       return Accepted(review);
     }
