@@ -17,21 +17,22 @@ namespace RVTR.Lodging.UnitTesting.Tests
 {
     public class LodgingControllerTest
     {
-        private static readonly SqliteConnection _connection = new SqliteConnection("Data Source=:memory:");
-        private static readonly DbContextOptions<LodgingContext> _options = new DbContextOptionsBuilder<LodgingContext>().UseSqlite(_connection).Options;
 
         private class Mocks
         {
             public Mock<LodgingContext> _lodgingContext;
             public Mock<ILogger<LodgingController>> _logger;
-            public Mock<ILodgingRepository> _repository;
+            public Mock<Repository<LodgingModel>> _repository;
             public Mock<UnitOfWork> _unitOfWork;
 
             public Mocks()
             {
+                SqliteConnection _connection = new SqliteConnection("Data Source=:memory:");
+                DbContextOptions<LodgingContext> _options = new DbContextOptionsBuilder<LodgingContext>().UseSqlite(_connection).Options;
+
                 this._lodgingContext = new Mock<LodgingContext>(_options);
                 this._logger = new Mock<ILogger<LodgingController>>();
-                this._repository = new Mock<ILodgingRepository>();
+                this._repository = new Mock<Repository<LodgingModel>>(this._lodgingContext.Object);
                 this._unitOfWork = new Mock<UnitOfWork>(_lodgingContext.Object);
                 this._unitOfWork.Setup(m => m.Lodging).Returns(this._repository.Object);
             }
@@ -47,7 +48,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         public async void Delete_UsingValidId()
         {
             var mocks = new Mocks();
-            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(true));
+            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(new LodgingModel()));
 
             var _controller = NewLodgingController(mocks);
 
@@ -59,7 +60,8 @@ namespace RVTR.Lodging.UnitTesting.Tests
         public async void Delete_UsingInvalidId()
         {
             var mocks = new Mocks();
-            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(false));
+            LodgingModel mockResult = null;
+            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(mockResult));
 
             var _controller = NewLodgingController(mocks);
 
