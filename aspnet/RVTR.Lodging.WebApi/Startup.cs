@@ -89,7 +89,6 @@ namespace RVTR.Lodging.WebApi
 
       applicationBuilder.UseZipkin();
       applicationBuilder.UseTracing("lodgingapi.rest");
-      applicationBuilder.UseHttpsRedirection();
 
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
@@ -101,6 +100,7 @@ namespace RVTR.Lodging.WebApi
         await context.Response.WriteAsync(result);
       }));
 
+      applicationBuilder.UseHttpsRedirection();
       applicationBuilder.UseRouting();
       applicationBuilder.UseSwagger();
       applicationBuilder.UseSwaggerUI(options =>

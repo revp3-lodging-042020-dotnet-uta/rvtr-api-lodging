@@ -38,16 +38,8 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      try
-      {
-        await _unitOfWork.Review.DeleteAsync(id);
-
-        return Ok();
-      }
-      catch
-      {
-        return NotFound(id);
-      }
+      await _unitOfWork.Review.DeleteAsync(id);
+      return Ok();
     }
 
     /// <summary>
@@ -68,14 +60,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-      try
-      {
-        return Ok(await _unitOfWork.Review.GetAsync(id));
-      }
-      catch
-      {
-        return NotFound(id);
-      }
+      return Ok(await _unitOfWork.Review.GetAsync(id));
     }
 
     /// <summary>
@@ -99,7 +84,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpPut]
     public async Task<IActionResult> Put(ReviewModel review)
     {
-      _unitOfWork.Review.Update(review);
+      await _unitOfWork.Review.Update(review);
 
       return Accepted(review);
     }
