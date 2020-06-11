@@ -22,7 +22,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
             public Mock<LodgingContext> _lodgingContext;
             public Mock<ILogger<LodgingController>> _logger;
-            public Mock<Repository<LodgingModel>> _repository;
+            public Mock<LodgingRepository> _repository;
             public Mock<UnitOfWork> _unitOfWork;
 
             public Mocks()
@@ -32,7 +32,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
                 this._lodgingContext = new Mock<LodgingContext>(_options);
                 this._logger = new Mock<ILogger<LodgingController>>();
-                this._repository = new Mock<Repository<LodgingModel>>(this._lodgingContext.Object);
+                this._repository = new Mock<LodgingRepository>(this._lodgingContext.Object);
                 this._unitOfWork = new Mock<UnitOfWork>(_lodgingContext.Object);
                 this._unitOfWork.Setup(m => m.Lodging).Returns(this._repository.Object);
             }
