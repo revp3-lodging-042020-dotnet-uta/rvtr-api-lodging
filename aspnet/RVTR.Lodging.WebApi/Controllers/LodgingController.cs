@@ -82,26 +82,24 @@ namespace RVTR.Lodging.WebApi.Controllers
         {
             if (lodging == null) return BadRequest();
 
-            var obj = await _unitOfWork.Lodging.InsertAsync(lodging);
+            var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id);
 
-            await _unitOfWork.CommitAsync();
+            if (ExistingEntry == null)
+            {
+              var obj = await _unitOfWork.Lodging.InsertAsync(lodging);
 
-            return Ok(obj);
-        }
+              await _unitOfWork.CommitAsync();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="lodging"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public async Task<IActionResult> Put(LodgingModel lodging)
-        {
-            _unitOfWork.Lodging.Update(lodging);
+              return Ok(obj);
+            }
+            else
+            {
+              _unitOfWork.Lodging.Update(lodging);
 
-            await _unitOfWork.CommitAsync();
+              await _unitOfWork.CommitAsync();
 
-            return Accepted(lodging);
+              return Ok(lodging);
+            }
         }
     }
 }

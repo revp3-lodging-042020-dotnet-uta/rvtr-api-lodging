@@ -80,26 +80,24 @@ namespace RVTR.Lodging.WebApi.Controllers
     {
       if (review == null) return BadRequest();
 
-      var obj = await _unitOfWork.Review.InsertAsync(review);
+      var ExistingEntry = await _unitOfWork.Review.GetAsync(review.Id);
 
-      await _unitOfWork.CommitAsync();
+      if (ExistingEntry == null)
+      {
+        var obj = await _unitOfWork.Review.InsertAsync(review);
 
-      return Ok(obj);
-    }
+        await _unitOfWork.CommitAsync();
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="review"></param>
-    /// <returns></returns>
-    [HttpPut]
-    public async Task<IActionResult> Put(ReviewModel review)
-    {
-      _unitOfWork.Review.Update(review);
+        return Ok(obj);
+      }
+      else
+      {
+        _unitOfWork.Review.Update(review);
 
-      await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync();
 
-      return Accepted(review);
+        return Ok(review);
+      }
     }
   }
 }

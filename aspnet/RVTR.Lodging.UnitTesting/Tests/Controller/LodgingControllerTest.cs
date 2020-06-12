@@ -123,10 +123,16 @@ namespace RVTR.Lodging.UnitTesting.Tests
         }
 
         [Fact]
-        public async void Post()
+        public async void Post_Insert()
         {
             var mocks = new Mocks();
-            var submittedModel = new LodgingModel();
+            var submittedModel = new LodgingModel { Id = 1 };
+
+            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+              Task.FromResult<LodgingModel>(
+                null
+              )
+            );
 
             mocks._repository.Setup(m => m.InsertAsync(submittedModel)).Returns(Task.FromResult(submittedModel));
 
@@ -137,6 +143,29 @@ namespace RVTR.Lodging.UnitTesting.Tests
         }
 
         [Fact]
+        public async void Post_Update()
+        {
+            var mocks = new Mocks();
+            var submittedModel = new LodgingModel { Id = 1 };
+
+            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+              Task.FromResult<LodgingModel>(
+                new LodgingModel { Id = 1 }
+              )
+            );
+
+            mocks._repository.Setup(m => m.Update(submittedModel));
+
+            var _controller = NewLodgingController(mocks);
+
+            var result = await _controller.Post(new LodgingModel { Id = 1 });
+            Assert.IsType(typeof(OkObjectResult), result);
+
+            var value = (result as OkObjectResult).Value as LodgingModel;
+            Assert.Equal(1, value.Id);
+        }
+
+    [Fact]
         public async void Post_GarbageModelIsRejected()
         {
             var mocks = new Mocks();
