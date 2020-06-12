@@ -52,7 +52,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] QueryModel queryParams)
     {
       return Ok(await _unitOfWork.Review.GetAsync());
     }
@@ -60,10 +60,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <summary>
     ///
     /// </summary>
-    /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get([FromQuery] QueryModel queryParams, int id)
     {
       var obj = await _unitOfWork.Review.GetAsync(id);
       if (obj == null) return NotFound();

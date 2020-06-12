@@ -82,7 +82,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get();
+      var result = await _controller.Get(new WebApi.QueryModel());
       Assert.IsType(typeof(OkObjectResult), result);
 
       var items = (result as OkObjectResult).Value as IEnumerable<RentalModel>;
@@ -102,7 +102,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get(1);
+      var result = await _controller.Get(new WebApi.QueryModel(), 1);
       Assert.IsType(typeof(OkObjectResult), result);
 
       var value = (result as OkObjectResult).Value as RentalModel;
@@ -118,7 +118,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get(1);
+      var result = await _controller.Get(new WebApi.QueryModel(), 1);
       Assert.IsType(typeof(NotFoundResult), result);
     }
 
