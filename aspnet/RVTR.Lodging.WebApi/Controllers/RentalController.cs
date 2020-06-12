@@ -38,8 +38,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _unitOfWork.Rental.DeleteAsync(id);
-        return Ok();
+        var obj = await _unitOfWork.Rental.DeleteAsync(id);
+        if (obj == null) return NotFound();
+        return Ok(obj);
     }
 
     /// <summary>
