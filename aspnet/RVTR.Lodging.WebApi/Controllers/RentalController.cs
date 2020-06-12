@@ -77,28 +77,26 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(RentalModel rental)
     {
-      if (rental == null) return BadRequest();
+      if(rental == null) return BadRequest();
 
-      var obj = await _unitOfWork.Rental.InsertAsync(rental);
+      var ExistingEntry = await _unitOfWork.Rental.GetAsync(rental.Id);
 
-      await _unitOfWork.CommitAsync();
+      if (ExistingEntry == null)
+      {
+        var obj = await _unitOfWork.Rental.InsertAsync(rental);
 
-      return Ok(obj);
-    }
+        await _unitOfWork.CommitAsync();
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="rental"></param>
-    /// <returns></returns>
-    [HttpPut]
-    public async Task<IActionResult> Put(RentalModel rental)
-    {
-      _unitOfWork.Rental.Update(rental);
+        return Ok(obj);
+      }
+      else
+      {
+        _unitOfWork.Rental.Update(rental);
 
-      await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync();
 
-      return Accepted(rental);
+        return Ok(rental);
+      }
     }
   }
 }

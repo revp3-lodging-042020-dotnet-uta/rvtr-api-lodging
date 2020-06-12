@@ -123,10 +123,16 @@ namespace RVTR.Lodging.UnitTesting.Tests
     }
 
     [Fact]
-    public async void Post()
+    public async void Post_Insert()
     {
       var mocks = new Mocks();
-      var submittedModel = new ReviewModel();
+      var submittedModel = new ReviewModel { Id = 1 };
+
+      mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+        Task.FromResult<ReviewModel>(
+          null
+        )
+      );
 
       mocks._repository.Setup(m => m.InsertAsync(submittedModel)).Returns(Task.FromResult(submittedModel));
 
@@ -134,6 +140,29 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var result = await _controller.Post(submittedModel);
       Assert.IsType(typeof(OkObjectResult), result);
+    }
+
+    [Fact]
+    public async void Post_Update()
+    {
+      var mocks = new Mocks();
+      var submittedModel = new ReviewModel { Id = 1 };
+
+      mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+        Task.FromResult<ReviewModel>(
+          new ReviewModel { Id = 1 }
+        )
+      );
+
+      mocks._repository.Setup(m => m.Update(submittedModel));
+
+      var _controller = NewReviewController(mocks);
+
+      var result = await _controller.Post(new ReviewModel { Id = 1 });
+      Assert.IsType(typeof(OkObjectResult), result);
+
+      var value = (result as OkObjectResult).Value as ReviewModel;
+      Assert.Equal(1, value.Id);
     }
 
     [Fact]
