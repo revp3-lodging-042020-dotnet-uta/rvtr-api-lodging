@@ -56,7 +56,9 @@ namespace RVTR.Lodging.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _unitOfWork.Lodging.GetAsync());
+              var queryParams = new QueryModel(this.HttpContext.Request.Query);
+
+              return Ok(await _unitOfWork.Lodging.GetAsync());
         }
 
         /// <summary>
