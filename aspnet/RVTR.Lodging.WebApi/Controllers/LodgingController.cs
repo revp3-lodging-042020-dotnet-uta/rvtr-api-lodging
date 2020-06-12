@@ -63,9 +63,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var obj = await _unitOfWork.Lodging.GetAsync(id);
-        if (obj == null) return NotFound();
-        return Ok(obj);
+      var obj = await _unitOfWork.Lodging.GetAsync(id);
+      if (obj == null) return NotFound();
+      return Ok(obj);
     }
 
     /// <summary>

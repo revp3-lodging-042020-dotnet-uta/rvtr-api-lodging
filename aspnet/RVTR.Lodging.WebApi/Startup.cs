@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -99,13 +100,15 @@ namespace RVTR.Lodging.WebApi
 
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
-        context.Response.StatusCode = 500;
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = JsonConvert.SerializeObject(new { error = exception.Message});
+        var result = new ObjectResult("");
+        result.StatusCode = 500;
+
+        var JsonResult = JsonConvert.SerializeObject(result);
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(result);
+        await context.Response.WriteAsync(JsonResult);
       }));
 
       applicationBuilder.UseHttpsRedirection();
