@@ -119,7 +119,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
             var _controller = NewLodgingController(mocks);
 
             var result = await _controller.Get(1);
-            Assert.IsType(typeof(NotFoundObjectResult), result);
+            Assert.IsType(typeof(NotFoundResult), result);
         }
 
         [Fact]
