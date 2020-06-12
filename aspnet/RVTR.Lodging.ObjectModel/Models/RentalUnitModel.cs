@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,6 +20,8 @@ namespace RVTR.Lodging.ObjectModel.Models
     public int Occupancy { get; set; }
 
     public string RentalUnitType { get; set; }
+
+    public IEnumerable<ImageModel> Images { get; set; }
 
     public int? RentalId { get; set; }
     public RentalModel Rental { get; set; }

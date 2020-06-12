@@ -80,11 +80,17 @@ namespace RVTR.Lodging.WebApi
     /// <param name="applicationBuilder"></param>
     /// <param name="hostEnvironment"></param>
     /// <param name="descriptionProvider"></param>
-    public void Configure(IApiVersionDescriptionProvider descriptionProvider, IApplicationBuilder applicationBuilder, IWebHostEnvironment hostEnvironment)
+    /// <param name="context"></param>
+    public void Configure(IApiVersionDescriptionProvider descriptionProvider,
+                          IApplicationBuilder applicationBuilder,
+                          IWebHostEnvironment hostEnvironment,
+                          LodgingContext context)
     {
       if (hostEnvironment.IsDevelopment())
       {
         applicationBuilder.UseDeveloperExceptionPage();
+
+        Seed.SeedDatabase(context);
       }
 
       applicationBuilder.UseZipkin();
