@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IO;
 using zipkin4net.Middleware;
 
 namespace RVTR.Lodging.WebApi
@@ -98,13 +99,45 @@ namespace RVTR.Lodging.WebApi
 
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
+        context.Response.StatusCode = 500;
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = JsonConvert.SerializeObject(new { error = exception.Message});
+        var result = JsonConvert.SerializeObject(new { error = exception.Message });
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(result);
       }));
+
+      //applicationBuilder.UseExceptionHandler(errorApp =>
+      //{
+      //  errorApp.Run(async context =>
+      //  {
+      //    context.Response.StatusCode = 500;
+      //    context.Response.ContentType = "text/html";
+
+      //    await context.Response.WriteAsync("<html lang=\"en\"><body>\r\n");
+      //    await context.Response.WriteAsync("ERROR!<br><br>\r\n");
+
+      //    var exceptionHandlerPathFeature =
+      //        context.Features.Get<IExceptionHandlerPathFeature>();
+
+
+
+      //    // Use exceptionHandlerPathFeature to process the exception (for example, 
+      //    // logging), but do NOT expose sensitive error information directly to 
+      //    // the client.
+
+      //    if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
+      //    {
+      //      await context.Response.WriteAsync("File error thrown!<br><br>\r\n");
+      //    }
+
+      //    await context.Response.WriteAsync("<a href=\"/\">Home</a><br>\r\n");
+      //    await context.Response.WriteAsync("</body></html>\r\n");
+      //    await context.Response.WriteAsync(new string(' ', 512)); // IE padding
+      //  });
+      //});
+      //applicationBuilder.UseHsts();
 
       applicationBuilder.UseHttpsRedirection();
       applicationBuilder.UseRouting();
