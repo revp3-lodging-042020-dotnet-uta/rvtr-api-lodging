@@ -53,7 +53,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewRentalController(mocks);
 
       var result = await _controller.Delete(1);
-      Assert.IsType(typeof(OkResult), result);
+      Assert.IsType(typeof(OkObjectResult), result);
     }
 
     [Fact]
@@ -66,7 +66,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewRentalController(mocks);
 
       var result = await _controller.Delete(1);
-      Assert.IsType(typeof(NotFoundObjectResult), result);
+      Assert.IsType(typeof(NotFoundResult), result);
     }
 
     [Fact]
@@ -119,7 +119,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewRentalController(mocks);
 
       var result = await _controller.Get(1);
-      Assert.IsType(typeof(NotFoundObjectResult), result);
+      Assert.IsType(typeof(NotFoundResult), result);
     }
 
     [Fact]
