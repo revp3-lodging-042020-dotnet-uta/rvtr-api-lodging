@@ -8,6 +8,9 @@ using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {
+
+  using FilterFunc = Expression<Func<ReviewModel, bool>>;
+
   public class ReviewRepository : Repository<ReviewModel>
   {
     private LodgingContext dbcontext;
@@ -16,18 +19,20 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       this.dbcontext = context;
     }
-    /// <summary>
-    /// Filtered and searched  Reviews
-    /// </summary>
-    /// <param name="searchFilter"></param>
-    /// <param name="maxResults"></param>
-    /// <returns></returns>
-    public async Task<IEnumerable<ReviewModel>> Find(Expression<Func<ReviewModel, bool>> searchFilter, int maxResults)
+
+    public async Task<IEnumerable<ReviewModel>> Find(FilterFunc searchFilter,
+                                                     int maxResults)
     {
       var lodgings = await dbcontext.Reviews
-        .AsNoTracking().Include(x=>x.Lodging).ThenInclude(x=>x.Id)
-        .Where(searchFilter).Take(maxResults).ToListAsync();
-      // Returns the results asynchronously. Since we are trying to keep things restFul 
+        .AsNoTracking()
+        .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .Where(searchFilter)
+        .Take(maxResults)
+        .ToListAsync();
+
       return lodgings;
     }
   }
