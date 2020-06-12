@@ -48,7 +48,11 @@ namespace RVTR.Lodging.WebApi
         options.ReportApiVersions = true;
       });
 
-      services.AddControllers();
+      services.AddControllers().AddNewtonsoftJson(options =>
+      {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+      });
+
       services.AddCors(options =>
       {
         options.AddPolicy("public", policy =>
