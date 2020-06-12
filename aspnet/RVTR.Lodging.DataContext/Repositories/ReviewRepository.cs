@@ -13,17 +13,40 @@ namespace RVTR.Lodging.DataContext.Repositories
 
   public class ReviewRepository : Repository<ReviewModel>
   {
-    private LodgingContext dbcontext;
+    private LodgingContext dbContext;
 
     public ReviewRepository(LodgingContext context) : base(context)
     {
-      this.dbcontext = context;
+      this.dbContext = context;
+    }
+
+    public override async Task<IEnumerable<ReviewModel>> GetAsync()
+    {
+      return await dbContext.Reviews
+        .AsNoTracking()
+        .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .ToListAsync();
+    }
+
+    public override async Task<ReviewModel> GetAsync(int id)
+    {
+      return await dbContext.Reviews
+        .AsNoTracking()
+        .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .Where(e => e.Id == id)
+        .FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<ReviewModel>> Find(FilterFunc searchFilter,
                                                      int maxResults)
     {
-      var lodgings = await dbcontext.Reviews
+      var lodgings = await dbContext.Reviews
         .AsNoTracking()
         .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
         .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)

@@ -21,6 +21,29 @@ namespace RVTR.Lodging.DataContext.Repositories
       this.dbContext = context;
     }
 
+    public override async Task<IEnumerable<RentalModel>> GetAsync()
+    {
+      return await dbContext.Rentals
+        .AsNoTracking()
+        .Include(x => x.Lodging)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .ToListAsync();
+    }
+
+    public override async Task<RentalModel> GetAsync(int id)
+    {
+      return await dbContext.Rentals
+        .AsNoTracking()
+        .Include(x => x.Lodging)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .Where(e => e.Id == id)
+        .FirstOrDefaultAsync();
+    }
+
     public async Task<IEnumerable<RentalModel>> Find(FilterFunc searchFilter,
                                                      int maxResults)
     {
