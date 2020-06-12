@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IO;
 using zipkin4net.Middleware;
 
 namespace RVTR.Lodging.WebApi
@@ -98,10 +99,11 @@ namespace RVTR.Lodging.WebApi
 
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
+        context.Response.StatusCode = 500;
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = JsonConvert.SerializeObject(new { error = exception.Message });
+        var result = JsonConvert.SerializeObject(new { error = exception.Message});
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(result);
       }));
