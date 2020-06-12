@@ -103,7 +103,7 @@ namespace RVTR.Lodging.WebApi
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = new ObjectResult(exceptionHandlerPathFeature.Error);
+        var result = new ObjectResult("");
         result.StatusCode = 500;
 
         var JsonResult = JsonConvert.SerializeObject(result);
