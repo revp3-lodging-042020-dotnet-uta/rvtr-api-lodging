@@ -74,9 +74,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(RentalModel rental)
     {
-      await _unitOfWork.Rental.InsertAsync(rental);
+      if (rental == null) return BadRequest();
 
-      return Accepted(rental);
+      return Ok(await _unitOfWork.Rental.InsertAsync(rental));
     }
 
     /// <summary>

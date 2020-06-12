@@ -74,9 +74,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(ReviewModel review)
     {
-      await _unitOfWork.Review.InsertAsync(review);
+      if (review == null) return BadRequest();
 
-      return Accepted(review);
+      return Ok(await _unitOfWork.Review.InsertAsync(review));
     }
 
     /// <summary>

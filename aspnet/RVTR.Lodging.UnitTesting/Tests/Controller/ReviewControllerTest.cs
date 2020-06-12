@@ -133,7 +133,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Post(submittedModel);
-      Assert.IsType(typeof(AcceptedResult), result);
+      Assert.IsType(typeof(OkObjectResult), result);
     }
 
     [Fact]
@@ -146,7 +146,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Post(null);
-      Assert.IsType(typeof(BadRequestObjectResult), result);
+      Assert.IsType(typeof(BadRequestResult), result);
     }
   }
 }
