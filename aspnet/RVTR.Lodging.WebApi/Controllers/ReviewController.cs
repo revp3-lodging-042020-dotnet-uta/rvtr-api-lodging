@@ -39,7 +39,11 @@ namespace RVTR.Lodging.WebApi.Controllers
     public async Task<IActionResult> Delete(int id)
     {
       var obj = await _unitOfWork.Review.DeleteAsync(id);
+
       if (obj == null) return NotFound();
+
+      await _unitOfWork.CommitAsync();
+
       return Ok(obj);
     }
 
@@ -76,7 +80,11 @@ namespace RVTR.Lodging.WebApi.Controllers
     {
       if (review == null) return BadRequest();
 
-      return Ok(await _unitOfWork.Review.InsertAsync(review));
+      var obj = await _unitOfWork.Review.InsertAsync(review);
+
+      await _unitOfWork.CommitAsync();
+
+      return Ok(obj);
     }
 
     /// <summary>
@@ -88,6 +96,8 @@ namespace RVTR.Lodging.WebApi.Controllers
     public async Task<IActionResult> Put(ReviewModel review)
     {
       _unitOfWork.Review.Update(review);
+
+      await _unitOfWork.CommitAsync();
 
       return Accepted(review);
     }
