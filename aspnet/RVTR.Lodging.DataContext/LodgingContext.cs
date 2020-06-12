@@ -18,7 +18,7 @@ namespace RVTR.Lodging.DataContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
       if (!options.IsConfigured)
-        options.UseNpgsql("Host=localhost;Database=LodgingDb;Username=postgres;Password=postgres;");
+        options.UseNpgsql("Host=localhost;Database=LodgingDb;Username=postgres;Password=masterchief2009;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
