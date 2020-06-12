@@ -1,58 +1,57 @@
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RVTR.Lodging.WebApi
 {
-  /// <summary>
-  /// This class is used for capturing URI request parameters         var queryParams = new QueryModel(this.HttpContext.Request.Query);
-  /// </summary>
-  public class QueryModel
-  {
-    int? Limit { get; set; }
-    int? Paginate { get; set; }
-    string SortKey { get; set; }
-    string SortOrder { get; set; }
-
     /// <summary>
-    /// 
+    /// This class is used for storing URI request parameters
     /// </summary>
-    public QueryModel(IQueryCollection queryParams)
+    public class QueryModel
     {
-      //-----------grab limit parameter from URI
-      if (queryParams.ContainsKey("limit"))
-      {
-        int limit;
-        if (Int32.TryParse(queryParams["limit"], out limit))
+        private int? _limit;
+
+        /// <summary>
+        /// Max number of results to be returned.
+        /// </summary>
+        public int? Limit
         {
-          this.Limit = limit;
+            get { return _limit; }
+            set {
+              if (value == null) return;
+              _limit = (int)value < 0 ? 1 : value;
+            }
         }
-        // defaults to null (int? Limit) vs 0 so that, DB will not return zero results ... else not required
-      }
 
-      //-----------grab paginate parameter from URI
-      if (queryParams.ContainsKey("paginate"))
-      {
-          int paginate;
-          if (Int32.TryParse(queryParams["paginate"], out paginate))
-          {
-            this.Paginate = paginate;
-          }
-       }
+        private int? _paginate;
 
-      //-----------grab sortkey parameter from URI
-      if (queryParams.ContainsKey("sortkey"))
-      {
-        this.SortKey = queryParams["sortkey"];
-      }
+        /// <summary>
+        /// Return results starting from this value.
+        /// </summary>
+        public int? Paginate
+        {
+            get { return _paginate; }
+            set {
+              if (value == null) return;
+              _paginate = (int)value < 0 ? 0 : value;
+            }
+        }
 
-      //-----------grab sortOrder parameter from URI and sort by the value
-      if (queryParams.ContainsKey("sortorder") )
-      {
-        this.SortOrder = queryParams["sortorder"] == "desc" ? "desc" : "asc";
-      }
+        /// <summary>
+        /// Key to use for sorting.
+        /// </summary>
+        string SortKey { get; set; }
+
+        private string _sortOrder;
+        /// <summary>
+        /// The order to sort results, must be "asc" or "desc", defaulting to "asc".
+        /// </summary>
+        public string SortOrder
+        {
+            get { return _sortOrder; }
+            set
+            {
+                _sortOrder = value == "desc" ? "desc" : "asc";
+            }
+        }
     }
-  }
 }

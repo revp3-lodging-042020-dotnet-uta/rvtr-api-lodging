@@ -54,20 +54,17 @@ namespace RVTR.Lodging.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] QueryModel queryParams)
         {
-              var queryParams = new QueryModel(this.HttpContext.Request.Query);
-
               return Ok(await _unitOfWork.Lodging.GetAsync());
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get([FromQuery] QueryModel queryParams, int id)
         {
             var obj = await _unitOfWork.Lodging.GetAsync(id);
             if (obj == null) return NotFound();
