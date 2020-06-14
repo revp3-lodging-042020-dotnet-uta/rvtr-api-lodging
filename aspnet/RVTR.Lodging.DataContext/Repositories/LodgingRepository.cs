@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
+using RVTR.Lodging.DataContext;
 using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.DataContext.Repositories
@@ -38,6 +41,31 @@ namespace RVTR.Lodging.DataContext.Repositories
         .Where(searchFilter).Take(maxResults).ToListAsync();
       // Returns the results asynchronously. Since we are trying to keep things restFul 
       return lodgings;
+    }
+
+    public async Task<IEnumerable<LodgingModel>> OrderBy(List<LodgingModel> lodgings,string param)
+    {
+      var orderedLodging = lodgings;
+      switch (param)
+      {
+        case "Desc":
+           orderedLodging= await lodgings.OrderByDescending(x=>x.Reviews).AsQueryable().ToListAsync();
+           break;
+        case "Asc":
+          orderedLodging = await lodgings.OrderBy(x => x.Reviews).AsQueryable().ToListAsync();
+          break;
+        default:
+          orderedLodging = await lodgings.OrderBy(x => x.Name).AsQueryable().ToListAsync();
+          break;
+      } ;
+      return orderedLodging;
+    }
+
+    public  async Task<IEnumerable<LodgingModel>> GetLodges(QueryClass query)
+    {
+     var lodgings=  await Find(x=>x.Name == query.Search, query.Limit);
+     var lodgeOrder = await OrderBy(lodgings.ToList(),query.SortKey );
+     return lodgeOrder;
     }
   }
 }
