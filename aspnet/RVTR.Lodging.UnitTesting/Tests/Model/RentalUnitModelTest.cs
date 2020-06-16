@@ -18,7 +18,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
           Bathrooms = new List<BathroomModel>(),
           Bedrooms = new List<BedroomModel>(),
           Name = "name",
-          Occupancy = 0,
+          Occupancy = 1,
           RentalUnitType = "unit",
           RentalId = 0,
           Rental = null

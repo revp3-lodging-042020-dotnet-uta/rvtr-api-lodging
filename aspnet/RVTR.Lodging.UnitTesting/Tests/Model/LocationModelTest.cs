@@ -16,9 +16,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           Id = 0,
           Address = new AddressModel(),
-          Latitude = "00",
+          Latitude = 14,
           Locale = "locale",
-          Longitude = "00"
+          Longitude = 40,
         }
       }
     };
