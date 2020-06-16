@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// Represents the _Repository_ generic
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
-  public abstract class Repository<TEntity, TSearchFilterModel> where TEntity : class
+  public abstract class Repository<TEntity, TSearchFilterModel> where TEntity : class where TSearchFilterModel : class
   {
     public readonly DbSet<TEntity> _db;
 
