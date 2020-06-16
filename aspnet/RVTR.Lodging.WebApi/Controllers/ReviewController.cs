@@ -53,9 +53,9 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] SearchFilterModel filterModel)
+    public async Task<IActionResult> Get([FromQuery] ReviewSearchFilterModel filterModel)
     {
-      return Ok(await _unitOfWork.Review.GetAsync());
+      return Ok(await _unitOfWork.Review.GetAsync(filterModel));
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromQuery] SearchFilterModel filterModel, int id)
+    public async Task<IActionResult> Get([FromQuery] ReviewSearchFilterModel filterModel, int id)
     {
       var obj = await _unitOfWork.Review.GetAsync(id);
       if (obj == null) return NotFound();

@@ -3,7 +3,7 @@ namespace RVTR.Lodging.DataContext
     /// <summary>
     /// This class is used for storing URI request parameters
     /// </summary>
-    public class SearchFilterModel
+    public class ReviewSearchFilterModel
     {
         private int _limit;
 
@@ -41,35 +41,27 @@ namespace RVTR.Lodging.DataContext
             set { _ratingAtLeast = value; }
         }
 
-        private int _searchRadius;
+        private int? _lodgingId;
         /// <summary>
-        /// Search radius (in miles).
+        /// Get reviews for this Lodging ID.
         /// </summary>
-        public int SearchRadius
+        public int? LodgingId
         {
-            get { return _searchRadius < 0 ? 1 : _searchRadius; }
-            set { _searchRadius = value; }
-        }
-        
-        private int _bedsAtLeast;
-        /// <summary>
-        /// Minimum number of beds in a lodging.
-        /// </summary>
-        public int BedsAtLeast
-        {
-            get { return _bedsAtLeast < 0 ? 0 : _bedsAtLeast; }
-            set { _bedsAtLeast = value; }
+            get { return _lodgingId; }
+            set { _lodgingId = value; }
         }
 
-        private int _bathsAtLeast;
+        private int? _accountId;
         /// <summary>
-        /// Minimum number of baths in a lodging.
+        /// Get reviews for this Account ID.
         /// </summary>
-        public int BathsAtLeast
+        /// <value></value>
+        public int? AccountId
         {
-            get { return _bathsAtLeast < 0 ? 0 : _bathsAtLeast; }
-            set { _bathsAtLeast = value; }
+            get { return _accountId; }
+            set { _accountId = value; }
         }
+        
 
         /// <summary>
         /// Key to use for sorting.

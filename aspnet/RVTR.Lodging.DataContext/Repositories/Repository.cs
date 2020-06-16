@@ -12,7 +12,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// Represents the _Repository_ generic
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
-  public class Repository<TEntity> where TEntity : class
+  public abstract class Repository<TEntity, TSearchFilterModel> where TEntity : class
   {
     public readonly DbSet<TEntity> _db;
 
@@ -31,17 +31,7 @@ namespace RVTR.Lodging.DataContext.Repositories
       return (await _db.AddAsync(entry).ConfigureAwait(true)).Entity;
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-                                                             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                             int resultStartIndex = 0,
-                                                             int maxResults = 50)
-    {
-      return await this.Select(this._db, filter, orderBy)
-        .AsNoTracking()
-        .Skip(resultStartIndex)
-        .Take(maxResults)
-        .ToListAsync();
-    }
+    public abstract Task<IEnumerable<TEntity>> GetAsync(TSearchFilterModel filterModel);
 
     public virtual async Task<TEntity> GetAsync(int id) => await _db.FindAsync(id).ConfigureAwait(true);
 
@@ -51,14 +41,29 @@ namespace RVTR.Lodging.DataContext.Repositories
     }
 
     protected virtual IQueryable<TEntity> Select(IQueryable<TEntity> query,
-                                                 Expression<Func<TEntity, bool>> filter = null,
+                                                 List<Expression<Func<TEntity, bool>>> filters = null,
                                                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
     {
-      if (filter != null) query = query.Where(filter);
+      foreach(var filter in filters)
+      {
+        query = query.Where(filter);
+      }
 
       if (orderBy != null) return orderBy(query);
 
       return query;
+    }
+
+    protected virtual async Task<IEnumerable<TEntity>> GetAsync(List<Expression<Func<TEntity, bool>>> filters = null,
+                                                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                                int resultStartIndex = 0,
+                                                                int maxResults = 50)
+    {
+      return await this.Select(this._db, filters, orderBy)
+        .AsNoTracking()
+        .Skip(resultStartIndex)
+        .Take(maxResults)
+        .ToListAsync();
     }
   }
 }
