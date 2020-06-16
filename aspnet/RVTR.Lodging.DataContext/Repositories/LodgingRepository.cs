@@ -63,11 +63,6 @@ namespace RVTR.Lodging.DataContext.Repositories
       return filters;
     }
 
-    private OrderByFunc GenerateOrderByFunc(LodgingSearchFilterModel filterModel)
-    {
-      return (t => t.OrderByDescending(f => f.Id));
-    }
-
     public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingSearchFilterModel filterModel)
     {
       var filters = GenerateFilterFuncs(filterModel);

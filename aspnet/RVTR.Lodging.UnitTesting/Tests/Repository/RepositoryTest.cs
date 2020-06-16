@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RVTR.Lodging.DataContext;
@@ -42,7 +43,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new LodgingRepository(ctx);
 
           await lodgings.DeleteAsync(1);
           await ctx.SaveChangesAsync();
@@ -52,7 +53,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var rentals = new Repository<RentalModel>(ctx);
+          var rentals = new RentalRepository(ctx);
 
           await rentals.DeleteAsync(1);
           await ctx.SaveChangesAsync();
@@ -62,7 +63,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var reviews = new Repository<ReviewModel>(ctx);
+          var reviews = new ReviewRepository(ctx);
 
           await reviews.DeleteAsync(1);
           await ctx.SaveChangesAsync();
@@ -91,7 +92,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new LodgingRepository(ctx);
 
           await lodgings.InsertAsync(lodging);
           await ctx.SaveChangesAsync();
@@ -101,7 +102,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var rentals = new Repository<RentalModel>(ctx);
+          var rentals = new RentalRepository(ctx);
 
           await rentals.InsertAsync(rental);
           await ctx.SaveChangesAsync();
@@ -111,7 +112,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var reviews = new Repository<ReviewModel>(ctx);
+          var reviews = new ReviewRepository(ctx);
 
           await reviews.InsertAsync(review);
           await ctx.SaveChangesAsync();
@@ -139,27 +140,27 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new LodgingRepository(ctx);
 
-          var actual = await lodgings.GetAsync();
-
-          Assert.Empty(actual);
-        }
-
-        using (var ctx = new LodgingContext(_options))
-        {
-          var rentals = new Repository<RentalModel>(ctx);
-
-          var actual = await rentals.GetAsync();
+          var actual = await lodgings.GetAsync(new LodgingSearchFilterModel());
 
           Assert.Empty(actual);
         }
 
         using (var ctx = new LodgingContext(_options))
         {
-          var reviews = new Repository<ReviewModel>(ctx);
+          var rentals = new RentalRepository(ctx);
 
-          var actual = await reviews.GetAsync();
+          var actual = await rentals.GetAsync(new RentalSearchFilterModel());
+
+          Assert.Empty(actual);
+        }
+
+        using (var ctx = new LodgingContext(_options))
+        {
+          var reviews = new ReviewRepository(ctx);
+
+          var actual = await reviews.GetAsync(new ReviewSearchFilterModel());
 
           Assert.Empty(actual);
         }
@@ -184,7 +185,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new LodgingRepository(ctx);
 
           var actual = await lodgings.GetAsync(1);
 
@@ -193,7 +194,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var rentals = new Repository<RentalModel>(ctx);
+          var rentals = new RentalRepository(ctx);
 
           var actual = await rentals.GetAsync(1);
 
@@ -202,7 +203,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var reviews = new Repository<ReviewModel>(ctx);
+          var reviews = new ReviewRepository(ctx);
 
           var actual = await reviews.GetAsync(1);
 
@@ -234,7 +235,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var lodgings = new Repository<LodgingModel>(ctx);
+          var lodgings = new LodgingRepository(ctx);
           var expected = await ctx.Lodgings.FirstAsync();
 
           expected.Name = "name";
@@ -248,7 +249,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var rentals = new Repository<RentalModel>(ctx);
+          var rentals = new RentalRepository(ctx);
           var expected = await ctx.Rentals.FirstAsync();
 
           expected.Name = "name";
@@ -262,7 +263,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         using (var ctx = new LodgingContext(_options))
         {
-          var reviews = new Repository<ReviewModel>(ctx);
+          var reviews = new ReviewRepository(ctx);
           var expected = await ctx.Reviews.FirstAsync();
 
           expected.Comment = "comment";

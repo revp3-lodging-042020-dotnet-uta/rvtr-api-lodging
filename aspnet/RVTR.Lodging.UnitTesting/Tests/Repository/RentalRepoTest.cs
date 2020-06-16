@@ -44,7 +44,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         var repo = new RentalRepository(ctx);
 
         // Add repo-specific method calls here.
-        var actual = await repo.GetAsync();
+        var actual = await repo.GetAsync(new RentalSearchFilterModel());
 
         // Add Asserts here.
         Assert.Empty(actual);
@@ -74,35 +74,6 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
         // Add Asserts here.
         Assert.Null(actual);
-      }
-    }
-
-    [Fact]
-    public async void Test_LodgingRepo_Find()
-    {
-      var dbOptions = await NewDb();
-
-      using (var ctx = new LodgingContext(dbOptions))
-      {
-        await ctx.Database.EnsureCreatedAsync();
-        await ctx.SaveChangesAsync();
-
-        // Add repo-specific setup here.
-        await ctx.SaveChangesAsync();
-      }
-
-      using (var ctx = new LodgingContext(dbOptions))
-      {
-        var repo = new RentalRepository(ctx);
-
-        Expression<Func<RentalModel, bool>> newFunc;
-        newFunc = (x => x.Id == 1);
-
-        // Add repo-specific method calls here.
-        var actual = await repo.Find(newFunc, 1);
-
-        // Add Asserts here.
-        Assert.Empty(actual);
       }
     }
   }

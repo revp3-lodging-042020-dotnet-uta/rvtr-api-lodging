@@ -73,8 +73,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
         public async void GetAll()
         {
             var mocks = new Mocks();
+            var filterModel = new LodgingSearchFilterModel();
 
-            mocks._repository.Setup(m => m.GetAsync()).Returns(
+            mocks._repository.Setup(m => m.GetAsync(filterModel)).Returns(
               Task.FromResult<IEnumerable<LodgingModel>>(
                 new List<LodgingModel>() { null, null }
               )
@@ -82,7 +83,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(new WebApi.QueryModel());
+            var result = await _controller.Get(filterModel);
             Assert.IsType(typeof(OkObjectResult), result);
 
             var items = (result as OkObjectResult).Value as IEnumerable<LodgingModel>;
@@ -102,7 +103,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(new WebApi.QueryModel(), 1);
+            var result = await _controller.Get(new LodgingSearchFilterModel(), 1);
             Assert.IsType(typeof(OkObjectResult), result);
 
             var value = (result as OkObjectResult).Value as LodgingModel;
@@ -118,7 +119,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(new WebApi.QueryModel(), 1);
+            var result = await _controller.Get(new LodgingSearchFilterModel(), 1);
             Assert.IsType(typeof(NotFoundResult), result);
         }
 

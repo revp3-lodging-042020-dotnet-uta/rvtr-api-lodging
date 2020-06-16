@@ -74,7 +74,9 @@ namespace RVTR.Lodging.UnitTesting.Tests
     {
       var mocks = new Mocks();
 
-      mocks._repository.Setup(m => m.GetAsync()).Returns(
+      var filterModel = new ReviewSearchFilterModel();
+
+      mocks._repository.Setup(m => m.GetAsync(filterModel)).Returns(
         Task.FromResult<IEnumerable<ReviewModel>>(
           new List<ReviewModel>() { null, null }
         )
@@ -82,7 +84,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewReviewController(mocks);
 
-      var result = await _controller.Get(new WebApi.QueryModel());
+      var result = await _controller.Get(filterModel);
       Assert.IsType(typeof(OkObjectResult), result);
 
       var items = (result as OkObjectResult).Value as IEnumerable<ReviewModel>;
@@ -102,7 +104,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewReviewController(mocks);
 
-      var result = await _controller.Get(new WebApi.QueryModel(), 1);
+      var result = await _controller.Get(new ReviewSearchFilterModel(), 1);
       Assert.IsType(typeof(OkObjectResult), result);
 
       var value = (result as OkObjectResult).Value as ReviewModel;
@@ -118,7 +120,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewReviewController(mocks);
 
-      var result = await _controller.Get(new WebApi.QueryModel(), 1);
+      var result = await _controller.Get(new ReviewSearchFilterModel(), 1);
       Assert.IsType(typeof(NotFoundResult), result);
     }
 
