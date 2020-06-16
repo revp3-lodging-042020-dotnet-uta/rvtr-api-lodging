@@ -10,6 +10,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 {
 
   using FilterFunc = Expression<Func<ReviewModel, bool>>;
+  using OrderByFunc = Func<IQueryable<ReviewModel>, IOrderedQueryable<ReviewModel>>;
 
   public class ReviewRepository : Repository<ReviewModel>
   {
@@ -20,43 +21,34 @@ namespace RVTR.Lodging.DataContext.Repositories
       this.dbContext = context;
     }
 
-    public override async Task<IEnumerable<ReviewModel>> GetAsync()
+    private IQueryable<ReviewModel> IncludeQuery()
     {
-      return await dbContext.Reviews
-        .AsNoTracking()
+      return dbContext.Reviews
         .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
         .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
         .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images);
+    }
+
+    public override async Task<IEnumerable<ReviewModel>> GetAsync(FilterFunc filter = null,
+                                                          OrderByFunc orderBy = null,
+                                                          int resultStartIndex = 0,
+                                                          int maxResults = 50)
+    {
+      var query = IncludeQuery();
+      return await this.Select(query, filter, orderBy)
+        .AsNoTracking()
+        .Skip(resultStartIndex)
+        .Take(maxResults)
         .ToListAsync();
     }
 
     public override async Task<ReviewModel> GetAsync(int id)
     {
-      return await dbContext.Reviews
+      return await IncludeQuery()
         .AsNoTracking()
-        .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
-    }
-
-    public async Task<IEnumerable<ReviewModel>> Find(FilterFunc searchFilter,
-                                                     int maxResults)
-    {
-      var lodgings = await dbContext.Reviews
-        .AsNoTracking()
-        .Include(x => x.Lodging).ThenInclude(x => x.Location).ThenInclude(x => x.Address)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
-        .Include(x => x.Lodging).ThenInclude(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
-        .Where(searchFilter)
-        .Take(maxResults)
-        .ToListAsync();
-
-      return lodgings;
     }
   }
 }
