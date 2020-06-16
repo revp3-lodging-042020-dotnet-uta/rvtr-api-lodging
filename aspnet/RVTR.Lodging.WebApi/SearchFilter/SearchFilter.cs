@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Http;
 using System;
 
-namespace RVTR.Lodging.WebApi
+namespace RVTR.Lodging.WebApi.SearchFilter
 {
     /// <summary>
     /// This class is used for storing URI request parameters
     /// </summary>
-    public class QueryModel
+    public class SearchFilterModel
     {
         private int? _limit;
 

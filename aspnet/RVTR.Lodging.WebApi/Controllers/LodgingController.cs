@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using RVTR.Lodging.DataContext.Repositories;
 using RVTR.Lodging.ObjectModel.Models;
+using RVTR.Lodging.WebApi.SearchFilter;
 
 namespace RVTR.Lodging.WebApi.Controllers
 {
@@ -54,7 +55,7 @@ namespace RVTR.Lodging.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] QueryModel queryParams)
+        public async Task<IActionResult> Get([FromQuery] SearchFilterModel filterModel)
         {
               return Ok(await _unitOfWork.Lodging.GetAsync());
         }
@@ -64,7 +65,7 @@ namespace RVTR.Lodging.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromQuery] QueryModel queryParams, int id)
+        public async Task<IActionResult> Get([FromQuery] SearchFilterModel filterModel, int id)
         {
             var obj = await _unitOfWork.Lodging.GetAsync(id);
             if (obj == null) return NotFound();
