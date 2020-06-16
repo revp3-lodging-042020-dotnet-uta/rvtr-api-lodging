@@ -66,7 +66,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingSearchFilterModel filterModel)
     {
       var filters = GenerateFilterFuncs(filterModel);
-      return await GetAsync(filters, null, filterModel.Paginate, filterModel.Limit);
+      return await GetAsync(filters, null, filterModel.Offset, filterModel.Limit);
     }
   }
 }

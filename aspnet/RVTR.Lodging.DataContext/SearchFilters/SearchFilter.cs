@@ -16,15 +16,15 @@ namespace RVTR.Lodging.DataContext
             set { _limit = value; }
         }
 
-        private int _paginate;
+        private int _offset;
 
         /// <summary>
         /// Return results starting from this value.
         /// </summary>
-        public int Paginate
+        public int Offset
         {
-            get { return _paginate < 0 ? 0 : _paginate; }
-            set { _paginate = value; }
+            get { return _offset < 0 ? 0 : _offset; }
+            set { _offset = value; }
         }
 
         private string _sortOrder;

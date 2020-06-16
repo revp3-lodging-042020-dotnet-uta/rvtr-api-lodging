@@ -24,14 +24,14 @@ namespace RVTR.Lodging.UnitTesting.Tests
     }
 
     [Fact]
-    public void Test_Paginate_Clamp()
+    public void Test_Offset_Clamp()
     {
       var filterModel = new SearchFilter();
-      filterModel.Paginate = -1;
-      Assert.Equal(0, filterModel.Paginate);
+      filterModel.Offset = -1;
+      Assert.Equal(0, filterModel.Offset);
 
-      filterModel.Paginate = 999;
-      Assert.Equal(999, filterModel.Paginate);
+      filterModel.Offset = 999;
+      Assert.Equal(999, filterModel.Offset);
     }
 
     [Fact]
