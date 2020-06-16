@@ -12,6 +12,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public string BedType { get; set; }
 
+    [Range(0, 100000)]
     public int Count { get; set; }
 
     /// <summary>

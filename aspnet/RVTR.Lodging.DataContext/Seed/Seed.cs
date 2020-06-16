@@ -17,7 +17,7 @@ namespace RVTR.Lodging.DataContext
                 Name = "lodging name",
                 Location = new LocationModel
                 {
-                    Latitude = "latitude",
+                    Latitude = 14,
                     Address = new AddressModel
                     {
                         City = "city",
@@ -57,7 +57,7 @@ namespace RVTR.Lodging.DataContext
                 Name = "another lodging",
                 Location = new LocationModel
                 {
-                    Latitude = "latitude 2",
+                    Latitude = 15,
                     Address = new AddressModel
                     {
                         City = "city 2",
@@ -111,7 +111,7 @@ namespace RVTR.Lodging.DataContext
                 Name = "a third lodging",
                 Location = new LocationModel
                 {
-                    Latitude = "latitude 3",
+                    Latitude = 90,
                     Address = new AddressModel
                     {
                         City = "city 3",

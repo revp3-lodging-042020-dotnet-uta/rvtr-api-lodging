@@ -19,6 +19,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public string Description { get; set; }
 
+    [Range(1, 100000)]
     public int Occupancy { get; set; }
 
     public string RentalUnitType { get; set; }

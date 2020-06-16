@@ -12,11 +12,13 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public AddressModel Address { get; set; }
 
-    public string Latitude { get; set; }
+    [Range(-90, 90)]
+    public double Latitude { get; set; }
 
     public string Locale { get; set; }
 
-    public string Longitude { get; set; }
+    [Range(-180, 180)]
+    public double Longitude { get; set; }
 
     /// <summary>
     /// Represents the _Location_ `Validate` method
