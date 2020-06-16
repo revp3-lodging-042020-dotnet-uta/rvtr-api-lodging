@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Http;
-using System;
-
-namespace RVTR.Lodging.WebApi.SearchFilter
+namespace RVTR.Lodging.DataContext
 {
     /// <summary>
     /// This class is used for storing URI request parameters

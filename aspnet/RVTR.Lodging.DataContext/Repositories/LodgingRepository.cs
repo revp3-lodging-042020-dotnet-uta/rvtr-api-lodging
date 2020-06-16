@@ -21,6 +21,11 @@ namespace RVTR.Lodging.DataContext.Repositories
       this.dbContext = context;
     }
 
+    private void GenerateSearchFilter(SearchFilterModel searchFilter)
+    {
+
+    }
+
     private IQueryable<LodgingModel> IncludeQuery()
     {
       return dbContext.Lodgings

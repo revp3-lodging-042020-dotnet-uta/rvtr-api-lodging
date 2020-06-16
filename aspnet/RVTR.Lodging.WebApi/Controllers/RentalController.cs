@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using RVTR.Lodging.ObjectModel.Models;
-using RVTR.Lodging.WebApi.SearchFilter;
 
 namespace RVTR.Lodging.WebApi.Controllers
 {
