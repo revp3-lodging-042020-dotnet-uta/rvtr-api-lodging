@@ -10,7 +10,7 @@ using RVTR.Lodging.DataContext;
 namespace RVTR.Lodging.DataContext.Migrations
 {
     [DbContext(typeof(LodgingContext))]
-    [Migration("20200612003940_InitialCreate")]
+    [Migration("20200616181738_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,9 @@ namespace RVTR.Lodging.DataContext.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
@@ -165,6 +168,9 @@ namespace RVTR.Lodging.DataContext.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<int?>("LodgingId")
                         .HasColumnType("integer");
 
@@ -184,6 +190,9 @@ namespace RVTR.Lodging.DataContext.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

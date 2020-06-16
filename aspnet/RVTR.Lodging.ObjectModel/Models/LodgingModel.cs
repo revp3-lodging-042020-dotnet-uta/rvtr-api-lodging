@@ -13,6 +13,7 @@ namespace RVTR.Lodging.ObjectModel.Models
     public LocationModel Location { get; set; }
 
     public string Name { get; set; }
+    public string Description { get; set; }
 
     public IEnumerable<RentalModel> Rentals { get; set; }
 

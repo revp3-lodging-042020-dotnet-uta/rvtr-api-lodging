@@ -54,7 +54,8 @@ namespace RVTR.Lodging.DataContext.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     LocationId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,6 +75,7 @@ namespace RVTR.Lodging.DataContext.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     LodgingId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -117,6 +119,7 @@ namespace RVTR.Lodging.DataContext.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     Occupancy = table.Column<int>(nullable: false),
                     RentalUnitType = table.Column<string>(nullable: true),
                     RentalId = table.Column<int>(nullable: true)
