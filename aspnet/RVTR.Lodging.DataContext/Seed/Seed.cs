@@ -39,14 +39,21 @@ namespace RVTR.Lodging.DataContext
                             },
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel {
-                                    BedType = "a bed"
+                                    BedType = "a bed",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() {
+                                            Amenity = AmenityType.Coffee,
+                                        }
+                                    },
+                                    BedCount = 4,
+                                    RoomNumber = "113",
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel {
+                                            Image = "this is invalid data, but would normally be a Base64 encoded string"
+                                        }
+                                    }
                                 }
                             },
-                            Images = new List<ImageModel>() {
-                                new ImageModel {
-                                    Image = "this is invalid data, but would normally be a Base64 encoded string"
-                                }
-                            }
                         }
                     }
                 }
@@ -93,12 +100,19 @@ namespace RVTR.Lodging.DataContext
                             },
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel {
-                                    BedType = "a bed 2"
-                                }
-                            },
-                            Images = new List<ImageModel>() {
-                                new ImageModel {
-                                    Image = "this is invalid data, but would normally be a Base64 encoded string"
+                                    BedType = "a bed",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() {
+                                            Amenity = AmenityType.Coffee,
+                                        }
+                                    },
+                                    BedCount = 3,
+                                    RoomNumber = "107",
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel {
+                                            Image = "this is invalid data, but would normally be a Base64 encoded string"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -137,17 +151,36 @@ namespace RVTR.Lodging.DataContext
                             },
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel {
-                                    BedType = "bed is comfy"
+                                    BedType = "a bed",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() {
+                                            Amenity = AmenityType.Coffee,
+                                        }
+                                    },
+                                    BedCount = 3,
+                                    RoomNumber = "102",
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel {
+                                            Image = "this is invalid data, but would normally be a Base64 encoded string"
+                                        }
+                                    }
                                 },
                                 new BedroomModel {
-                                    BedType = "wow two beds"
+                                    BedType = "a bed",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() {
+                                            Amenity = AmenityType.Coffee,
+                                        }
+                                    },
+                                    BedCount = 3,
+                                    RoomNumber = "103",
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel {
+                                            Image = "this is invalid data, but would normally be a Base64 encoded string"
+                                        }
+                                    }
                                 }
                             },
-                            Images = new List<ImageModel>() {
-                                new ImageModel {
-                                    Image = "this is invalid data, but would normally be a Base64 encoded string"
-                                }
-                            }
                         }
                     }
                 }

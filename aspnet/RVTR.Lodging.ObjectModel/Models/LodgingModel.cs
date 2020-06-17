@@ -15,6 +15,10 @@ namespace RVTR.Lodging.ObjectModel.Models
     public string Name { get; set; }
     public string Description { get; set; }
 
+    public IEnumerable<AmenityModel> Amenities { get; set; }
+
+    public IEnumerable<ImageModel> Images { get; set; }
+
     public IEnumerable<RentalModel> Rentals { get; set; }
 
     public IEnumerable<ReviewModel> Reviews { get; set; }

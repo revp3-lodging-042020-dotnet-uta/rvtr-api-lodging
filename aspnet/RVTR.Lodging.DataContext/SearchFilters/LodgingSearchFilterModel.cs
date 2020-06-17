@@ -48,5 +48,15 @@ namespace RVTR.Lodging.DataContext
             get { return _bathsAtLeast < 0 ? 0 : _bathsAtLeast; }
             set { _bathsAtLeast = value; }
         }
+
+        private int _bedRoomsAtLeast;
+        /// <summary>
+        /// Minimum number of bedrooms in a lodging.
+        /// </summary>
+        public int BedRoomsAtLeast
+        {
+            get { return _bedRoomsAtLeast < 0 ? 0 : _bedRoomsAtLeast; }
+            set { _bedRoomsAtLeast = value; }
+        }
     }
 }

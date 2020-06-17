@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RVTR.Lodging.ObjectModel.Models
 {
+  public class BedType
+  {
+    public const string King = "King";
+    public const string Queen = "Queen";
+  }
+
   /// <summary>
   /// Represents the _Bedroom_ model
   /// </summary>
@@ -11,6 +17,14 @@ namespace RVTR.Lodging.ObjectModel.Models
     public int Id { get; set; }
 
     public string BedType { get; set; }
+
+    public int BedCount { get; set; }
+
+    public string RoomNumber { get; set; }
+
+    public IEnumerable<ImageModel> Images { get; set; }
+
+    public IEnumerable<AmenityModel> Amenities { get; set; }
 
     [Range(0, 100000)]
     public int Count { get; set; }

@@ -24,8 +24,6 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public string RentalUnitType { get; set; }
 
-    public IEnumerable<ImageModel> Images { get; set; }
-
     public int? RentalId { get; set; }
     public RentalModel Rental { get; set; }
 

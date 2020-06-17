@@ -27,8 +27,8 @@ namespace RVTR.Lodging.DataContext.Repositories
       return dbContext.Rentals
         .Include(x => x.Lodging)
         .Include(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
-        .Include(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
-        .Include(x => x.RentalUnit).ThenInclude(x => x.Images);
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images)
+        .Include(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Amenities);
     }
 
     protected override async Task<IEnumerable<RentalModel>> GetAsync(FilterFuncs filters = null,
@@ -63,7 +63,8 @@ namespace RVTR.Lodging.DataContext.Repositories
     private FilterFuncs GenerateFilterFuncs(RentalSearchFilterModel filterModel)
     {
       var filters = new FilterFuncs();
-      filters.Add(r => r.RentalUnit.Bedrooms.Count() >= filterModel.BedsAtLeast);
+      filters.Add(r => r.RentalUnit.Bedrooms.Sum(b => b.BedCount) >= filterModel.BedsAtLeast);
+      filters.Add(r => r.RentalUnit.Bedrooms.Count() >= filterModel.BedRoomsAtLeast);
       filters.Add(r => r.RentalUnit.Bathrooms.Count() >= filterModel.BathsAtLeast);
 
       return filters;
@@ -79,8 +80,10 @@ namespace RVTR.Lodging.DataContext.Repositories
           case "Name": return (e => e.Name);
           case "Description": return (e => e.Description);
 
+          case "Beds": return (u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount));
           case "Bedrooms": return (u => u.RentalUnit.Bedrooms.Count());
-          case "Bathrooms": return (u => u.RentalUnit.Bedrooms.Count());
+          case "Bathrooms": return (u => u.RentalUnit.Bathrooms.Count());
+
           case "Occupancy": return (u => u.RentalUnit.Occupancy);
         }
       }

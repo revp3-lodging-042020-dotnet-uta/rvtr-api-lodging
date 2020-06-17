@@ -28,8 +28,8 @@ namespace RVTR.Lodging.DataContext.Repositories
       return dbContext.Lodgings
         .Include(x => x.Location).ThenInclude(x => x.Address)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
-        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms)
-        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Images)
+        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images)
+        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Amenities)
         .Include(x => x.Reviews);
     }
 
@@ -65,8 +65,9 @@ namespace RVTR.Lodging.DataContext.Repositories
     private FilterFuncs GenerateFilterFuncs(LodgingSearchFilterModel filterModel)
     {
       var filters = new FilterFuncs();
-      filters.Add(m => Math.Round(m.Reviews.Average(r => r.Rating)) >= filterModel.RatingAtLeast);
-      filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bedrooms.Count()) >= filterModel.BedsAtLeast);
+      filters.Add(m => m.Reviews.Average(r => r.Rating) >= filterModel.RatingAtLeast);
+      filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bedrooms.Count()) >= filterModel.BedRoomsAtLeast);
+      filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bedrooms.Sum(b => b.BedCount)) >= filterModel.BedsAtLeast);
       filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bathrooms.Count()) >= filterModel.BathsAtLeast);
       return filters;
     }
@@ -94,8 +95,9 @@ namespace RVTR.Lodging.DataContext.Repositories
           case "Location.Address.Street": return (e => e.Location.Address.Street);
 
           case "Rentals": return (e => e.Rentals.Count());
+          case "Beds": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount)));
           case "Bedrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
-          case "Bathrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
+          case "Bathrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bathrooms.Count()));
           case "Occupancy": return (e => e.Rentals.Sum(u => u.RentalUnit.Occupancy));
 
           case "ReviewCount": return (e => e.Reviews.Count());
