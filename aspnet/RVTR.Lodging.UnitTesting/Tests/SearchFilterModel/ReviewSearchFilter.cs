@@ -9,11 +9,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
     public void Test_Rating_Clamp()
     {
       var filterModel = new ReviewSearchFilterModel();
-      filterModel.RatingAtLeast = 0;
-      Assert.Equal(1, filterModel.RatingAtLeast);
+      filterModel.RatingAtLeast = -1;
+      Assert.Equal(0, filterModel.RatingAtLeast);
 
       filterModel.RatingAtLeast = 999;
-      Assert.Equal(5, filterModel.RatingAtLeast);
+      Assert.Equal(10, filterModel.RatingAtLeast);
 
       filterModel.RatingAtLeast = 3;
       Assert.Equal(3, filterModel.RatingAtLeast);

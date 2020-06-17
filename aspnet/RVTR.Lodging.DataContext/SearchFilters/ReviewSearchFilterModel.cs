@@ -5,15 +5,15 @@ namespace RVTR.Lodging.DataContext
     /// </summary>
     public class ReviewSearchFilterModel : SearchFilter
     {
-        private int _ratingAtLeast;
+        private double _ratingAtLeast;
         /// <summary>
         /// Minimum star rating.
         /// </summary>
-        public int RatingAtLeast
+        public double RatingAtLeast
         {
             get {
-                if (_ratingAtLeast < 1) return 1;
-                if (_ratingAtLeast > 5) return 5;
+                if (_ratingAtLeast < 0) return 0;
+                if (_ratingAtLeast > 10) return 10;
                 return _ratingAtLeast;
             }
             set { _ratingAtLeast = value; }

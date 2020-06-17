@@ -17,7 +17,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public DateTime DateCreated { get; set; }
 
-    public int Rating { get; set; }
+    public double Rating { get; set; }
 
     public int? LodgingId { get; set; }
     public LodgingModel Lodging { get; set; }
