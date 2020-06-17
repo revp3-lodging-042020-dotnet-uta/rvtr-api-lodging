@@ -12,7 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace RVTR.Lodging.DataContext.Repositories
 {
   using FilterFuncs = List<Expression<Func<LodgingModel, bool>>>;
-  using OrderByFunc = Func<IQueryable<LodgingModel>, IOrderedQueryable<LodgingModel>>;
+  using OrderByFunc = Expression<Func<LodgingModel, Object>>;
 
   public class LodgingRepository : Repository<LodgingModel, LodgingSearchFilterModel>
   {
@@ -35,13 +35,14 @@ namespace RVTR.Lodging.DataContext.Repositories
 
     protected override async Task<IEnumerable<LodgingModel>> GetAsync(FilterFuncs filters = null,
                                                           OrderByFunc orderBy = null,
-                                                          int resultStartIndex = 0,
+                                                          string sortOrder = "asc",
+                                                          int resultOffset = 0,
                                                           int maxResults = 50)
     {
       var query = IncludeQuery();
-      return await this.Select(query, filters, orderBy)
+      return await this.Select(query, filters, orderBy, sortOrder)
         .AsNoTracking()
-        .Skip(resultStartIndex)
+        .Skip(resultOffset)
         .Take(maxResults)
         .ToListAsync();
     }
@@ -54,6 +55,13 @@ namespace RVTR.Lodging.DataContext.Repositories
         .FirstOrDefaultAsync();
     }
 
+    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingSearchFilterModel filterModel)
+    {
+      var filters = GenerateFilterFuncs(filterModel);
+      var orderBy = GenerateOrderByFunc(filterModel);
+      return await GetAsync(filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+    }
+
     private FilterFuncs GenerateFilterFuncs(LodgingSearchFilterModel filterModel)
     {
       var filters = new FilterFuncs();
@@ -63,10 +71,39 @@ namespace RVTR.Lodging.DataContext.Repositories
       return filters;
     }
 
-    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingSearchFilterModel filterModel)
+    private OrderByFunc GenerateOrderByFunc(LodgingSearchFilterModel filterModel)
     {
-      var filters = GenerateFilterFuncs(filterModel);
-      return await GetAsync(filters, null, filterModel.Offset, filterModel.Limit);
+      if (!String.IsNullOrEmpty(filterModel.SortKey))
+      {
+        switch (filterModel.SortKey)
+        {
+          case "Id": return (e => e.Id);
+          case "Name": return (e => e.Name);
+          case "Description": return (e => e.Description);
+
+          case "Location.Id": return (e => e.Location.Id);
+          case "Location.Latitude": return (e => e.Location.Latitude);
+          case "Location.Longitude": return (e => e.Location.Longitude);
+          case "Location.Locale": return (e => e.Location.Locale);
+
+          case "Location.Address.Id": return (e => e.Location.Address.Id);
+          case "Location.Address.City": return (e => e.Location.Address.City);
+          case "Location.Address.Country": return (e => e.Location.Address.Country);
+          case "Location.Address.PostalCode": return (e => e.Location.Address.PostalCode);
+          case "Location.Address.StateProvince": return (e => e.Location.Address.StateProvince);
+          case "Location.Address.Street": return (e => e.Location.Address.Street);
+
+          case "Rentals": return (e => e.Rentals.Count());
+          case "Bedrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
+          case "Bathrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
+          case "Occupancy": return (e => e.Rentals.Sum(u => u.RentalUnit.Occupancy));
+
+          case "ReviewCount": return (e => e.Reviews.Count());
+          case "ReviewAverageRating": return (e => e.Reviews.Average(r => r.Rating));
+        }
+      }
+      return null;
     }
+
   }
 }

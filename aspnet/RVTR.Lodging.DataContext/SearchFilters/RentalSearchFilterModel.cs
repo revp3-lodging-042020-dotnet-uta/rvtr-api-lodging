@@ -24,10 +24,5 @@ namespace RVTR.Lodging.DataContext
             get { return _bathsAtLeast < 0 ? 0 : _bathsAtLeast; }
             set { _bathsAtLeast = value; }
         }
-
-        /// <summary>
-        /// Key to use for sorting.
-        /// </summary>
-        public string SortKey { get; set; }
     }
 }

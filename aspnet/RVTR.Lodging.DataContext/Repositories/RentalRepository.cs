@@ -10,7 +10,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 {
 
   using FilterFuncs = List<Expression<Func<RentalModel, bool>>>;
-  using OrderByFunc = Func<IQueryable<RentalModel>, IOrderedQueryable<RentalModel>>;
+  using OrderByFunc = Expression<Func<RentalModel, Object>>;
 
   public class RentalRepository : Repository<RentalModel, RentalSearchFilterModel>
   {
@@ -33,11 +33,12 @@ namespace RVTR.Lodging.DataContext.Repositories
 
     protected override async Task<IEnumerable<RentalModel>> GetAsync(FilterFuncs filters = null,
                                                           OrderByFunc orderBy = null,
+                                                          string sortOrder = "asc",
                                                           int resultStartIndex = 0,
                                                           int maxResults = 50)
     {
       var query = IncludeQuery();
-      return await this.Select(query, filters, orderBy)
+      return await this.Select(query, filters, orderBy, sortOrder)
         .AsNoTracking()
         .Skip(resultStartIndex)
         .Take(maxResults)
@@ -52,6 +53,13 @@ namespace RVTR.Lodging.DataContext.Repositories
         .FirstOrDefaultAsync();
     }
 
+    public override async Task<IEnumerable<RentalModel>> GetAsync(RentalSearchFilterModel filterModel)
+    {
+      var filters = GenerateFilterFuncs(filterModel);
+      var orderBy = GenerateOrderByFunc(filterModel);
+      return await GetAsync(filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+    }
+
     private FilterFuncs GenerateFilterFuncs(RentalSearchFilterModel filterModel)
     {
       var filters = new FilterFuncs();
@@ -61,10 +69,23 @@ namespace RVTR.Lodging.DataContext.Repositories
       return filters;
     }
 
-    public override async Task<IEnumerable<RentalModel>> GetAsync(RentalSearchFilterModel filterModel)
+    private OrderByFunc GenerateOrderByFunc(RentalSearchFilterModel filterModel)
     {
-      var filters = GenerateFilterFuncs(filterModel);
-      return await GetAsync(filters, null, filterModel.Offset, filterModel.Limit);
+      if (!String.IsNullOrEmpty(filterModel.SortKey))
+      {
+        switch (filterModel.SortKey)
+        {
+          case "Id": return (e => e.Id);
+          case "Name": return (e => e.Name);
+          case "Description": return (e => e.Description);
+
+          case "Bedrooms": return (u => u.RentalUnit.Bedrooms.Count());
+          case "Bathrooms": return (u => u.RentalUnit.Bedrooms.Count());
+          case "Occupancy": return (u => u.RentalUnit.Occupancy);
+        }
+      }
+      return null;
     }
+
   }
 }

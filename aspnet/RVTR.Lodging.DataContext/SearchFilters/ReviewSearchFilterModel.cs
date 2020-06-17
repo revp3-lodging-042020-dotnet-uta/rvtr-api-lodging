@@ -39,11 +39,5 @@ namespace RVTR.Lodging.DataContext
             get { return _accountId; }
             set { _accountId = value; }
         }
-        
-
-        /// <summary>
-        /// Key to use for sorting.
-        /// </summary>
-        public string SortKey { get; set; }
     }
 }

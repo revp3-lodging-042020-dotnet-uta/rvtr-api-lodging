@@ -1,11 +1,9 @@
-using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {
@@ -32,9 +30,22 @@ namespace RVTR.Lodging.DataContext.Repositories
       return (await _db.AddAsync(entry).ConfigureAwait(true)).Entity;
     }
 
+    public virtual async Task<TEntity> GetAsync(int id) => await _db.FindAsync(id).ConfigureAwait(true);
+
     public abstract Task<IEnumerable<TEntity>> GetAsync(TSearchFilterModel filterModel);
 
-    public virtual async Task<TEntity> GetAsync(int id) => await _db.FindAsync(id).ConfigureAwait(true);
+    protected virtual async Task<IEnumerable<TEntity>> GetAsync(List<Expression<Func<TEntity, bool>>> filters = null,
+                                                                Expression<Func<TEntity, Object>> orderBy = null,
+                                                                string sortOrder = "asc",
+                                                                int resultOffset = 0,
+                                                                int maxResults = 50)
+    {
+      return await this.Select(this._db, filters, orderBy, sortOrder)
+        .AsNoTracking()
+        .Skip(resultOffset)
+        .Take(maxResults)
+        .ToListAsync();
+    }
 
     public virtual TEntity Update(TEntity entry) {
       _db.Update(entry);
@@ -43,28 +54,26 @@ namespace RVTR.Lodging.DataContext.Repositories
 
     protected virtual IQueryable<TEntity> Select(IQueryable<TEntity> query,
                                                  List<Expression<Func<TEntity, bool>>> filters = null,
-                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+                                                 Expression<Func<TEntity, Object>> orderBy = null,
+                                                 string sortOrder = "asc")
     {
       foreach(var filter in filters)
       {
         query = query.Where(filter);
       }
 
-      if (orderBy != null) return orderBy(query);
+      if (orderBy != null)
+      {
+        switch (sortOrder)
+        {
+          case "asc": return query.OrderBy(orderBy);
+          case "desc": return query.OrderByDescending(orderBy);
+          default: return query.OrderBy(orderBy);
+        }
+      }
 
       return query;
     }
 
-    protected virtual async Task<IEnumerable<TEntity>> GetAsync(List<Expression<Func<TEntity, bool>>> filters = null,
-                                                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                                int resultStartIndex = 0,
-                                                                int maxResults = 50)
-    {
-      return await this.Select(this._db, filters, orderBy)
-        .AsNoTracking()
-        .Skip(resultStartIndex)
-        .Take(maxResults)
-        .ToListAsync();
-    }
   }
 }

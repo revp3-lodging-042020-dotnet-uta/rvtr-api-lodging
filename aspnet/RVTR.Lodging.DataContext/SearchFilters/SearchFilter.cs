@@ -1,3 +1,5 @@
+using System;
+
 namespace RVTR.Lodging.DataContext
 {
     /// <summary>
@@ -35,6 +37,16 @@ namespace RVTR.Lodging.DataContext
         {
             get { return _sortOrder == "desc" ? "desc" : "asc"; }
             set { _sortOrder = value; }
+        }
+
+        /// <summary>
+        /// Key to use for sorting.
+        /// </summary>
+        private string _sortKey;
+        public string SortKey
+        {
+            get { return _sortKey; }
+            set { _sortKey = value; }
         }
     }
 }
