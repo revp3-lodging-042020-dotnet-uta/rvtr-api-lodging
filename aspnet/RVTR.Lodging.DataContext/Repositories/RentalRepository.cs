@@ -67,6 +67,21 @@ namespace RVTR.Lodging.DataContext.Repositories
       filters.Add(r => r.RentalUnit.Bedrooms.Count() >= filterModel.BedRoomsAtLeast);
       filters.Add(r => r.RentalUnit.Bathrooms.Count() >= filterModel.BathsAtLeast);
 
+      if (!String.IsNullOrEmpty(filterModel.HasBedType))
+      {
+        filters.Add(r => r.RentalUnit.Bedrooms.Where(
+                      b => b.BedType == filterModel.HasBedType).FirstOrDefault() != null);
+      }
+
+      if (!String.IsNullOrEmpty(filterModel.HasAmenity))
+      {
+        filters.Add(r => r.RentalUnit.Bedrooms.Where(
+                      b => b.Amenities.Where(
+                        a => a.Amenity == filterModel.HasAmenity)
+                        .FirstOrDefault() != null)
+                      .FirstOrDefault() != null);
+      }
+
       return filters;
     }
 

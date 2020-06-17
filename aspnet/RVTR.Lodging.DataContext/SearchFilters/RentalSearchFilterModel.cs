@@ -34,5 +34,25 @@ namespace RVTR.Lodging.DataContext
             get { return _bedRoomsAtLeast < 0 ? 0 : _bedRoomsAtLeast; }
             set { _bedRoomsAtLeast = value; }
         }
+
+        /// <summary>
+        /// Offers this type of bed.
+        /// </summary>
+        private string _hasBedType;
+        public string HasBedType
+        {
+            get { return _hasBedType; }
+            set { _hasBedType = value; }
+        }
+
+        /// <summary>
+        /// Offers this amenity.
+        /// </summary>
+        private string _hasAmenity;
+        public string HasAmenity
+        {
+            get { return _hasAmenity; }
+            set { _hasAmenity = value; }
+        }
     }
 }
