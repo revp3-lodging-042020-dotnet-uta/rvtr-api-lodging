@@ -67,8 +67,14 @@ namespace RVTR.Lodging.DataContext.Repositories
       var filters = new FilterFuncs();
       filters.Add(m => m.Reviews.Average(r => r.Rating) >= filterModel.RatingAtLeast);
       filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bedrooms.Count()) >= filterModel.BedRoomsAtLeast);
-      filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bedrooms.Sum(b => b.BedCount)) >= filterModel.BedsAtLeast);
       filters.Add(m => m.Rentals.Sum(r => r.RentalUnit.Bathrooms.Count()) >= filterModel.BathsAtLeast);
+
+      filters.Add(m => m.Rentals.Where(
+                    r => r.RentalUnit.Bedrooms.Where(
+                      b => b.BedCount >= filterModel.BedsAtLeast)
+                      .FirstOrDefault() != null)
+                    .FirstOrDefault() != null);
+
       if (!String.IsNullOrEmpty(filterModel.HasBedType))
       {
         filters.Add(m => m.Rentals.Where(
