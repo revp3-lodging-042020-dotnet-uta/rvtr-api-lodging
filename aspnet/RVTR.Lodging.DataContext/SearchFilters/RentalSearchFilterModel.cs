@@ -1,9 +1,10 @@
 namespace RVTR.Lodging.DataContext
 {
-    /// <summary>
-    /// This class is used for storing URI request parameters
-    /// </summary>
-    public class RentalSearchFilterModel : SearchFilter
+  /// <summary>
+  /// This class is used for storing URI request parameters
+  /// Particularly search filters relevant to the Rentals DbSet
+  /// </summary>
+  public class RentalSearchFilterModel : SearchFilter
     {
         private int _bedsAtLeast;
         /// <summary>
