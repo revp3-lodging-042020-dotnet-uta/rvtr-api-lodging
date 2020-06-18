@@ -16,7 +16,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           Id = 0,
           BedType = BedType.King,
-          Count = 1
+          BedCount = 1
         }
       }
     };

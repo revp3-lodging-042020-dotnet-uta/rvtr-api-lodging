@@ -40,30 +40,6 @@ namespace RVTR.Lodging.DataContext.Repositories
     }
 
     /// <summary>
-    /// Executes a database query for all entities based on filtering parameters.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="filters"></param>
-    /// <param name="orderBy"></param>
-    /// <param name="sortOrder"></param>
-    /// <param name="resultOffset">start results from this value</param>
-    /// <param name="maxResults"></param>
-    /// <returns></returns>
-    protected override async Task<IEnumerable<ReviewModel>> GetAsync(IQueryable<ReviewModel> query,
-                                                                     FilterFuncs filters = null,
-                                                                     OrderByFunc orderBy = null,
-                                                                     string sortOrder = "asc",
-                                                                     int resultStartIndex = 0,
-                                                                     int maxResults = 50)
-    {
-      return await this.Select(query, filters, orderBy, sortOrder)
-        .AsNoTracking()
-        .Skip(resultStartIndex)
-        .Take(maxResults)
-        .ToListAsync();
-    }
-
-    /// <summary>
     /// Executes a database query for a specific entity ID.
     /// </summary>
     /// <param name="id"></param>
