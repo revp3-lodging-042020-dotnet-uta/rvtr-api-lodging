@@ -60,7 +60,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[22] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
                                     }
                                 },
                                 new BedroomModel() {
@@ -73,7 +73,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[24] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
                                     }
                                 }
                             },
@@ -158,7 +158,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[24] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[2] },
                                     }
                                 },
                                 new BedroomModel() {
@@ -171,7 +171,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[2] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[3] },
                                     }
                                 }
                             },
@@ -257,7 +257,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[21] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
                                     }
                                 },
                                 new BedroomModel() {
@@ -270,7 +270,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[6] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
                                     }
                                 }
                             },
@@ -355,7 +355,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Wifi },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[14] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[2] },
                                     }
                                 },
                                 new BedroomModel() {
@@ -367,7 +367,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Wifi },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.Images()[9] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[3] },
                                     }
                                 }
                             },
