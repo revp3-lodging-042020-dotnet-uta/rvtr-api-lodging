@@ -66,7 +66,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     }
 
     /// <summary>
-    /// Configures an executes a database query based on query parameters.
+    /// Configures and executes a database query based on query parameters.
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
