@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Represents the _Address_ model
+  /// Contains information regarding a physical address.
   /// </summary>
   public class AddressModel : IValidatableObject
   {

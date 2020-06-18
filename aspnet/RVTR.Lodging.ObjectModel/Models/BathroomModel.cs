@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Represents the _Bathroom_ model
+  /// Represents a bathroom.
   /// </summary>
   public class BathroomModel : IValidatableObject
   {

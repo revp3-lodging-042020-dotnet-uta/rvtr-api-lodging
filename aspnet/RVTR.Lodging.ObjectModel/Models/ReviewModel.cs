@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Represents the _Review_ model
+  /// A user review.
   /// </summary>
   public class ReviewModel : IValidatableObject
   {
@@ -17,6 +17,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public DateTime DateCreated { get; set; }
 
+    [Range(0, 10)]
     public double Rating { get; set; }
 
     public int? LodgingId { get; set; }

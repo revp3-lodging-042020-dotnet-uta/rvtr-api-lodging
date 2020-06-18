@@ -4,19 +4,20 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Represents the _RentalUnit_ model
+  /// Reference to an image.
   /// </summary>
   public class ImageModel : IValidatableObject
   {
     public int Id { get; set; }
 
     /// <summary>
-    /// Images are store in Base64 encoded strings.
+    /// The URL to an image.
     /// </summary>
+    /// <value></value>
     public string Image { get; set; }
 
     /// <summary>
-    /// Represents the _RentalImageModel_ `Validate` method
+    /// Represents the _ImageModel_ `Validate` method
     /// </summary>
     /// <param name="validationContext"></param>
     /// <returns></returns>

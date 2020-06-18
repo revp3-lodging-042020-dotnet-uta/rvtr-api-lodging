@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RVTR.Lodging.ObjectModel.Models
 {
+  /// <summary>
+  /// Types of beds in a bedroom.
+  /// </summary>
   public class BedType
   {
     public const string King = "King";
@@ -10,7 +13,7 @@ namespace RVTR.Lodging.ObjectModel.Models
   }
 
   /// <summary>
-  /// Represents the _Bedroom_ model
+  /// Represents a bedroom.
   /// </summary>
   public class BedroomModel : IValidatableObject
   {
@@ -18,6 +21,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public string BedType { get; set; }
 
+    [Range(0, 10)]
     public int BedCount { get; set; }
 
     public string RoomNumber { get; set; }
@@ -25,9 +29,6 @@ namespace RVTR.Lodging.ObjectModel.Models
     public IEnumerable<ImageModel> Images { get; set; }
 
     public IEnumerable<AmenityModel> Amenities { get; set; }
-
-    [Range(0, 10)]
-    public int Count { get; set; }
 
     /// <summary>
     /// Represents the _Bedroom_ `Validate` method

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Represents the _Rental_ model
+  /// A rental that is available within a lodging.
   /// </summary>
   public class RentalModel : IValidatableObject
   {

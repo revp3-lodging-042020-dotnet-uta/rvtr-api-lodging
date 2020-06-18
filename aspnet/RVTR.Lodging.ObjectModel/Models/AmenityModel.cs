@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RVTR.Lodging.ObjectModel.Models
 {
+  /// <summary>
+  /// Types of amenities available.
+  /// </summary>
   public class AmenityType
   {
     public const string Coffee = "Coffee";
@@ -11,7 +14,7 @@ namespace RVTR.Lodging.ObjectModel.Models
   }
 
   /// <summary>
-  /// Represents the _Amenity_ model
+  /// An amenity offered.
   /// </summary>
   public class AmenityModel : IValidatableObject
   {
