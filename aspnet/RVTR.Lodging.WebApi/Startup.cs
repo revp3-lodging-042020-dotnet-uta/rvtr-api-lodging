@@ -107,12 +107,16 @@ namespace RVTR.Lodging.WebApi
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = new ObjectResult("");                    // creates an empty object for the exception (so as not to leak server data)
-        result.StatusCode = 500;                              // sets the status code for the exception response to server error
+        // creates an empty object for the exception (so as not to leak server data)
+        var result = new ObjectResult("");
+        // sets the status code for the exception response to server error
+        result.StatusCode = 500;
 
         var JsonResult = JsonConvert.SerializeObject(result);
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(JsonResult);        // writes the object into a readable response
+
+        // writes the object into a readable response
+        await context.Response.WriteAsync(JsonResult);
       }));
 
       applicationBuilder.UseHttpsRedirection();
