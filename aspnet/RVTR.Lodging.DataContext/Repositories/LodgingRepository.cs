@@ -89,6 +89,11 @@ namespace RVTR.Lodging.DataContext.Repositories
         filters.Add(m => m.Amenities.Where(a => a.Amenity == filterModel.HasAmenity).FirstOrDefault() != null);
       }
 
+      if (!String.IsNullOrEmpty(filterModel.City))
+      {
+        filters.Add(m => m.Location.Address.City.ToLower().Contains(filterModel.City.ToLower()));
+      }
+
       return filters;
     }
 

@@ -78,5 +78,15 @@ namespace RVTR.Lodging.DataContext
             get { return _hasAmenity; }
             set { _hasAmenity = value; }
         }
+
+        /// <summary>
+        /// In this city.
+        /// </summary>
+        private string _city;
+        public string City
+        {
+            get { return _city; }
+            set { _city = value; }
+        }
     }
 }
