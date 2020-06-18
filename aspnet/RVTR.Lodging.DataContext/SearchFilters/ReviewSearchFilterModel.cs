@@ -2,12 +2,13 @@ namespace RVTR.Lodging.DataContext
 {
     /// <summary>
     /// This class is used for storing URI request parameters
+    /// Particularly search filters relevant to the Reviews DbSet
     /// </summary>
     public class ReviewSearchFilterModel : SearchFilter
     {
         private double _ratingAtLeast;
         /// <summary>
-        /// Minimum star rating.
+        /// Minimum rating (out of 10).
         /// </summary>
         public double RatingAtLeast
         {

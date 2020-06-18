@@ -1,9 +1,10 @@
 namespace RVTR.Lodging.DataContext
 {
-    /// <summary>
-    /// This class is used for storing URI request parameters
-    /// </summary>
-    public class LodgingSearchFilterModel : SearchFilter
+  /// <summary>
+  /// This class is used for storing URI request parameters
+  /// Particularly search filters relevant to the Lodging DbSet
+  /// </summary>
+  public class LodgingSearchFilterModel : SearchFilter
     {
         private bool _includeImages;
         public bool IncludeImages
@@ -14,7 +15,7 @@ namespace RVTR.Lodging.DataContext
         
         private double _ratingAtLeast;
         /// <summary>
-        /// Minimum star rating.
+        /// Minimum rating (out of 10).
         /// </summary>
         public double RatingAtLeast
         {

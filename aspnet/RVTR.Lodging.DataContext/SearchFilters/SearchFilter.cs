@@ -1,7 +1,8 @@
 namespace RVTR.Lodging.DataContext
 {
     /// <summary>
-    /// This class is used for storing URI request parameters
+    /// This class is used for storing general URI request parameters
+    /// Particularly for pagination and sorting
     /// </summary>
     public class SearchFilter
     {

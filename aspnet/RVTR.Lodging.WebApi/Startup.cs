@@ -101,17 +101,18 @@ namespace RVTR.Lodging.WebApi
       applicationBuilder.UseZipkin();
       applicationBuilder.UseTracing("lodgingapi.rest");
 
+      // Implements a global exception handler
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var exception = exceptionHandlerPathFeature.Error;
 
-        var result = new ObjectResult("");
-        result.StatusCode = 500;
+        var result = new ObjectResult("");                    // creates an empty object for the exception (so as not to leak server data)
+        result.StatusCode = 500;                              // sets the status code for the exception response to server error
 
         var JsonResult = JsonConvert.SerializeObject(result);
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(JsonResult);
+        await context.Response.WriteAsync(JsonResult);        // writes the object into a readable response
       }));
 
       applicationBuilder.UseHttpsRedirection();
