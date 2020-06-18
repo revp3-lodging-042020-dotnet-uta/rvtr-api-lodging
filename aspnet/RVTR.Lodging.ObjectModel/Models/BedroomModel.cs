@@ -26,7 +26,7 @@ namespace RVTR.Lodging.ObjectModel.Models
 
     public IEnumerable<AmenityModel> Amenities { get; set; }
 
-    [Range(0, 100000)]
+    [Range(0, 10)]
     public int Count { get; set; }
 
     /// <summary>
