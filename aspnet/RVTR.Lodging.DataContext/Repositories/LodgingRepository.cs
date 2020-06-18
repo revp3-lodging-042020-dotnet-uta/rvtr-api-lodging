@@ -24,6 +24,8 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       return dbContext.Lodgings
         .Include(x => x.Location).ThenInclude(x => x.Address)
+        .Include(x => x.Amenities)
+        .Include(x => x.Images)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Amenities)
