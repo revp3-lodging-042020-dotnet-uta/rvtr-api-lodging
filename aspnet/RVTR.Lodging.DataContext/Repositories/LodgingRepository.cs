@@ -1,5 +1,3 @@
-using System.IO;
-using System.Security.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,7 +5,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using RVTR.Lodging.ObjectModel.Models;
-using System.Security.Cryptography.X509Certificates;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {

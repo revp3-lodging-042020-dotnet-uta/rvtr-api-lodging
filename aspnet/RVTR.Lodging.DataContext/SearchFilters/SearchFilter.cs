@@ -1,5 +1,3 @@
-using System;
-
 namespace RVTR.Lodging.DataContext
 {
     /// <summary>

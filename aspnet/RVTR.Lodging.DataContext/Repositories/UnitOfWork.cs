@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.DataContext.Repositories
 {

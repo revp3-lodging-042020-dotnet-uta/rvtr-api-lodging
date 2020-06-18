@@ -4,15 +4,10 @@ using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Xunit;
 using System.Threading.Tasks;
-using RVTR.Lodging.ObjectModel.Models;
-using System;
-using System.Linq.Expressions;
-using Xunit.Sdk;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class RentalRepoTest
+    public class RentalRepoTest
   {
 
     private async Task<DbContextOptions<LodgingContext>> NewDb()

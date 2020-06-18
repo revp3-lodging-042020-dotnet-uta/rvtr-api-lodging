@@ -13,15 +13,14 @@ using Newtonsoft.Json;
 using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.IO;
 using zipkin4net.Middleware;
 
 namespace RVTR.Lodging.WebApi
 {
-  /// <summary>
-  ///
-  /// </summary>
-  public class Startup
+    /// <summary>
+    ///
+    /// </summary>
+    public class Startup
   {
     /// <summary>
     ///

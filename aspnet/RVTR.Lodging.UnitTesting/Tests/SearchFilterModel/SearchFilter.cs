@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using RVTR.Lodging.DataContext;
 using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class SearchFilterTest
+    public class SearchFilterTest
   {
 
     [Fact]

@@ -1,16 +1,14 @@
 using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RVTR.Lodging.DataContext;
-using RVTR.Lodging.DataContext.Repositories;
 using RVTR.Lodging.ObjectModel.Models;
 using Xunit;
 using System.Threading.Tasks;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class SeedTest
+    public class SeedTest
   {
 
     private async Task<DbContextOptions<LodgingContext>> NewDb()
