@@ -5,6 +5,13 @@ namespace RVTR.Lodging.DataContext
     /// </summary>
     public class LodgingSearchFilterModel : SearchFilter
     {
+        private bool _includeImages;
+        public bool IncludeImages
+        {
+            get { return _includeImages; }
+            set { _includeImages = value; }
+        }
+        
         private double _ratingAtLeast;
         /// <summary>
         /// Minimum star rating.

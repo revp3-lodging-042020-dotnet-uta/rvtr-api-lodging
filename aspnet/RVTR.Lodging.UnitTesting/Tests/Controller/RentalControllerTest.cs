@@ -47,11 +47,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
     public async void Delete_UsingValidId()
     {
       var mocks = new Mocks();
-      mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(new RentalModel()));
+      mocks._repository.Setup(m => m.DeleteAsync(1, null)).Returns(Task.FromResult(new RentalModel()));
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Delete(1);
+      var result = await _controller.Delete(null, 1);
       Assert.IsType(typeof(OkObjectResult), result);
     }
 
@@ -60,11 +60,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
     {
       var mocks = new Mocks();
       RentalModel mockResult = null;
-      mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(mockResult));
+      mocks._repository.Setup(m => m.DeleteAsync(1, null)).Returns(Task.FromResult(mockResult));
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Delete(1);
+      var result = await _controller.Delete(null, 1);
       Assert.IsType(typeof(NotFoundResult), result);
     }
 
@@ -73,9 +73,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     {
       var mocks = new Mocks();
 
-      var filterModel = new RentalSearchFilterModel();
-
-      mocks._repository.Setup(m => m.GetAsync(filterModel)).Returns(
+      mocks._repository.Setup(m => m.GetAsync(null)).Returns(
         Task.FromResult<IEnumerable<RentalModel>>(
           new List<RentalModel>() { null, null }
         )
@@ -83,7 +81,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get(filterModel);
+      var result = await _controller.Get(null);
       Assert.IsType(typeof(OkObjectResult), result);
 
       var items = (result as OkObjectResult).Value as IEnumerable<RentalModel>;
@@ -95,7 +93,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     {
       var mocks = new Mocks();
 
-      mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+      mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
         Task.FromResult<RentalModel>(
           new RentalModel { Id = 1 }
         )
@@ -103,7 +101,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get(new RentalSearchFilterModel(), 1);
+      var result = await _controller.Get(null, 1);
       Assert.IsType(typeof(OkObjectResult), result);
 
       var value = (result as OkObjectResult).Value as RentalModel;
@@ -115,11 +113,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
     {
       var mocks = new Mocks();
 
-      mocks._repository.Setup(m => m.GetAsync(1)).Returns(Task.FromResult<RentalModel>(null));
+      mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(Task.FromResult<RentalModel>(null));
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Get(new RentalSearchFilterModel(), 1);
+      var result = await _controller.Get(null, 1);
       Assert.IsType(typeof(NotFoundResult), result);
     }
 
@@ -129,7 +127,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var mocks = new Mocks();
       var submittedModel = new RentalModel { Id = 1 };
 
-      mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+      mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
         Task.FromResult<RentalModel>(
           null
         )
@@ -139,7 +137,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Post(submittedModel);
+      var result = await _controller.Post(null, submittedModel);
       Assert.IsType(typeof(OkObjectResult), result);
     }
 
@@ -149,7 +147,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var mocks = new Mocks();
       var submittedModel = new RentalModel { Id = 1 };
 
-      mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+      mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
         Task.FromResult<RentalModel>(
           new RentalModel { Id = 1 }
         )
@@ -159,7 +157,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Post(new RentalModel { Id = 1 });
+      var result = await _controller.Post(null, new RentalModel { Id = 1 });
       Assert.IsType(typeof(OkObjectResult), result);
 
       var value = (result as OkObjectResult).Value as RentalModel;
@@ -175,7 +173,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
       var _controller = NewRentalController(mocks);
 
-      var result = await _controller.Post(null);
+      var result = await _controller.Post(null, null);
       Assert.IsType(typeof(BadRequestResult), result);
     }
   }

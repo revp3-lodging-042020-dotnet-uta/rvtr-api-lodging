@@ -21,19 +21,19 @@ namespace RVTR.Lodging.DataContext.Repositories
       this.dbContext = context;
     }
 
-    private IQueryable<ReviewModel> IncludeQuery()
+    private IQueryable<ReviewModel> IncludeQuery(ReviewSearchFilterModel filterModel)
     {
       return dbContext.Reviews
         .Include(x => x.Lodging);
     }
 
-    protected override async Task<IEnumerable<ReviewModel>> GetAsync(FilterFuncs filters = null,
-                                                          OrderByFunc orderBy = null,
-                                                          string sortOrder = "asc",
-                                                          int resultStartIndex = 0,
-                                                          int maxResults = 50)
+    protected override async Task<IEnumerable<ReviewModel>> GetAsync(IQueryable<ReviewModel> query,
+                                                                     FilterFuncs filters = null,
+                                                                     OrderByFunc orderBy = null,
+                                                                     string sortOrder = "asc",
+                                                                     int resultStartIndex = 0,
+                                                                     int maxResults = 50)
     {
-      var query = IncludeQuery();
       return await this.Select(query, filters, orderBy, sortOrder)
         .AsNoTracking()
         .Skip(resultStartIndex)
@@ -41,9 +41,9 @@ namespace RVTR.Lodging.DataContext.Repositories
         .ToListAsync();
     }
 
-    public override async Task<ReviewModel> GetAsync(int id)
+    public override async Task<ReviewModel> GetAsync(int id, ReviewSearchFilterModel filterModel)
     {
-      return await IncludeQuery()
+      return await IncludeQuery(filterModel)
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
@@ -53,7 +53,8 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       var filters = GenerateFilterFuncs(filterModel);
       var orderBy = GenerateOrderByFunc(filterModel);
-      return await GetAsync(filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+      var query = IncludeQuery(filterModel);
+      return await GetAsync(query, filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
     }
 
     private FilterFuncs GenerateFilterFuncs(ReviewSearchFilterModel filterModel)

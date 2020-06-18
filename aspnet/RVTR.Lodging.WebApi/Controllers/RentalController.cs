@@ -35,11 +35,12 @@ namespace RVTR.Lodging.WebApi.Controllers
     ///
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="filterModel"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete([FromQuery] RentalSearchFilterModel filterModel, int id)
     {
-        var obj = await _unitOfWork.Rental.DeleteAsync(id);
+        var obj = await _unitOfWork.Rental.DeleteAsync(id, filterModel);
         if (obj == null) return NotFound();
 
         await _unitOfWork.CommitAsync();
@@ -64,7 +65,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromQuery] RentalSearchFilterModel filterModel, int id)
     {
-      var obj = await _unitOfWork.Rental.GetAsync(id);
+      var obj = await _unitOfWork.Rental.GetAsync(id, filterModel);
       if (obj == null) return NotFound();
       return Ok(obj);
     }
@@ -73,13 +74,14 @@ namespace RVTR.Lodging.WebApi.Controllers
     ///
     /// </summary>
     /// <param name="rental"></param>
+    /// <param name="filterModel"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> Post(RentalModel rental)
+    public async Task<IActionResult> Post([FromQuery] RentalSearchFilterModel filterModel, RentalModel rental)
     {
       if(rental == null) return BadRequest();
 
-      var ExistingEntry = await _unitOfWork.Rental.GetAsync(rental.Id);
+      var ExistingEntry = await _unitOfWork.Rental.GetAsync(rental.Id, filterModel);
 
       if (ExistingEntry == null)
       {

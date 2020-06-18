@@ -171,7 +171,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[3] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
                                     }
                                 }
                             },
@@ -367,7 +367,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Wifi },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[3] },
+                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
                                     }
                                 }
                             },

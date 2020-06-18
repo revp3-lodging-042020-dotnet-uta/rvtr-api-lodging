@@ -47,11 +47,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
         public async void Delete_UsingValidId()
         {
             var mocks = new Mocks();
-            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(new LodgingModel()));
+            mocks._repository.Setup(m => m.DeleteAsync(1, null)).Returns(Task.FromResult(new LodgingModel()));
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Delete(1);
+            var result = await _controller.Delete(null, 1);
             Assert.IsType(typeof(OkObjectResult), result);
         }
 
@@ -60,11 +60,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
             var mocks = new Mocks();
             LodgingModel mockResult = null;
-            mocks._repository.Setup(m => m.DeleteAsync(1)).Returns(Task.FromResult(mockResult));
+            mocks._repository.Setup(m => m.DeleteAsync(1, null)).Returns(Task.FromResult(mockResult));
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Delete(1);
+            var result = await _controller.Delete(null, 1);
             Assert.IsType(typeof(NotFoundResult), result);
         }
 
@@ -72,9 +72,8 @@ namespace RVTR.Lodging.UnitTesting.Tests
         public async void GetAll()
         {
             var mocks = new Mocks();
-            var filterModel = new LodgingSearchFilterModel();
 
-            mocks._repository.Setup(m => m.GetAsync(filterModel)).Returns(
+            mocks._repository.Setup(m => m.GetAsync(null)).Returns(
               Task.FromResult<IEnumerable<LodgingModel>>(
                 new List<LodgingModel>() { null, null }
               )
@@ -82,7 +81,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(filterModel);
+            var result = await _controller.Get(null);
             Assert.IsType(typeof(OkObjectResult), result);
 
             var items = (result as OkObjectResult).Value as IEnumerable<LodgingModel>;
@@ -94,7 +93,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
             var mocks = new Mocks();
 
-            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+            mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
               Task.FromResult<LodgingModel>(
                 new LodgingModel{ Id = 1 }
               )
@@ -102,7 +101,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(new LodgingSearchFilterModel(), 1);
+            var result = await _controller.Get(null, 1);
             Assert.IsType(typeof(OkObjectResult), result);
 
             var value = (result as OkObjectResult).Value as LodgingModel;
@@ -114,11 +113,11 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
             var mocks = new Mocks();
 
-            mocks._repository.Setup(m => m.GetAsync(1)).Returns(Task.FromResult<LodgingModel>(null));
+            mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(Task.FromResult<LodgingModel>(null));
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Get(new LodgingSearchFilterModel(), 1);
+            var result = await _controller.Get(null, 1);
             Assert.IsType(typeof(NotFoundResult), result);
         }
 
@@ -128,7 +127,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
             var mocks = new Mocks();
             var submittedModel = new LodgingModel { Id = 1 };
 
-            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+            mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
               Task.FromResult<LodgingModel>(
                 null
               )
@@ -138,7 +137,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Post(submittedModel);
+            var result = await _controller.Post(null, submittedModel);
             Assert.IsType(typeof(OkObjectResult), result);
         }
 
@@ -148,7 +147,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
             var mocks = new Mocks();
             var submittedModel = new LodgingModel { Id = 1 };
 
-            mocks._repository.Setup(m => m.GetAsync(1)).Returns(
+            mocks._repository.Setup(m => m.GetAsync(1, null)).Returns(
               Task.FromResult<LodgingModel>(
                 new LodgingModel { Id = 1 }
               )
@@ -158,7 +157,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Post(new LodgingModel { Id = 1 });
+            var result = await _controller.Post(null, new LodgingModel { Id = 1 });
             Assert.IsType(typeof(OkObjectResult), result);
 
             var value = (result as OkObjectResult).Value as LodgingModel;
@@ -174,7 +173,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
             var _controller = NewLodgingController(mocks);
 
-            var result = await _controller.Post(null);
+            var result = await _controller.Post(null, null);
             Assert.IsType(typeof(BadRequestResult), result);
         }
     }

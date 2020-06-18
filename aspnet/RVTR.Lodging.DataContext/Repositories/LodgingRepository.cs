@@ -20,25 +20,34 @@ namespace RVTR.Lodging.DataContext.Repositories
       this.dbContext = context;
     }
 
-    private IQueryable<LodgingModel> IncludeQuery()
+    private IQueryable<LodgingModel> IncludeQuery(LodgingSearchFilterModel filterModel)
     {
-      return dbContext.Lodgings
+      var query = dbContext.Lodgings.AsQueryable();
+
+      if (filterModel != null) {
+        if (filterModel.IncludeImages == true) {
+          query = query
+            .Include(x => x.Images)
+            .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images);
+        }
+      }
+
+      return query
         .Include(x => x.Location).ThenInclude(x => x.Address)
         .Include(x => x.Amenities)
-        .Include(x => x.Images)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
-        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Amenities)
         .Include(x => x.Reviews);
     }
 
-    protected override async Task<IEnumerable<LodgingModel>> GetAsync(FilterFuncs filters = null,
+    protected override async Task<IEnumerable<LodgingModel>> GetAsync(
+                                                          IQueryable<LodgingModel> query = null,
+                                                          FilterFuncs filters = null,
                                                           OrderByFunc orderBy = null,
                                                           string sortOrder = "asc",
                                                           int resultOffset = 0,
                                                           int maxResults = 50)
     {
-      var query = IncludeQuery();
       return await this.Select(query, filters, orderBy, sortOrder)
         .AsNoTracking()
         .Skip(resultOffset)
@@ -46,9 +55,9 @@ namespace RVTR.Lodging.DataContext.Repositories
         .ToListAsync();
     }
 
-    public override async Task<LodgingModel> GetAsync(int id)
+    public override async Task<LodgingModel> GetAsync(int id, LodgingSearchFilterModel filterModel)
     {
-      return await IncludeQuery()
+      return await IncludeQuery(filterModel)
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
@@ -58,7 +67,8 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       var filters = GenerateFilterFuncs(filterModel);
       var orderBy = GenerateOrderByFunc(filterModel);
-      return await GetAsync(filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+      var query = IncludeQuery(filterModel);
+      return await GetAsync(query, filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
     }
 
     private FilterFuncs GenerateFilterFuncs(LodgingSearchFilterModel filterModel)

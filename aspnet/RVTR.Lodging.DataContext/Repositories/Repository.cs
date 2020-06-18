@@ -20,8 +20,8 @@ namespace RVTR.Lodging.DataContext.Repositories
       _db = context.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity> DeleteAsync(int id) {
-      var entity = await GetAsync(id);
+    public virtual async Task<TEntity> DeleteAsync(int id, TSearchFilterModel filterModel) {
+      var entity = await GetAsync(id, filterModel);
       _db.Remove(entity);
       return entity;
     }
@@ -30,11 +30,12 @@ namespace RVTR.Lodging.DataContext.Repositories
       return (await _db.AddAsync(entry).ConfigureAwait(true)).Entity;
     }
 
-    public virtual async Task<TEntity> GetAsync(int id) => await _db.FindAsync(id).ConfigureAwait(true);
+    public virtual async Task<TEntity> GetAsync(int id, TSearchFilterModel filterModel) => await _db.FindAsync(id).ConfigureAwait(true);
 
     public abstract Task<IEnumerable<TEntity>> GetAsync(TSearchFilterModel filterModel);
 
-    protected virtual async Task<IEnumerable<TEntity>> GetAsync(List<Expression<Func<TEntity, bool>>> filters = null,
+    protected virtual async Task<IEnumerable<TEntity>> GetAsync(IQueryable<TEntity> query = null,
+                                                                List<Expression<Func<TEntity, bool>>> filters = null,
                                                                 Expression<Func<TEntity, Object>> orderBy = null,
                                                                 string sortOrder = "asc",
                                                                 int resultOffset = 0,

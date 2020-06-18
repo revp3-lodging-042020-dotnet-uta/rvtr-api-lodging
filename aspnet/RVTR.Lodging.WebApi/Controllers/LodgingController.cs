@@ -35,11 +35,12 @@ namespace RVTR.Lodging.WebApi.Controllers
         ///
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="filterModel"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromQuery] LodgingSearchFilterModel filterModel, int id)
         {
-            var obj = await _unitOfWork.Lodging.DeleteAsync(id);
+            var obj = await _unitOfWork.Lodging.DeleteAsync(id, filterModel);
 
             if (obj == null) return NotFound();
 
@@ -65,7 +66,7 @@ namespace RVTR.Lodging.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromQuery] LodgingSearchFilterModel filterModel, int id)
         {
-            var obj = await _unitOfWork.Lodging.GetAsync(id);
+            var obj = await _unitOfWork.Lodging.GetAsync(id, filterModel);
             if (obj == null) return NotFound();
             return Ok(obj);
         }
@@ -74,13 +75,14 @@ namespace RVTR.Lodging.WebApi.Controllers
         ///
         /// </summary>
         /// <param name="lodging"></param>
+        /// <param name="filterModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post(LodgingModel lodging)
+        public async Task<IActionResult> Post([FromQuery] LodgingSearchFilterModel filterModel, LodgingModel lodging)
         {
             if (lodging == null) return BadRequest();
 
-            var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id);
+            var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id, filterModel);
 
             if (ExistingEntry == null)
             {

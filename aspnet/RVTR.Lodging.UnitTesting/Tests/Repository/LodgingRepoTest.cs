@@ -65,7 +65,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         var repo = new LodgingRepository(ctx);
 
         // Add repo-specific method calls here.
-        var actual = await repo.GetAsync(1);
+        var actual = await repo.GetAsync(1, new LodgingSearchFilterModel());
 
         // Add Asserts here.
         Assert.Null(actual);
