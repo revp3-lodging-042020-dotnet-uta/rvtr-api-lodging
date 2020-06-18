@@ -17,7 +17,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// </summary>
   using OrderByFunc = Expression<Func<LodgingModel, Object>>;
 
-  public class LodgingRepository : Repository<LodgingModel, LodgingSearchFilterModel>
+  public class LodgingRepository : Repository<LodgingModel, LodgingQueryParamModel>
   {
     private LodgingContext dbContext;
 
@@ -29,14 +29,14 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// EFCore "Include" functions for including additional data in the query.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<LodgingModel> IncludeQuery(LodgingSearchFilterModel filterModel)
+    private IQueryable<LodgingModel> IncludeQuery(LodgingQueryParamModel queryParams)
     {
       var query = dbContext.Lodgings.AsQueryable();
 
-      if (filterModel != null) {
-        if (filterModel.IncludeImages == true) {
+      if (queryParams != null) {
+        if (queryParams.IncludeImages == true) {
           query = query
             .Include(x => x.Images)
             .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images);
@@ -55,64 +55,64 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// Executes a database query for a specific entity ID.
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<LodgingModel> GetAsync(int id, LodgingSearchFilterModel filterModel)
+    public override async Task<LodgingModel> GetAsync(int id, LodgingQueryParamModel queryParams)
     {
-      return await IncludeQuery(filterModel)
+      return await IncludeQuery(queryParams)
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
     }
 
     /// <summary>
-    /// Configures an executes a database query based on filtering parameters.
+    /// Configures an executes a database query based on query parameters.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingSearchFilterModel filterModel)
+    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingQueryParamModel queryParams)
     {
-      var filters = GenerateFilterFuncs(filterModel);
-      var orderBy = GenerateOrderByFunc(filterModel);
-      var query = IncludeQuery(filterModel);
-      return await GetAsync(query, filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+      var filters = GenerateFilterFuncs(queryParams);
+      var orderBy = GenerateOrderByFunc(queryParams);
+      var query = IncludeQuery(queryParams);
+      return await GetAsync(query, filters, orderBy, queryParams.SortOrder, queryParams.Offset, queryParams.Limit);
     }
 
     /// <summary>
-    /// Generates filtering functions based on user-supplied filtering parameters.
+    /// Generates filtering functions based on user-supplied query parameters.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(LodgingSearchFilterModel filterModel)
+    private FilterFuncs GenerateFilterFuncs(LodgingQueryParamModel queryParams)
     {
       var filters = new FilterFuncs();
-      filters.Add(m => m.Reviews.Average(r => r.Rating) >= filterModel.RatingAtLeast);
-      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bedrooms.Count() >= filterModel.BedRoomsAtLeast).FirstOrDefault() != null);
-      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bathrooms.Count() >= filterModel.BathsAtLeast).FirstOrDefault() != null);
+      filters.Add(m => m.Reviews.Average(r => r.Rating) >= queryParams.RatingAtLeast);
+      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bedrooms.Count() >= queryParams.BedRoomsAtLeast).FirstOrDefault() != null);
+      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bathrooms.Count() >= queryParams.BathsAtLeast).FirstOrDefault() != null);
 
       filters.Add(m => m.Rentals.Where(
                     r => r.RentalUnit.Bedrooms.Where(
-                      b => b.BedCount >= filterModel.BedsAtLeast)
+                      b => b.BedCount >= queryParams.BedsAtLeast)
                       .FirstOrDefault() != null)
                     .FirstOrDefault() != null);
 
-      if (!String.IsNullOrEmpty(filterModel.HasBedType))
+      if (!String.IsNullOrEmpty(queryParams.HasBedType))
       {
         filters.Add(m => m.Rentals.Where(
                       r => r.RentalUnit.Bedrooms.Where(
-                        b => b.BedType == filterModel.HasBedType)
+                        b => b.BedType == queryParams.HasBedType)
                         .FirstOrDefault() != null)
                       .FirstOrDefault() != null);
       }
 
-      if (!String.IsNullOrEmpty(filterModel.HasAmenity))
+      if (!String.IsNullOrEmpty(queryParams.HasAmenity))
       {
-        filters.Add(m => m.Amenities.Where(a => a.Amenity == filterModel.HasAmenity).FirstOrDefault() != null);
+        filters.Add(m => m.Amenities.Where(a => a.Amenity == queryParams.HasAmenity).FirstOrDefault() != null);
       }
 
-      if (!String.IsNullOrEmpty(filterModel.City))
+      if (!String.IsNullOrEmpty(queryParams.City))
       {
-        filters.Add(m => m.Location.Address.City.ToLower().Contains(filterModel.City.ToLower()));
+        filters.Add(m => m.Location.Address.City.ToLower().Contains(queryParams.City.ToLower()));
       }
 
       return filters;
@@ -122,13 +122,13 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// Generates ordering functions based on user-supplied data.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(LodgingSearchFilterModel filterModel)
+    private OrderByFunc GenerateOrderByFunc(LodgingQueryParamModel queryParams)
     {
-      if (!String.IsNullOrEmpty(filterModel.SortKey))
+      if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
-        switch (filterModel.SortKey)
+        switch (queryParams.SortKey)
         {
           case "Id": return (e => e.Id);
           case "Name": return (e => e.Name);

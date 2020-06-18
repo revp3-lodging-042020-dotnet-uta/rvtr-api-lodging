@@ -19,7 +19,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// </summary>
   using OrderByFunc = Expression<Func<ReviewModel, Object>>;
 
-  public class ReviewRepository : Repository<ReviewModel, ReviewSearchFilterModel>
+  public class ReviewRepository : Repository<ReviewModel, ReviewQueryParamModel>
   {
     private LodgingContext dbContext;
 
@@ -31,9 +31,9 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// EFCore "Include" functions for including additional data in the query.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<ReviewModel> IncludeQuery(ReviewSearchFilterModel filterModel)
+    private IQueryable<ReviewModel> IncludeQuery(ReviewQueryParamModel queryParams)
     {
       return dbContext.Reviews
         .Include(x => x.Lodging);
@@ -43,47 +43,47 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// Executes a database query for a specific entity ID.
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<ReviewModel> GetAsync(int id, ReviewSearchFilterModel filterModel)
+    public override async Task<ReviewModel> GetAsync(int id, ReviewQueryParamModel queryParams)
     {
-      return await IncludeQuery(filterModel)
+      return await IncludeQuery(queryParams)
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
     }
 
     /// <summary>
-    /// Configures an executes a database query based on filtering parameters.
+    /// Configures an executes a database query based on query parameters.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<IEnumerable<ReviewModel>> GetAsync(ReviewSearchFilterModel filterModel)
+    public override async Task<IEnumerable<ReviewModel>> GetAsync(ReviewQueryParamModel queryParams)
     {
-      var filters = GenerateFilterFuncs(filterModel);
-      var orderBy = GenerateOrderByFunc(filterModel);
-      var query = IncludeQuery(filterModel);
-      return await GetAsync(query, filters, orderBy, filterModel.SortOrder, filterModel.Offset, filterModel.Limit);
+      var filters = GenerateFilterFuncs(queryParams);
+      var orderBy = GenerateOrderByFunc(queryParams);
+      var query = IncludeQuery(queryParams);
+      return await GetAsync(query, filters, orderBy, queryParams.SortOrder, queryParams.Offset, queryParams.Limit);
     }
 
     /// <summary>
-    /// Generates filtering functions based on user-supplied filtering parameters.
+    /// Generates filtering functions based on user-supplied query parameters.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(ReviewSearchFilterModel filterModel)
+    private FilterFuncs GenerateFilterFuncs(ReviewQueryParamModel queryParams)
     {
       var filters = new FilterFuncs();
-      filters.Add(r => r.Rating >= filterModel.RatingAtLeast);
+      filters.Add(r => r.Rating >= queryParams.RatingAtLeast);
 
-      if (filterModel.AccountId != null)
+      if (queryParams.AccountId != null)
       {
-        filters.Add(r => r.AccountId == (int)filterModel.AccountId);
+        filters.Add(r => r.AccountId == (int)queryParams.AccountId);
       }
 
-      if (filterModel.LodgingId != null)
+      if (queryParams.LodgingId != null)
       {
-        filters.Add(r => r.LodgingId == (int)filterModel.LodgingId);
+        filters.Add(r => r.LodgingId == (int)queryParams.LodgingId);
       }
 
       return filters;
@@ -92,13 +92,13 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// Generates ordering functions based on user-supplied data.
     /// </summary>
-    /// <param name="filterModel"></param>
+    /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(ReviewSearchFilterModel filterModel)
+    private OrderByFunc GenerateOrderByFunc(ReviewQueryParamModel queryParams)
     {
-      if (!String.IsNullOrEmpty(filterModel.SortKey))
+      if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
-        switch (filterModel.SortKey)
+        switch (queryParams.SortKey)
         {
           case "Id": return (e => e.Id);
           case "AccountId": return (e => e.AccountId);

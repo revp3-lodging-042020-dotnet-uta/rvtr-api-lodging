@@ -11,8 +11,8 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// Repository class to be used as a base for concrete repositories.
   /// </summary>
   /// <typeparam name="TEntity">The entity the repository is responsible for handling</typeparam>
-  /// <typeparam name="TSearchFilterModel">The query parameter model used for processing query string</typeparam>
-  public abstract class Repository<TEntity, TSearchFilterModel> where TEntity : class where TSearchFilterModel : class
+  /// <typeparam name="TQueryParamModel">The query parameter model used for processing query string</typeparam>
+  public abstract class Repository<TEntity, TQueryParamModel> where TEntity : class where TQueryParamModel : class
   {
     public readonly DbSet<TEntity> _db;
 
@@ -25,9 +25,9 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// Delete an entity by id.
     /// </summary>
     /// <param name="id">ID of the entity</param>
-    /// <param name="filterModel">Query parameter model</param>
-    public virtual async Task<TEntity> DeleteAsync(int id, TSearchFilterModel filterModel) {
-      var entity = await GetAsync(id, filterModel);
+    /// <param name="queryParams">Query parameter model</param>
+    public virtual async Task<TEntity> DeleteAsync(int id, TQueryParamModel queryParams) {
+      var entity = await GetAsync(id, queryParams);
       _db.Remove(entity);
       return entity;
     }
@@ -43,17 +43,17 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// Gets an entity by it's ID.
     /// </summary>
-    public virtual async Task<TEntity> GetAsync(int id, TSearchFilterModel filterModel) => await _db.FindAsync(id).ConfigureAwait(true);
+    public virtual async Task<TEntity> GetAsync(int id, TQueryParamModel queryParams) => await _db.FindAsync(id).ConfigureAwait(true);
 
     /// <summary>
     /// Gets all entities based on the supplied query parameters
     /// </summary>
-    /// <param name="filterModel">Query parameter model</param>
+    /// <param name="queryParam">Query parameter model</param>
     /// <returns></returns>
-    public abstract Task<IEnumerable<TEntity>> GetAsync(TSearchFilterModel filterModel);
+    public abstract Task<IEnumerable<TEntity>> GetAsync(TQueryParamModel queryParam);
 
     /// <summary>
-    /// Used by class implementors to execute a query.
+    /// Executes a composed query.
     /// </summary>
     /// <param name="query">A queryable with .Include methods already added</param>
     /// <param name="filters">Filter functions to be applied to the query</param>

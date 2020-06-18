@@ -37,12 +37,12 @@ namespace RVTR.Lodging.WebApi.Controllers
         /// is found through the given ID
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="filterModel"></param>
+        /// <param name="queryParams"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromQuery] LodgingSearchFilterModel filterModel, int id)
+        public async Task<IActionResult> Delete([FromQuery] LodgingQueryParamModel queryParams, int id)
         {
-            var obj = await _unitOfWork.Lodging.DeleteAsync(id, filterModel);
+            var obj = await _unitOfWork.Lodging.DeleteAsync(id, queryParams);
 
             if (obj == null) return NotFound();
 
@@ -53,24 +53,24 @@ namespace RVTR.Lodging.WebApi.Controllers
 
         /// <summary>
         /// HTTP method for getting all of the lodging data
-        /// based on the given search parameter filters (inside filtermodel)
+        /// based on the given query parameters.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] LodgingSearchFilterModel filterModel)
+        public async Task<IActionResult> Get([FromQuery] LodgingQueryParamModel queryParams)
         {
-              return Ok(await _unitOfWork.Lodging.GetAsync(filterModel));
+              return Ok(await _unitOfWork.Lodging.GetAsync(queryParams));
         }
 
         /// <summary>
         /// HTTP method for getting a specific lodging entry
-        /// based on both the given ID and the search parameter filters (inside filtermodel)
+        /// based on both the given ID and the query parameters.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromQuery] LodgingSearchFilterModel filterModel, int id)
+        public async Task<IActionResult> Get([FromQuery] LodgingQueryParamModel queryParams, int id)
         {
-            var obj = await _unitOfWork.Lodging.GetAsync(id, filterModel);
+            var obj = await _unitOfWork.Lodging.GetAsync(id, queryParams);
             if (obj == null) return NotFound();
             return Ok(obj);
         }
@@ -82,14 +82,14 @@ namespace RVTR.Lodging.WebApi.Controllers
         /// If there is an existing model with the given ID, then update is called.
         /// </summary>
         /// <param name="lodging"></param>
-        /// <param name="filterModel"></param>
+        /// <param name="queryParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] LodgingSearchFilterModel filterModel, LodgingModel lodging)
+        public async Task<IActionResult> Post([FromQuery] LodgingQueryParamModel queryParams, LodgingModel lodging)
         {
             if (lodging == null) return BadRequest();
 
-            var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id, filterModel);
+            var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id, queryParams);
 
             if (ExistingEntry == null)
             {
