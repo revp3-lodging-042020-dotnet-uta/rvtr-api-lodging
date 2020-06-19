@@ -33,8 +33,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for deleting a rental entry where the entry
-    /// is found through the given ID
+    /// Delete rental information based on ID.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="queryParams"></param>
@@ -51,8 +50,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for getting all of the rental data
-    /// based on the given query parameters.
+    /// Get all rental information.
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -62,8 +60,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for getting a specific rental entry
-    /// based on both the given ID and the query parameters.
+    /// Get rental information based on ID.
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id}")]
@@ -75,8 +72,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for inserting and updating rental entries
-    /// based on the given rental model's ID.
+    /// Updates or inserts rental information.
     /// If there is no existing model with the given ID, then insertion is called.
     /// If there is an existing model with the given ID, then update is called.
     /// </summary>

@@ -33,8 +33,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for deleting a review entry where the entry
-    /// is found through the given ID
+    /// Delete a review based on ID.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="queryParams"></param>
@@ -52,8 +51,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for getting all of the review data
-    /// based on the given query parameters.
+    /// Get all review information.
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -63,8 +61,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for getting a specific review entry
-    /// based on both the given ID and the query parameters.
+    /// Get a specific review based on ID.
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id}")]
@@ -76,8 +73,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     }
 
     /// <summary>
-    /// HTTP method for inserting and updating review entries
-    /// based on the given review model's ID.
+    /// Update or insert a review.
     /// If there is no existing model with the given ID, then insertion is called.
     /// If there is an existing model with the given ID, then update is called.
     /// </summary>
