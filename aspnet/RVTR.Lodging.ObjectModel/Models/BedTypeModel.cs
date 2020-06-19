@@ -4,17 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace RVTR.Lodging.ObjectModel.Models
 {
   /// <summary>
-  /// Types of beds in a bedroom.
-  /// </summary>
-  public static class BedType
-  {
-    public const string King = "King";
-    public const string Queen = "Queen";
-
-
-  }
-
-  /// <summary>
   /// Represents a type of bed.
   /// </summary>
   public class BedTypeModel : IValidatableObject

@@ -15,7 +15,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         new BedTypeModel()
         {
           Id = 0,
-          BedType = BedType.King,
+          BedType = "King",
         }
       }
     };

@@ -29,9 +29,9 @@ namespace RVTR.Lodging.DataContext
                     Longitude = 0,
                 },
                 Amenities = new List<AmenityModel>() {
-                    new AmenityModel() { Amenity = AmenityType.Wifi },
-                    new AmenityModel() { Amenity = AmenityType.Coffee },
-                    new AmenityModel() { Amenity = AmenityType.Pool },
+                    new AmenityModel() { Amenity = "Wifi" },
+                    new AmenityModel() { Amenity = "Coffee" },
+                    new AmenityModel() { Amenity = "Pool" },
                 },
                 Images = new List<ImageModel>() {
                     new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/lodge-12.jpg" },
@@ -51,26 +51,26 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 2,
                                     RoomNumber = "100",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-05-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 2,
                                     RoomNumber = "101",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-06-square.jpg" },
@@ -128,9 +128,9 @@ namespace RVTR.Lodging.DataContext
                     Longitude = 0,
                 },
                 Amenities = new List<AmenityModel>() {
-                    new AmenityModel() { Amenity = AmenityType.Wifi },
-                    new AmenityModel() { Amenity = AmenityType.Coffee },
-                    new AmenityModel() { Amenity = AmenityType.Pool },
+                    new AmenityModel() { Amenity = "Wifi" },
+                    new AmenityModel() { Amenity = "Coffee" },
+                    new AmenityModel() { Amenity = "Pool" },
                 },
                 Images = new List<ImageModel>() {
                     new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-09.jpg" },
@@ -150,25 +150,25 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.Queen },
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
                                     BedCount = 1,
                                     RoomNumber = "200",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-07-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 2,
                                     RoomNumber = "202",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-08-square.jpg" },
@@ -226,9 +226,9 @@ namespace RVTR.Lodging.DataContext
                     Longitude = 0,
                 },
                 Amenities = new List<AmenityModel>() {
-                    new AmenityModel() { Amenity = AmenityType.Wifi },
-                    new AmenityModel() { Amenity = AmenityType.Coffee },
-                    new AmenityModel() { Amenity = AmenityType.Pool },
+                    new AmenityModel() { Amenity = "Wifi" },
+                    new AmenityModel() { Amenity = "Coffee" },
+                    new AmenityModel() { Amenity = "Pool" },
                 },
                 Images = new List<ImageModel>() {
                     new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-06.jpg" },
@@ -248,26 +248,26 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 3,
                                     RoomNumber = "105",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-09-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 2,
                                     RoomNumber = "106",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
-                                        new AmenityModel() { Amenity = AmenityType.Pool },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-11-square.jpg" },
@@ -325,9 +325,9 @@ namespace RVTR.Lodging.DataContext
                     Longitude = 0,
                 },
                 Amenities = new List<AmenityModel>() {
-                    new AmenityModel() { Amenity = AmenityType.Wifi },
-                    new AmenityModel() { Amenity = AmenityType.Coffee },
-                    new AmenityModel() { Amenity = AmenityType.Pool },
+                    new AmenityModel() { Amenity = "Wifi" },
+                    new AmenityModel() { Amenity = "Coffee" },
+                    new AmenityModel() { Amenity = "Pool" },
                 },
                 Images = new List<ImageModel>() {
                     new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/lodge-13.jpg" },
@@ -347,24 +347,24 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 3,
                                     RoomNumber = "10",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-14-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = new BedTypeModel() { BedType = BedType.King },
+                                    BedType = new BedTypeModel() { BedType = "King" },
                                     BedCount = 2,
                                     RoomNumber = "11",
                                     Amenities = new List<AmenityModel>() {
-                                        new AmenityModel() { Amenity = AmenityType.Coffee },
-                                        new AmenityModel() { Amenity = AmenityType.Wifi },
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-17-square.jpg" },

@@ -24,8 +24,8 @@ namespace RVTR.Lodging.UnitTesting.Tests
     public void Test_GenerateFilterFuncs()
     {
       var queryParams = new RentalQueryParamsModel();
-      queryParams.HasBedType = BedType.King;
-      queryParams.HasAmenity = AmenityType.Coffee;
+      queryParams.HasBedType = "King";
+      queryParams.HasAmenity = "Coffee";
 
       var funcs = RentalRepository.GenerateFilterFuncs(queryParams);
 
