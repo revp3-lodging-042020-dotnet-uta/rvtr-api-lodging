@@ -46,6 +46,7 @@ namespace RVTR.Lodging.DataContext.Repositories
         .Include(x => x.Amenities)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bathrooms)
         .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Amenities)
+        .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.BedType)
         .Include(x => x.Reviews);
     }
 
@@ -101,7 +102,7 @@ namespace RVTR.Lodging.DataContext.Repositories
       {
         filters.Add(m => m.Rentals.FirstOrDefault(
                       r => r.RentalUnit.Bedrooms.FirstOrDefault(
-                        b => b.BedType == queryParams.HasBedType) != null) != null);
+                        b => b.BedType.BedType == queryParams.HasBedType) != null) != null);
       }
 
       if (!String.IsNullOrEmpty(queryParams.HasAmenity))

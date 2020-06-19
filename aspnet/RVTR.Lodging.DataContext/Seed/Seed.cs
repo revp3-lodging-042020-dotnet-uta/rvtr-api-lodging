@@ -51,7 +51,7 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 2,
                                     RoomNumber = "100",
                                     Amenities = new List<AmenityModel>() {
@@ -64,7 +64,7 @@ namespace RVTR.Lodging.DataContext
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 2,
                                     RoomNumber = "101",
                                     Amenities = new List<AmenityModel>() {
@@ -150,7 +150,7 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = BedType.Queen,
+                                    BedType = new BedTypeModel() { BedType = BedType.Queen },
                                     BedCount = 1,
                                     RoomNumber = "200",
                                     Amenities = new List<AmenityModel>() {
@@ -162,7 +162,7 @@ namespace RVTR.Lodging.DataContext
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 2,
                                     RoomNumber = "202",
                                     Amenities = new List<AmenityModel>() {
@@ -248,7 +248,7 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 3,
                                     RoomNumber = "105",
                                     Amenities = new List<AmenityModel>() {
@@ -261,7 +261,7 @@ namespace RVTR.Lodging.DataContext
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 2,
                                     RoomNumber = "106",
                                     Amenities = new List<AmenityModel>() {
@@ -347,7 +347,7 @@ namespace RVTR.Lodging.DataContext
                             RentalUnitType = "Rental unit",
                             Bedrooms = new List<BedroomModel>() {
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 3,
                                     RoomNumber = "10",
                                     Amenities = new List<AmenityModel>() {
@@ -359,7 +359,7 @@ namespace RVTR.Lodging.DataContext
                                     }
                                 },
                                 new BedroomModel() {
-                                    BedType = BedType.King,
+                                    BedType = new BedTypeModel() { BedType = BedType.King },
                                     BedCount = 2,
                                     RoomNumber = "11",
                                     Amenities = new List<AmenityModel>() {
