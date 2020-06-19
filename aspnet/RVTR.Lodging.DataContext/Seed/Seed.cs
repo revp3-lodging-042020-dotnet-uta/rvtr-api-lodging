@@ -34,13 +34,13 @@ namespace RVTR.Lodging.DataContext
                     new AmenityModel() { Amenity = AmenityType.Pool },
                 },
                 Images = new List<ImageModel>() {
-                    new ImageModel() { Image = SeedImages.Images()[0] },
-                    new ImageModel() { Image = SeedImages.Images()[1] },
-                    new ImageModel() { Image = SeedImages.Images()[2] },
-                    new ImageModel() { Image = SeedImages.Images()[3] },
-                    new ImageModel() { Image = SeedImages.Images()[4] },
-                    new ImageModel() { Image = SeedImages.Images()[5] },
-                    new ImageModel() { Image = SeedImages.Images()[6] },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/lodge-12.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-01.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-02.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-03.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-04.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-05.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-06.jpg" },
                 },
                 Rentals = new List<RentalModel>() {
                     new RentalModel() {
@@ -60,7 +60,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-05-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
@@ -73,7 +73,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-06-square.jpg" },
                                     }
                                 }
                             },
@@ -133,13 +133,13 @@ namespace RVTR.Lodging.DataContext
                     new AmenityModel() { Amenity = AmenityType.Pool },
                 },
                 Images = new List<ImageModel>() {
-                    new ImageModel() { Image = SeedImages.Images()[7] },
-                    new ImageModel() { Image = SeedImages.Images()[8] },
-                    new ImageModel() { Image = SeedImages.Images()[9] },
-                    new ImageModel() { Image = SeedImages.Images()[10] },
-                    new ImageModel() { Image = SeedImages.Images()[11] },
-                    new ImageModel() { Image = SeedImages.Images()[12] },
-                    new ImageModel() { Image = SeedImages.Images()[13] },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-09.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-01.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-02.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-03.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-04.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-08.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-09.jpg" },
                 },
                 Rentals = new List<RentalModel>() {
                     new RentalModel() {
@@ -158,7 +158,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[2] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-07-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
@@ -171,7 +171,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-08-square.jpg" },
                                     }
                                 }
                             },
@@ -231,13 +231,13 @@ namespace RVTR.Lodging.DataContext
                     new AmenityModel() { Amenity = AmenityType.Pool },
                 },
                 Images = new List<ImageModel>() {
-                    new ImageModel() { Image = SeedImages.Images()[14] },
-                    new ImageModel() { Image = SeedImages.Images()[15] },
-                    new ImageModel() { Image = SeedImages.Images()[16] },
-                    new ImageModel() { Image = SeedImages.Images()[17] },
-                    new ImageModel() { Image = SeedImages.Images()[18] },
-                    new ImageModel() { Image = SeedImages.Images()[19] },
-                    new ImageModel() { Image = SeedImages.Images()[20] },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-06.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-07.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-08.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/camp-08.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-10.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-11.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-12.jpg" },
                 },
                 Rentals = new List<RentalModel>() {
                     new RentalModel() {
@@ -257,7 +257,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[0] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-09-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
@@ -270,7 +270,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Pool },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-11-square.jpg" },
                                     }
                                 }
                             },
@@ -330,13 +330,13 @@ namespace RVTR.Lodging.DataContext
                     new AmenityModel() { Amenity = AmenityType.Pool },
                 },
                 Images = new List<ImageModel>() {
-                    new ImageModel() { Image = SeedImages.Images()[21] },
-                    new ImageModel() { Image = SeedImages.Images()[22] },
-                    new ImageModel() { Image = SeedImages.Images()[23] },
-                    new ImageModel() { Image = SeedImages.Images()[24] },
-                    new ImageModel() { Image = SeedImages.Images()[25] },
-                    new ImageModel() { Image = SeedImages.Images()[26] },
-                    new ImageModel() { Image = SeedImages.Images()[27] },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/lodge-13.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-13.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-14.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-15.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-16.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-17.jpg" },
+                    new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-18.jpg" },
                 },
                 Rentals = new List<RentalModel>() {
                     new RentalModel() {
@@ -355,7 +355,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Wifi },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[2] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-14-square.jpg" },
                                     }
                                 },
                                 new BedroomModel() {
@@ -367,7 +367,7 @@ namespace RVTR.Lodging.DataContext
                                         new AmenityModel() { Amenity = AmenityType.Wifi },
                                     },
                                     Images = new List<ImageModel>() {
-                                        new ImageModel() { Image = SeedImages.ImagesSquare()[1] },
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-17-square.jpg" },
                                     }
                                 }
                             },
