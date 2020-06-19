@@ -83,7 +83,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <param name="filters">Filter functions to be applied</param>
     /// <param name="orderBy">Ordering function to be applied</param>
     /// <param name="sortOrder">The sort order ("asc" or "desc"></param>
-    private IQueryable<TEntity> Apply(IQueryable<TEntity> query,
+    protected IQueryable<TEntity> Apply(IQueryable<TEntity> query,
                                       List<Expression<Func<TEntity, bool>>> filters = null,
                                       Expression<Func<TEntity, Object>> orderBy = null,
                                       string sortOrder = "asc")

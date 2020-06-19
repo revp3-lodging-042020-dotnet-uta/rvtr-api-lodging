@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RVTR.Lodging.DataContext;
@@ -8,7 +12,32 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-    public class RepositoryTest
+  public class DummyModel {
+    public int Id { get; set; }
+  }
+  public class DummyQueryParamsModel {}
+  public class ConcreteRepository : Repository<DummyModel, DummyQueryParamsModel>
+  {
+    private readonly LodgingContext dbContext;
+    public ConcreteRepository(LodgingContext context) : base(context)
+    {
+      this.dbContext = context;
+    }
+
+    public override Task<IEnumerable<DummyModel>> GetAsync(DummyQueryParamsModel queryParam) {
+      return null;
+    }
+
+    public IQueryable<DummyModel> RunApplyTest(IQueryable<DummyModel> query,
+                                      List<Expression<Func<DummyModel, bool>>> filters = null,
+                                      Expression<Func<DummyModel, Object>> orderBy = null,
+                                      string sortOrder = "asc")
+    {
+      return this.Apply(query, filters, orderBy, sortOrder);
+    }
+  }
+
+  public class RepositoryTest
   {
     private static readonly SqliteConnection _connection = new SqliteConnection("Data Source=:memory:");
     private static readonly DbContextOptions<LodgingContext> _options = new DbContextOptionsBuilder<LodgingContext>().UseSqlite(_connection).Options;
@@ -22,6 +51,15 @@ namespace RVTR.Lodging.UnitTesting.Tests
         new ReviewModel() { Id = 1 }
       }
     };
+
+    private async Task<DbContextOptions<LodgingContext>> NewDb()
+    {
+      var connection = new SqliteConnection("Data Source=:memory:");
+      await connection.OpenAsync();
+      return new DbContextOptionsBuilder<LodgingContext>()
+          .UseSqlite(connection)
+          .Options;
+    }
 
     [Theory]
     [MemberData(nameof(_records))]
@@ -277,6 +315,46 @@ namespace RVTR.Lodging.UnitTesting.Tests
       finally
       {
         await _connection.CloseAsync();
+      }
+    }
+
+    [Fact]
+    public async void Test_Apply_Sort_Order()
+    {
+      var dbOptions = await NewDb();
+
+      using (var ctx = new LodgingContext(dbOptions))
+      {
+          await ctx.Database.EnsureCreatedAsync();
+          await ctx.SaveChangesAsync();
+      }
+
+      using (var ctx = new LodgingContext(dbOptions))
+      {
+        var query = new List<DummyModel>().AsQueryable();
+        var filters = new List<Expression<Func<DummyModel, bool>>>();
+        var repo = new ConcreteRepository(ctx);
+        repo.RunApplyTest(query, filters, (e => e.Id), "asc");
+        repo.RunApplyTest(query, filters, (e => e.Id), "desc");
+        repo.RunApplyTest(query, filters, (e => e.Id), "default");
+      }
+    }
+
+    [Fact]
+    public async void Test_GetAsyncById()
+    {
+      var dbOptions = await NewDb();
+
+      using (var ctx = new LodgingContext(dbOptions))
+      {
+          await ctx.Database.EnsureCreatedAsync();
+          await ctx.SaveChangesAsync();
+      }
+
+      using (var ctx = new LodgingContext(dbOptions))
+      {
+        var repo = new ConcreteRepository(ctx);
+        var _ = repo.GetAsync(1, new DummyQueryParamsModel());
       }
     }
   }

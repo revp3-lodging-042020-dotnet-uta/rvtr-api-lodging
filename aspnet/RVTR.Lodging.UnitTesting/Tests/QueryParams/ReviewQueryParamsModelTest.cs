@@ -5,38 +5,33 @@ namespace RVTR.Lodging.UnitTesting.Tests
 {
   public class ReviewQueryParamsModelTest
   {
-    [Fact]
-    public void Test_Rating_Clamp()
+    [Theory]
+    [InlineData("RatingAtLeast", 0, 10)]
+    public void Test_Clamped_Props_Double(string propName, double min, double max)
     {
       var queryParams = new ReviewQueryParamsModel();
-      queryParams.RatingAtLeast = -1;
-      Assert.Equal(0, queryParams.RatingAtLeast);
+      var prop = queryParams.GetType().GetProperty(propName);
 
-      queryParams.RatingAtLeast = 999;
-      Assert.Equal(10, queryParams.RatingAtLeast);
+      prop.SetValue(queryParams, -99999999);
+      Assert.Equal(min, prop.GetValue(queryParams));
 
-      queryParams.RatingAtLeast = 3;
-      Assert.Equal(3, queryParams.RatingAtLeast);
+      if (min != max)
+      {
+        prop.SetValue(queryParams, 99999999);
+        Assert.Equal(max, prop.GetValue(queryParams));
+      }
     }
 
-    [Fact]
-    public void Test_LodgingId()
+    [Theory]
+    [InlineData("LodgingId")]
+    [InlineData("AccountId")]
+    public void Test_Trivial_NullableInt_Props(string propName)
     {
       var queryParams = new ReviewQueryParamsModel();
-      Assert.Null(queryParams.LodgingId);
-
-      queryParams.LodgingId = 0;
-      Assert.Equal(0, queryParams.LodgingId);
+      var prop = queryParams.GetType().GetProperty(propName);
+      prop.SetValue(queryParams, 1);
+      Assert.Equal(1, prop.GetValue(queryParams));
     }
 
-    [Fact]
-    public void Test_AccountId()
-    {
-      var queryParams = new ReviewQueryParamsModel();
-      Assert.Null(queryParams.AccountId);
-
-      queryParams.AccountId = 0;
-      Assert.Equal(0, queryParams.AccountId);
-    }
   }
 }

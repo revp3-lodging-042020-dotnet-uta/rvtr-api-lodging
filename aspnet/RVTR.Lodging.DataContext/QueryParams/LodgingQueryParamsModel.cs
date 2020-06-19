@@ -24,16 +24,6 @@ namespace RVTR.Lodging.DataContext
             }
             set { _ratingAtLeast = value; }
         }
-
-        private int _searchRadius;
-        /// <summary>
-        /// Search radius (in miles).
-        /// </summary>
-        public int SearchRadius
-        {
-            get { return _searchRadius < 0 ? 1 : _searchRadius; }
-            set { _searchRadius = value; }
-        }
         
         private int _bedsAtLeast;
         /// <summary>

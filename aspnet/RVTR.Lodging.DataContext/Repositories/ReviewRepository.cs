@@ -71,7 +71,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(ReviewQueryParamsModel queryParams)
+    public static FilterFuncs GenerateFilterFuncs(ReviewQueryParamsModel queryParams)
     {
       var filters = new FilterFuncs();
       filters.Add(r => r.Rating >= queryParams.RatingAtLeast);
@@ -94,7 +94,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(ReviewQueryParamsModel queryParams)
+    public static OrderByFunc GenerateOrderByFunc(ReviewQueryParamsModel queryParams)
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {

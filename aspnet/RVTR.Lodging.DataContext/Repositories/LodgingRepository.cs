@@ -81,7 +81,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(LodgingQueryParamsModel queryParams)
+    public static FilterFuncs GenerateFilterFuncs(LodgingQueryParamsModel queryParams)
     {
       // The funcs created here simply return true if there is an element matching
       // the filter parameter, or false if the element does not match. We use a
@@ -123,7 +123,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(LodgingQueryParamsModel queryParams)
+    public static OrderByFunc GenerateOrderByFunc(LodgingQueryParamsModel queryParams)
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
@@ -157,6 +157,5 @@ namespace RVTR.Lodging.DataContext.Repositories
       }
       return null;
     }
-
   }
 }

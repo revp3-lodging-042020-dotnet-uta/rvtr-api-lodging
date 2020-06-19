@@ -16,3 +16,8 @@ appsettings*
 # Visual studio
 **/.vs
 **/.vs/
+
+**/justfile
+**/coverage.opencover.xml
+
+**/report

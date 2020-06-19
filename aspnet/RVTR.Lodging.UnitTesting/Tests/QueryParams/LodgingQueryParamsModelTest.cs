@@ -5,51 +5,62 @@ namespace RVTR.Lodging.UnitTesting.Tests
 {
   public class LodgingQueryParamsModelTest
   {
-    [Fact]
-    public void Test_Rating_Clamp()
+    [Theory]
+    [InlineData("BedsAtLeast", 0, 0)]
+    [InlineData("BathsAtLeast", 0, 0)]
+    [InlineData("BedRoomsAtLeast", 0, 0)]
+    public void Test_Clamped_Props_Int(string propName, int min, int max)
     {
       var queryParams = new LodgingQueryParamsModel();
-      queryParams.RatingAtLeast = -1;
-      Assert.Equal(0, queryParams.RatingAtLeast);
+      var prop = queryParams.GetType().GetProperty(propName);
 
-      queryParams.RatingAtLeast = 999;
-      Assert.Equal(10, queryParams.RatingAtLeast);
+      prop.SetValue(queryParams, -99999999);
+      Assert.Equal(min, prop.GetValue(queryParams));
 
-      queryParams.RatingAtLeast = 3;
-      Assert.Equal(3, queryParams.RatingAtLeast);
+      if (min != max)
+      {
+        prop.SetValue(queryParams, 99999999);
+        Assert.Equal(max, prop.GetValue(queryParams));
+      }
     }
 
-    [Fact]
-    public void Test_SearchRadius_Clamp()
+    [Theory]
+    [InlineData("RatingAtLeast", 0, 10)]
+    public void Test_Clamped_Props_Double(string propName, double min, double max)
     {
       var queryParams = new LodgingQueryParamsModel();
-      queryParams.SearchRadius = -1;
-      Assert.Equal(1, queryParams.SearchRadius);
+      var prop = queryParams.GetType().GetProperty(propName);
 
-      queryParams.SearchRadius = 999;
-      Assert.Equal(999, queryParams.SearchRadius);
+      prop.SetValue(queryParams, -99999999);
+      Assert.Equal(min, prop.GetValue(queryParams));
+
+      if (min != max)
+      {
+        prop.SetValue(queryParams, 99999999);
+        Assert.Equal(max, prop.GetValue(queryParams));
+      }
     }
 
-    [Fact]
-    public void Test_BedsAtLeast_Clamp()
+    [Theory]
+    [InlineData("City")]
+    [InlineData("HasAmenity")]
+    [InlineData("HasBedType")]
+    public void Test_Trivial_String_Props(string propName)
     {
       var queryParams = new LodgingQueryParamsModel();
-      queryParams.BedsAtLeast = -1;
-      Assert.Equal(0, queryParams.BedsAtLeast);
-
-      queryParams.BedsAtLeast = 999;
-      Assert.Equal(999, queryParams.BedsAtLeast);
+      var prop = queryParams.GetType().GetProperty(propName);
+      prop.SetValue(queryParams, "test");
+      Assert.Equal("test", prop.GetValue(queryParams));
     }
 
-    [Fact]
-    public void Test_BathsAtLeast_Clamp()
+    [Theory]
+    [InlineData("IncludeImages")]
+    public void Test_Trivial_Bool_Props(string propName)
     {
       var queryParams = new LodgingQueryParamsModel();
-      queryParams.BathsAtLeast = -1;
-      Assert.Equal(0, queryParams.BathsAtLeast);
-
-      queryParams.BathsAtLeast = 999;
-      Assert.Equal(999, queryParams.BathsAtLeast);
+      var prop = queryParams.GetType().GetProperty(propName);
+      prop.SetValue(queryParams, true);
+      Assert.Equal(true, prop.GetValue(queryParams));
     }
 
   }

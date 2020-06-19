@@ -4,6 +4,7 @@ using RVTR.Lodging.DataContext;
 using RVTR.Lodging.DataContext.Repositories;
 using Xunit;
 using System.Threading.Tasks;
+using RVTR.Lodging.ObjectModel.Models;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
@@ -19,7 +20,61 @@ namespace RVTR.Lodging.UnitTesting.Tests
           .Options;
     }
 
-    // Sample test if there is LodgingRepo specific functionality to test.
+    [Fact]
+    public void Test_GenerateFilterFuncs()
+    {
+      var queryParams = new RentalQueryParamsModel();
+      queryParams.HasBedType = BedType.King;
+      queryParams.HasAmenity = AmenityType.Coffee;
+
+      var funcs = RentalRepository.GenerateFilterFuncs(queryParams);
+
+      // 3 filters are always added, +2 more based on params.
+      Assert.Equal(5, funcs.Count);
+    }
+
+    [Theory]
+    [InlineData("Id")]
+    [InlineData("Name")]
+    [InlineData("Description")]
+
+    [InlineData("Beds")]
+    [InlineData("Bedrooms")]
+    [InlineData("Bathrooms")]
+
+    [InlineData("Occupancy")]
+    public void Test_GenerateOrderByFunc(string sortKey)
+    {
+      var queryParams = new RentalQueryParamsModel();
+      queryParams.SortKey = sortKey;
+
+      var orderByFunc = RentalRepository.GenerateOrderByFunc(queryParams);
+
+      Assert.NotNull(orderByFunc);
+    }
+
+    [Fact]
+    public void Test_GenerateOrderByFunc_InvalidKey()
+    {
+      var queryParams = new RentalQueryParamsModel();
+      queryParams.SortKey = "missing";
+
+      var orderByFunc = RentalRepository.GenerateOrderByFunc(queryParams);
+
+      Assert.Null(orderByFunc);
+    }
+
+    [Fact]
+    public void Test_GenerateOrderByFunc_EmptyKey()
+    {
+      var queryParams = new RentalQueryParamsModel();
+
+      var orderByFunc = RentalRepository.GenerateOrderByFunc(queryParams);
+
+      Assert.Null(orderByFunc);
+    }
+
+
     [Fact]
     public async void Test_RentalRepo_GetAsync()
     {
@@ -29,19 +84,14 @@ namespace RVTR.Lodging.UnitTesting.Tests
       {
         await ctx.Database.EnsureCreatedAsync();
         await ctx.SaveChangesAsync();
-
-        // Add repo-specific setup here.
-        await ctx.SaveChangesAsync();
       }
 
       using (var ctx = new LodgingContext(dbOptions))
       {
         var repo = new RentalRepository(ctx);
 
-        // Add repo-specific method calls here.
         var actual = await repo.GetAsync(new RentalQueryParamsModel());
 
-        // Add Asserts here.
         Assert.Empty(actual);
       }
     }
@@ -55,19 +105,14 @@ namespace RVTR.Lodging.UnitTesting.Tests
       {
         await ctx.Database.EnsureCreatedAsync();
         await ctx.SaveChangesAsync();
-
-        // Add repo-specific setup here.
-        await ctx.SaveChangesAsync();
       }
 
       using (var ctx = new LodgingContext(dbOptions))
       {
         var repo = new RentalRepository(ctx);
 
-        // Add repo-specific method calls here.
         var actual = await repo.GetAsync(1, new RentalQueryParamsModel());
 
-        // Add Asserts here.
         Assert.Null(actual);
       }
     }
