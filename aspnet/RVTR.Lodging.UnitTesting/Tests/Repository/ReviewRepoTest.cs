@@ -39,7 +39,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         var repo = new ReviewRepository(ctx);
 
         // Add repo-specific method calls here.
-        var actual = await repo.GetAsync(new ReviewQueryParamModel());
+        var actual = await repo.GetAsync(new ReviewQueryParamsModel());
 
         // Add Asserts here.
         Assert.Empty(actual);
@@ -65,7 +65,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         var repo = new ReviewRepository(ctx);
 
         // Add repo-specific method calls here.
-        var actual = await repo.GetAsync(1, new ReviewQueryParamModel());
+        var actual = await repo.GetAsync(1, new ReviewQueryParamsModel());
 
         // Add Asserts here.
         Assert.Null(actual);

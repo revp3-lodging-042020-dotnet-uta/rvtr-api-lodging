@@ -3,12 +3,12 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class ReviewQueryParamModelTest
+  public class ReviewQueryParamsModelTest
   {
     [Fact]
     public void Test_Rating_Clamp()
     {
-      var queryParams = new ReviewQueryParamModel();
+      var queryParams = new ReviewQueryParamsModel();
       queryParams.RatingAtLeast = -1;
       Assert.Equal(0, queryParams.RatingAtLeast);
 
@@ -22,7 +22,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_LodgingId()
     {
-      var queryParams = new ReviewQueryParamModel();
+      var queryParams = new ReviewQueryParamsModel();
       Assert.Null(queryParams.LodgingId);
 
       queryParams.LodgingId = 0;
@@ -32,7 +32,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_AccountId()
     {
-      var queryParams = new ReviewQueryParamModel();
+      var queryParams = new ReviewQueryParamsModel();
       Assert.Null(queryParams.AccountId);
 
       queryParams.AccountId = 0;

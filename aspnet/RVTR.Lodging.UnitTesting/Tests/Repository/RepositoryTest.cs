@@ -44,7 +44,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var lodgings = new LodgingRepository(ctx);
 
-          await lodgings.DeleteAsync(1, new LodgingQueryParamModel());
+          await lodgings.DeleteAsync(1, new LodgingQueryParamsModel());
           await ctx.SaveChangesAsync();
 
           Assert.Empty(await ctx.Lodgings.ToListAsync());
@@ -54,7 +54,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var rentals = new RentalRepository(ctx);
 
-          await rentals.DeleteAsync(1, new RentalQueryParamModel());
+          await rentals.DeleteAsync(1, new RentalQueryParamsModel());
           await ctx.SaveChangesAsync();
 
           Assert.Empty(await ctx.Rentals.ToListAsync());
@@ -64,7 +64,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var reviews = new ReviewRepository(ctx);
 
-          await reviews.DeleteAsync(1, new ReviewQueryParamModel());
+          await reviews.DeleteAsync(1, new ReviewQueryParamsModel());
           await ctx.SaveChangesAsync();
 
           Assert.Empty(await ctx.Reviews.ToListAsync());
@@ -141,7 +141,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var lodgings = new LodgingRepository(ctx);
 
-          var actual = await lodgings.GetAsync(new LodgingQueryParamModel());
+          var actual = await lodgings.GetAsync(new LodgingQueryParamsModel());
 
           Assert.Empty(actual);
         }
@@ -150,7 +150,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var rentals = new RentalRepository(ctx);
 
-          var actual = await rentals.GetAsync(new RentalQueryParamModel());
+          var actual = await rentals.GetAsync(new RentalQueryParamsModel());
 
           Assert.Empty(actual);
         }
@@ -159,7 +159,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var reviews = new ReviewRepository(ctx);
 
-          var actual = await reviews.GetAsync(new ReviewQueryParamModel());
+          var actual = await reviews.GetAsync(new ReviewQueryParamsModel());
 
           Assert.Empty(actual);
         }
@@ -186,7 +186,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var lodgings = new LodgingRepository(ctx);
 
-          var actual = await lodgings.GetAsync(1, new LodgingQueryParamModel());
+          var actual = await lodgings.GetAsync(1, new LodgingQueryParamsModel());
 
           Assert.Null(actual);
         }
@@ -195,7 +195,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var rentals = new RentalRepository(ctx);
 
-          var actual = await rentals.GetAsync(1, new RentalQueryParamModel());
+          var actual = await rentals.GetAsync(1, new RentalQueryParamsModel());
 
           Assert.Null(actual);
         }
@@ -204,7 +204,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
         {
           var reviews = new ReviewRepository(ctx);
 
-          var actual = await reviews.GetAsync(1, new ReviewQueryParamModel());
+          var actual = await reviews.GetAsync(1, new ReviewQueryParamsModel());
 
           Assert.Null(actual);
         }

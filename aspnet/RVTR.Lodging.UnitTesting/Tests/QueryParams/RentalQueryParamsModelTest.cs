@@ -3,12 +3,12 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class RentalQueryParamModelTest
+  public class RentalQueryParamsModelTest
   {
     [Fact]
     public void Test_BedsAtLeast_Clamp()
     {
-      var queryParams = new RentalQueryParamModel();
+      var queryParams = new RentalQueryParamsModel();
       queryParams.BedsAtLeast = -1;
       Assert.Equal(0, queryParams.BedsAtLeast);
 
@@ -19,7 +19,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_BathsAtLeast_Clamp()
     {
-      var queryParams = new RentalQueryParamModel();
+      var queryParams = new RentalQueryParamsModel();
       queryParams.BathsAtLeast = -1;
       Assert.Equal(0, queryParams.BathsAtLeast);
 

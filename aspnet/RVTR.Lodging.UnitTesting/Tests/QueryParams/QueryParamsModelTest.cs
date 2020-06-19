@@ -3,13 +3,13 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-    public class QueryParamModelTest
+    public class QueryParamsModelTest
   {
 
     [Fact]
     public void Test_Limit_Clamp()
     {
-      var queryParams = new QueryParamModel();
+      var queryParams = new QueryParamsModel();
       queryParams.Limit = -1;
       Assert.Equal(50, queryParams.Limit);
 
@@ -23,7 +23,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_Offset_Clamp()
     {
-      var queryParams = new QueryParamModel();
+      var queryParams = new QueryParamsModel();
       queryParams.Offset = -1;
       Assert.Equal(0, queryParams.Offset);
 
@@ -34,7 +34,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_SortOrder_Keywords()
     {
-      var queryParams = new QueryParamModel();
+      var queryParams = new QueryParamsModel();
       queryParams.SortOrder = null;
       Assert.Equal("asc", queryParams.SortOrder);
 

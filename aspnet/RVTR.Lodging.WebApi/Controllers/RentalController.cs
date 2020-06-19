@@ -40,7 +40,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="queryParams"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromQuery] RentalQueryParamModel queryParams, int id)
+    public async Task<IActionResult> Delete([FromQuery] RentalQueryParamsModel queryParams, int id)
     {
         var obj = await _unitOfWork.Rental.DeleteAsync(id, queryParams);
         if (obj == null) return NotFound();
@@ -56,7 +56,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] RentalQueryParamModel queryParams)
+    public async Task<IActionResult> Get([FromQuery] RentalQueryParamsModel queryParams)
     {
       return Ok(await _unitOfWork.Rental.GetAsync(queryParams));
     }
@@ -67,7 +67,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromQuery] RentalQueryParamModel queryParams, int id)
+    public async Task<IActionResult> Get([FromQuery] RentalQueryParamsModel queryParams, int id)
     {
       var obj = await _unitOfWork.Rental.GetAsync(id, queryParams);
       if (obj == null) return NotFound();
@@ -84,7 +84,7 @@ namespace RVTR.Lodging.WebApi.Controllers
     /// <param name="queryParams"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> Post([FromQuery] RentalQueryParamModel queryParams, RentalModel rental)
+    public async Task<IActionResult> Post([FromQuery] RentalQueryParamsModel queryParams, RentalModel rental)
     {
       if(rental == null) return BadRequest();
 

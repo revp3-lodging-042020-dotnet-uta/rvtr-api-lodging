@@ -4,7 +4,7 @@ namespace RVTR.Lodging.DataContext
     /// This class is used for storing general URI request parameters
     /// Particularly for pagination and sorting
     /// </summary>
-    public class QueryParamModel
+    public class QueryParamsModel
     {
         private int _limit;
 

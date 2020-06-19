@@ -3,12 +3,12 @@ using Xunit;
 
 namespace RVTR.Lodging.UnitTesting.Tests
 {
-  public class LodgingQueryParamModelTest
+  public class LodgingQueryParamsModelTest
   {
     [Fact]
     public void Test_Rating_Clamp()
     {
-      var queryParams = new LodgingQueryParamModel();
+      var queryParams = new LodgingQueryParamsModel();
       queryParams.RatingAtLeast = -1;
       Assert.Equal(0, queryParams.RatingAtLeast);
 
@@ -22,7 +22,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_SearchRadius_Clamp()
     {
-      var queryParams = new LodgingQueryParamModel();
+      var queryParams = new LodgingQueryParamsModel();
       queryParams.SearchRadius = -1;
       Assert.Equal(1, queryParams.SearchRadius);
 
@@ -33,7 +33,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_BedsAtLeast_Clamp()
     {
-      var queryParams = new LodgingQueryParamModel();
+      var queryParams = new LodgingQueryParamsModel();
       queryParams.BedsAtLeast = -1;
       Assert.Equal(0, queryParams.BedsAtLeast);
 
@@ -44,7 +44,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
     [Fact]
     public void Test_BathsAtLeast_Clamp()
     {
-      var queryParams = new LodgingQueryParamModel();
+      var queryParams = new LodgingQueryParamsModel();
       queryParams.BathsAtLeast = -1;
       Assert.Equal(0, queryParams.BathsAtLeast);
 

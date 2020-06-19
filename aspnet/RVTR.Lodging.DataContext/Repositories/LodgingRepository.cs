@@ -17,7 +17,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// </summary>
   using OrderByFunc = Expression<Func<LodgingModel, Object>>;
 
-  public class LodgingRepository : Repository<LodgingModel, LodgingQueryParamModel>
+  public class LodgingRepository : Repository<LodgingModel, LodgingQueryParamsModel>
   {
     private LodgingContext dbContext;
 
@@ -31,7 +31,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<LodgingModel> IncludeQuery(LodgingQueryParamModel queryParams)
+    private IQueryable<LodgingModel> IncludeQuery(LodgingQueryParamsModel queryParams)
     {
       var query = dbContext.Lodgings.AsQueryable();
 
@@ -57,7 +57,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <param name="id"></param>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<LodgingModel> GetAsync(int id, LodgingQueryParamModel queryParams)
+    public override async Task<LodgingModel> GetAsync(int id, LodgingQueryParamsModel queryParams)
     {
       return await IncludeQuery(queryParams)
         .AsNoTracking()
@@ -70,7 +70,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingQueryParamModel queryParams)
+    public override async Task<IEnumerable<LodgingModel>> GetAsync(LodgingQueryParamsModel queryParams)
     {
       var filters = GenerateFilterFuncs(queryParams);
       var orderBy = GenerateOrderByFunc(queryParams);
@@ -83,7 +83,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(LodgingQueryParamModel queryParams)
+    private FilterFuncs GenerateFilterFuncs(LodgingQueryParamsModel queryParams)
     {
       var filters = new FilterFuncs();
       filters.Add(m => m.Reviews.Average(r => r.Rating) >= queryParams.RatingAtLeast);
@@ -124,7 +124,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(LodgingQueryParamModel queryParams)
+    private OrderByFunc GenerateOrderByFunc(LodgingQueryParamsModel queryParams)
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {

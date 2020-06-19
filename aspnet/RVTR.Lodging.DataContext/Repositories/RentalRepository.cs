@@ -18,7 +18,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// </summary>
   using OrderByFunc = Expression<Func<RentalModel, Object>>;
 
-  public class RentalRepository : Repository<RentalModel, RentalQueryParamModel>
+  public class RentalRepository : Repository<RentalModel, RentalQueryParamsModel>
   {
     private LodgingContext dbContext;
 
@@ -33,7 +33,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<RentalModel> IncludeQuery(RentalQueryParamModel queryParams)
+    private IQueryable<RentalModel> IncludeQuery(RentalQueryParamsModel queryParams)
     {
       return dbContext.Rentals
         .Include(x => x.Lodging)
@@ -48,7 +48,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <param name="id"></param>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<RentalModel> GetAsync(int id, RentalQueryParamModel queryParams)
+    public override async Task<RentalModel> GetAsync(int id, RentalQueryParamsModel queryParams)
     {
       return await IncludeQuery(queryParams)
         .AsNoTracking()
@@ -61,7 +61,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    public override async Task<IEnumerable<RentalModel>> GetAsync(RentalQueryParamModel queryParams)
+    public override async Task<IEnumerable<RentalModel>> GetAsync(RentalQueryParamsModel queryParams)
     {
       var filters = GenerateFilterFuncs(queryParams);
       var orderBy = GenerateOrderByFunc(queryParams);
@@ -74,7 +74,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private FilterFuncs GenerateFilterFuncs(RentalQueryParamModel queryParams)
+    private FilterFuncs GenerateFilterFuncs(RentalQueryParamsModel queryParams)
     {
       var filters = new FilterFuncs();
       filters.Add(r => r.RentalUnit.Bedrooms.Sum(b => b.BedCount) >= queryParams.BedsAtLeast);
@@ -104,7 +104,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private OrderByFunc GenerateOrderByFunc(RentalQueryParamModel queryParams)
+    private OrderByFunc GenerateOrderByFunc(RentalQueryParamsModel queryParams)
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
