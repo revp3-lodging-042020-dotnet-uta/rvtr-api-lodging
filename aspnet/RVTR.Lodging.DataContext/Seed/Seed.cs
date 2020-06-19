@@ -5,7 +5,7 @@ using System;
 
 namespace RVTR.Lodging.DataContext
 {
-    public class Seed
+    public static class Seed
     {
         public static void SeedDatabase(LodgingContext context)
         {

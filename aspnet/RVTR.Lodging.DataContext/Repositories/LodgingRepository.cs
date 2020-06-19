@@ -19,7 +19,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 
   public class LodgingRepository : Repository<LodgingModel, LodgingQueryParamsModel>
   {
-    private LodgingContext dbContext;
+    private readonly LodgingContext dbContext;
 
     public LodgingRepository(LodgingContext context) : base(context)
     {
@@ -35,12 +35,10 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       var query = dbContext.Lodgings.AsQueryable();
 
-      if (queryParams != null) {
-        if (queryParams.IncludeImages == true) {
-          query = query
-            .Include(x => x.Images)
-            .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images);
-        }
+      if (queryParams != null && queryParams.IncludeImages) {
+        query = query
+          .Include(x => x.Images)
+          .Include(x => x.Rentals).ThenInclude(x => x.RentalUnit).ThenInclude(x => x.Bedrooms).ThenInclude(x => x.Images);
       }
 
       return query
@@ -85,29 +83,30 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <returns></returns>
     private FilterFuncs GenerateFilterFuncs(LodgingQueryParamsModel queryParams)
     {
+      // The funcs created here simply return true if there is an element matching
+      // the filter parameter, or false if the element does not match. We use a
+      // FirstOrDefault overload that acts as a Where clause. If there is a match,
+      // then the item is valid for our filtering and should be included in the
+      // result set. If not, then the item should not be included in the result set.
+
       var filters = new FilterFuncs();
       filters.Add(m => m.Reviews.Average(r => r.Rating) >= queryParams.RatingAtLeast);
-      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bedrooms.Count() >= queryParams.BedRoomsAtLeast).FirstOrDefault() != null);
-      filters.Add(m => m.Rentals.Where(r => r.RentalUnit.Bathrooms.Count() >= queryParams.BathsAtLeast).FirstOrDefault() != null);
+      filters.Add(m => m.Rentals.FirstOrDefault(r => r.RentalUnit.Bedrooms.Count() >= queryParams.BedRoomsAtLeast) != null);
+      filters.Add(m => m.Rentals.FirstOrDefault(r => r.RentalUnit.Bathrooms.Count() >= queryParams.BathsAtLeast) != null);
 
-      filters.Add(m => m.Rentals.Where(
-                    r => r.RentalUnit.Bedrooms.Where(
-                      b => b.BedCount >= queryParams.BedsAtLeast)
-                      .FirstOrDefault() != null)
-                    .FirstOrDefault() != null);
+      filters.Add(m => m.Rentals.FirstOrDefault(
+                    r => r.RentalUnit.Bedrooms.FirstOrDefault(b => b.BedCount >= queryParams.BedsAtLeast) != null) != null);
 
       if (!String.IsNullOrEmpty(queryParams.HasBedType))
       {
-        filters.Add(m => m.Rentals.Where(
-                      r => r.RentalUnit.Bedrooms.Where(
-                        b => b.BedType == queryParams.HasBedType)
-                        .FirstOrDefault() != null)
-                      .FirstOrDefault() != null);
+        filters.Add(m => m.Rentals.FirstOrDefault(
+                      r => r.RentalUnit.Bedrooms.FirstOrDefault(
+                        b => b.BedType == queryParams.HasBedType) != null) != null);
       }
 
       if (!String.IsNullOrEmpty(queryParams.HasAmenity))
       {
-        filters.Add(m => m.Amenities.Where(a => a.Amenity == queryParams.HasAmenity).FirstOrDefault() != null);
+        filters.Add(m => m.Amenities.FirstOrDefault(a => a.Amenity == queryParams.HasAmenity) != null);
       }
 
       if (!String.IsNullOrEmpty(queryParams.City))

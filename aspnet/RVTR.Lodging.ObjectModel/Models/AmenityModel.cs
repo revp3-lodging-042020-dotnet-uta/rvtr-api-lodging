@@ -6,7 +6,7 @@ namespace RVTR.Lodging.ObjectModel.Models
   /// <summary>
   /// Types of amenities available.
   /// </summary>
-  public class AmenityType
+  public static class AmenityType
   {
     public const string Coffee = "Coffee";
     public const string Wifi = "Wifi";

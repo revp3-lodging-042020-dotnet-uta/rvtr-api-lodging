@@ -20,25 +20,15 @@ namespace RVTR.Lodging.DataContext
             set { _ratingAtLeast = value; }
         }
 
-        private int? _lodgingId;
         /// <summary>
         /// Get reviews for this Lodging ID.
         /// </summary>
-        public int? LodgingId
-        {
-            get { return _lodgingId; }
-            set { _lodgingId = value; }
-        }
+        public int? LodgingId { get; set; }
 
-        private int? _accountId;
         /// <summary>
         /// Get reviews for this Account ID.
         /// </summary>
         /// <value></value>
-        public int? AccountId
-        {
-            get { return _accountId; }
-            set { _accountId = value; }
-        }
+        public int? AccountId { get; set; }
     }
 }

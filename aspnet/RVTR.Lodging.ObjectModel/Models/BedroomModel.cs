@@ -6,7 +6,7 @@ namespace RVTR.Lodging.ObjectModel.Models
   /// <summary>
   /// Types of beds in a bedroom.
   /// </summary>
-  public class BedType
+  public static class BedType
   {
     public const string King = "King";
     public const string Queen = "Queen";

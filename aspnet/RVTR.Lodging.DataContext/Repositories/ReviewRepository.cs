@@ -21,7 +21,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 
   public class ReviewRepository : Repository<ReviewModel, ReviewQueryParamsModel>
   {
-    private LodgingContext dbContext;
+    private readonly LodgingContext dbContext;
 
     public ReviewRepository(LodgingContext context) : base(context)
     {
@@ -33,7 +33,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<ReviewModel> IncludeQuery(ReviewQueryParamsModel queryParams)
+    private IQueryable<ReviewModel> IncludeQuery()
     {
       return dbContext.Reviews
         .Include(x => x.Lodging);
@@ -47,7 +47,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <returns></returns>
     public override async Task<ReviewModel> GetAsync(int id, ReviewQueryParamsModel queryParams)
     {
-      return await IncludeQuery(queryParams)
+      return await IncludeQuery()
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
@@ -62,7 +62,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       var filters = GenerateFilterFuncs(queryParams);
       var orderBy = GenerateOrderByFunc(queryParams);
-      var query = IncludeQuery(queryParams);
+      var query = IncludeQuery();
       return await GetAsync(query, filters, orderBy, queryParams.SortOrder, queryParams.Offset, queryParams.Limit);
     }
 

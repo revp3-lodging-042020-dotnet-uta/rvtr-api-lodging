@@ -15,12 +15,6 @@ namespace RVTR.Lodging.DataContext
     public LodgingContext() {}
     public LodgingContext(DbContextOptions<LodgingContext> options) : base(options) { }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      if (!optionsBuilder.IsConfigured)
-        optionsBuilder.UseNpgsql("Host=localhost;Database=LodgingDb;Username=postgres;Password=postgres;");
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<AddressModel>().HasKey(e => e.Id);

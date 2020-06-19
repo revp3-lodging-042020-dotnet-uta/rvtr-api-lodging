@@ -39,21 +39,11 @@ namespace RVTR.Lodging.DataContext
         /// <summary>
         /// Offers this type of bed.
         /// </summary>
-        private string _hasBedType;
-        public string HasBedType
-        {
-            get { return _hasBedType; }
-            set { _hasBedType = value; }
-        }
+        public string HasBedType { get; set; }
 
         /// <summary>
         /// Offers this amenity.
         /// </summary>
-        private string _hasAmenity;
-        public string HasAmenity
-        {
-            get { return _hasAmenity; }
-            set { _hasAmenity = value; }
-        }
+        public string HasAmenity { get; set; }
     }
 }

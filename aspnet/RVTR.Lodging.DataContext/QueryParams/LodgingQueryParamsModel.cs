@@ -6,12 +6,10 @@ namespace RVTR.Lodging.DataContext
   /// </summary>
   public class LodgingQueryParamsModel : QueryParamsModel
     {
-        private bool _includeImages;
-        public bool IncludeImages
-        {
-            get { return _includeImages; }
-            set { _includeImages = value; }
-        }
+        /// <summary>
+        /// Whether or not to include image URLs with the response.
+        /// </summary>
+        public bool IncludeImages { get; set; }
         
         private double _ratingAtLeast;
         /// <summary>
@@ -70,31 +68,16 @@ namespace RVTR.Lodging.DataContext
         /// <summary>
         /// Offers this type of bed.
         /// </summary>
-        private string _hasBedType;
-        public string HasBedType
-        {
-            get { return _hasBedType; }
-            set { _hasBedType = value; }
-        }
+        public string HasBedType { get; set; }
 
         /// <summary>
         /// Offers this amenity.
         /// </summary>
-        private string _hasAmenity;
-        public string HasAmenity
-        {
-            get { return _hasAmenity; }
-            set { _hasAmenity = value; }
-        }
+        public string HasAmenity { get; set; }
 
         /// <summary>
         /// In this city.
         /// </summary>
-        private string _city;
-        public string City
-        {
-            get { return _city; }
-            set { _city = value; }
-        }
+        public string City { get; set; }
     }
 }

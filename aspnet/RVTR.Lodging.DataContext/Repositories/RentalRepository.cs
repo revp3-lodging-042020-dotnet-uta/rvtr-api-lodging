@@ -20,8 +20,7 @@ namespace RVTR.Lodging.DataContext.Repositories
 
   public class RentalRepository : Repository<RentalModel, RentalQueryParamsModel>
   {
-    private LodgingContext dbContext;
-
+    private readonly LodgingContext dbContext;
 
     public RentalRepository(LodgingContext context) : base(context)
     {
@@ -33,7 +32,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="queryParams"></param>
     /// <returns></returns>
-    private IQueryable<RentalModel> IncludeQuery(RentalQueryParamsModel queryParams)
+    private IQueryable<RentalModel> IncludeQuery()
     {
       return dbContext.Rentals
         .Include(x => x.Lodging)
@@ -50,7 +49,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <returns></returns>
     public override async Task<RentalModel> GetAsync(int id, RentalQueryParamsModel queryParams)
     {
-      return await IncludeQuery(queryParams)
+      return await IncludeQuery()
         .AsNoTracking()
         .Where(e => e.Id == id)
         .FirstOrDefaultAsync();
@@ -65,7 +64,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       var filters = GenerateFilterFuncs(queryParams);
       var orderBy = GenerateOrderByFunc(queryParams);
-      var query = IncludeQuery(queryParams);
+      var query = IncludeQuery();
       return await GetAsync(query, filters, orderBy, queryParams.SortOrder, queryParams.Offset, queryParams.Limit);
     }
 
@@ -76,6 +75,12 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <returns></returns>
     private FilterFuncs GenerateFilterFuncs(RentalQueryParamsModel queryParams)
     {
+      // The funcs created here simply return true if there is an element matching
+      // the filter parameter, or false if the element does not match. We use a
+      // FirstOrDefault overload that acts as a Where clause. If there is a match,
+      // then the item is valid for our filtering and should be included in the
+      // result set. If not, then the item should not be included in the result set.
+
       var filters = new FilterFuncs();
       filters.Add(r => r.RentalUnit.Bedrooms.Sum(b => b.BedCount) >= queryParams.BedsAtLeast);
       filters.Add(r => r.RentalUnit.Bedrooms.Count() >= queryParams.BedRoomsAtLeast);
@@ -83,17 +88,15 @@ namespace RVTR.Lodging.DataContext.Repositories
 
       if (!String.IsNullOrEmpty(queryParams.HasBedType))
       {
-        filters.Add(r => r.RentalUnit.Bedrooms.Where(
-                      b => b.BedType == queryParams.HasBedType).FirstOrDefault() != null);
+        filters.Add(r => r.RentalUnit.Bedrooms.FirstOrDefault(
+                      b => b.BedType == queryParams.HasBedType) != null);
       }
 
       if (!String.IsNullOrEmpty(queryParams.HasAmenity))
       {
-        filters.Add(r => r.RentalUnit.Bedrooms.Where(
-                      b => b.Amenities.Where(
-                        a => a.Amenity == queryParams.HasAmenity)
-                        .FirstOrDefault() != null)
-                      .FirstOrDefault() != null);
+        filters.Add(r => r.RentalUnit.Bedrooms.FirstOrDefault(
+                      b => b.Amenities.FirstOrDefault(
+                        a => a.Amenity == queryParams.HasAmenity) != null) != null);
       }
 
       return filters;

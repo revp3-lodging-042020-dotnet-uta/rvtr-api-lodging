@@ -41,11 +41,6 @@ namespace RVTR.Lodging.DataContext
         /// <summary>
         /// Key to use for sorting.
         /// </summary>
-        private string _sortKey;
-        public string SortKey
-        {
-            get { return _sortKey; }
-            set { _sortKey = value; }
-        }
+        public string SortKey { get; set; }
     }
 }

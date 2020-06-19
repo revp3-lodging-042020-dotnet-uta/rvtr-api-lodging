@@ -104,8 +104,8 @@ namespace RVTR.Lodging.WebApi
       // Implements a global exception handler
       applicationBuilder.UseExceptionHandler(a => a.Run(async context =>
       {
-        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-        var exception = exceptionHandlerPathFeature.Error;
+        // Get access to exception data if needed for logging.
+        var _ = context.Features.Get<IExceptionHandlerPathFeature>();
 
         // creates an empty object for the exception (so as not to leak server data)
         var result = new ObjectResult("");

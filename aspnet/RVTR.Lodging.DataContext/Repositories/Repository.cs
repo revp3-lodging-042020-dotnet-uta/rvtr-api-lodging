@@ -16,7 +16,7 @@ namespace RVTR.Lodging.DataContext.Repositories
   {
     public readonly DbSet<TEntity> _db;
 
-    public Repository(LodgingContext context)
+    protected Repository(LodgingContext context)
     {
       _db = context.Set<TEntity>();
     }
