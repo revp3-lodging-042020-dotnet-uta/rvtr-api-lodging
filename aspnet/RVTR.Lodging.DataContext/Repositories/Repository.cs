@@ -11,8 +11,8 @@ namespace RVTR.Lodging.DataContext.Repositories
   /// Repository class to be used as a base for concrete repositories.
   /// </summary>
   /// <typeparam name="TEntity">The entity the repository is responsible for handling</typeparam>
-  /// <typeparam name="TQueryParamModel">The query parameter model used for processing query string</typeparam>
-  public abstract class Repository<TEntity, TQueryParamModel> where TEntity : class where TQueryParamModel : class
+  /// <typeparam name="TQueryParamsModel">The query parameter model used for processing query string</typeparam>
+  public abstract class Repository<TEntity, TQueryParamsModel> where TEntity : class where TQueryParamsModel : class
   {
     public readonly DbSet<TEntity> _db;
 
@@ -26,7 +26,7 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// </summary>
     /// <param name="id">ID of the entity</param>
     /// <param name="queryParams">Query parameter model</param>
-    public virtual async Task<TEntity> DeleteAsync(int id, TQueryParamModel queryParams) {
+    public virtual async Task<TEntity> DeleteAsync(int id, TQueryParamsModel queryParams) {
       var entity = await GetAsync(id, queryParams);
       _db.Remove(entity);
       return entity;
@@ -43,14 +43,14 @@ namespace RVTR.Lodging.DataContext.Repositories
     /// <summary>
     /// Gets an entity by it's ID.
     /// </summary>
-    public virtual async Task<TEntity> GetAsync(int id, TQueryParamModel queryParams) => await _db.FindAsync(id).ConfigureAwait(true);
+    public virtual async Task<TEntity> GetAsync(int id, TQueryParamsModel queryParams) => await _db.FindAsync(id).ConfigureAwait(true);
 
     /// <summary>
     /// Gets all entities based on the supplied query parameters
     /// </summary>
-    /// <param name="queryParam">Query parameter model</param>
+    /// <param name="queryParams">Query parameter model</param>
     /// <returns></returns>
-    public abstract Task<IEnumerable<TEntity>> GetAsync(TQueryParamModel queryParam);
+    public abstract Task<IEnumerable<TEntity>> GetAsync(TQueryParamsModel queryParams);
 
     /// <summary>
     /// Executes a composed query.
