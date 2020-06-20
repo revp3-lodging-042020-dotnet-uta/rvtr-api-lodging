@@ -52,7 +52,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Delete(null, 1);
-      Assert.IsType(typeof(OkObjectResult), result);
+      Assert.IsType<OkObjectResult>(result);
     }
 
     [Fact]
@@ -65,7 +65,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Delete(null, 1);
-      Assert.IsType(typeof(NotFoundResult), result);
+      Assert.IsType<NotFoundResult>(result);
     }
 
     [Fact]
@@ -82,7 +82,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Get(null);
-      Assert.IsType(typeof(OkObjectResult), result);
+      Assert.IsType<OkObjectResult>(result);
 
       var items = (result as OkObjectResult).Value as IEnumerable<ReviewModel>;
       Assert.Equal(2, items.Count());
@@ -102,7 +102,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Get(null, 1);
-      Assert.IsType(typeof(OkObjectResult), result);
+      Assert.IsType<OkObjectResult>(result);
 
       var value = (result as OkObjectResult).Value as ReviewModel;
       Assert.Equal(1, value.Id);
@@ -118,7 +118,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Get(null, 1);
-      Assert.IsType(typeof(NotFoundResult), result);
+      Assert.IsType<NotFoundResult>(result);
     }
 
     [Fact]
@@ -138,7 +138,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Post(null, submittedModel);
-      Assert.IsType(typeof(OkObjectResult), result);
+      Assert.IsType<OkObjectResult>(result);
     }
 
     [Fact]
@@ -158,7 +158,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Post(null, new ReviewModel { Id = 1 });
-      Assert.IsType(typeof(OkObjectResult), result);
+      Assert.IsType<OkObjectResult>(result);
 
       var value = (result as OkObjectResult).Value as ReviewModel;
       Assert.Equal(1, value.Id);
@@ -174,7 +174,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
       var _controller = NewReviewController(mocks);
 
       var result = await _controller.Post(null, null);
-      Assert.IsType(typeof(BadRequestResult), result);
+      Assert.IsType<BadRequestResult>(result);
     }
   }
 }
