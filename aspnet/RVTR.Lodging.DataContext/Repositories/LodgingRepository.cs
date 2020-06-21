@@ -115,6 +115,11 @@ namespace RVTR.Lodging.DataContext.Repositories
         filters.Add(m => m.Location.Address.City.ToLower().Contains(queryParams.City.ToLower()));
       }
 
+      if (!String.IsNullOrEmpty(queryParams.Name))
+      {
+        filters.Add(m => m.Name.ToLower().Contains(queryParams.Name.ToLower()));
+      }
+
       return filters;
     }
 

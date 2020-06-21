@@ -43,6 +43,7 @@ namespace RVTR.Lodging.UnitTesting.Tests
 
     [Theory]
     [InlineData("City")]
+    [InlineData("Name")]
     [InlineData("HasAmenity")]
     [InlineData("HasBedType")]
     public void Test_Trivial_String_Props(string propName)

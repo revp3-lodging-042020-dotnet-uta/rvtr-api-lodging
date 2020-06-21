@@ -29,5 +29,10 @@ namespace RVTR.Lodging.DataContext
         /// In this city.
         /// </summary>
         public string City { get; set; }
+
+        /// <summary>
+        /// Has this name
+        /// </summary>
+        public string Name { get; set; }
     }
 }
