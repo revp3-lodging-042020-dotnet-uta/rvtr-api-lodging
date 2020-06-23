@@ -82,6 +82,85 @@ namespace RVTR.Lodging.DataContext
                                 new BathroomModel() { Fixture = 2 },
                             },
                         },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 2",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "200",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-01-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 2,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-03-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 3",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 1,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-02-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "202",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-04-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
                     }
                 },
                 Reviews = new List<ReviewModel>() {
@@ -172,6 +251,45 @@ namespace RVTR.Lodging.DataContext
                                     },
                                     Images = new List<ImageModel>() {
                                         new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-08-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 2",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 1,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-02-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "202",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-04-square.jpg" },
                                     }
                                 }
                             },
@@ -279,7 +397,87 @@ namespace RVTR.Lodging.DataContext
                                 new BathroomModel() { Fixture = 2 },
                             },
                         },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 2",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "200",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-01-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 2,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-03-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 3",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 1,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-02-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "202",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-04-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
                     }
+
                 },
                 Reviews = new List<ReviewModel>() {
                     new ReviewModel() {
@@ -376,7 +574,88 @@ namespace RVTR.Lodging.DataContext
                                 new BathroomModel() { Fixture = 2 },
                             },
                         },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 2",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "200",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-01-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 2,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-03-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
+                    },
+                    new RentalModel() {
+                        RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 3",
+                            Description = "Unit for rent",
+                            Occupancy = 3,
+                            RentalUnitType = "Rental unit",
+                            Bedrooms = new List<BedroomModel>() {
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "King" },
+                                    BedCount = 1,
+                                    RoomNumber = "201",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Wifi" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-02-square.jpg" },
+                                    }
+                                },
+                                new BedroomModel() {
+                                    BedType = new BedTypeModel() { BedType = "Queen" },
+                                    BedCount = 2,
+                                    RoomNumber = "202",
+                                    Amenities = new List<AmenityModel>() {
+                                        new AmenityModel() { Amenity = "Coffee" },
+                                        new AmenityModel() { Amenity = "Pool" },
+                                    },
+                                    Images = new List<ImageModel>() {
+                                        new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/square/cabin-04-square.jpg" },
+                                    }
+                                }
+                            },
+                            Bathrooms = new List<BathroomModel>() {
+                                new BathroomModel() { Fixture = 1 },
+                                new BathroomModel() { Fixture = 2 },
+                            },
+                        },
                     }
+
+
                 },
                 Reviews = new List<ReviewModel>() {
                     new ReviewModel() {
@@ -405,7 +684,6 @@ namespace RVTR.Lodging.DataContext
                     }
                 },
             };
-
 
 
             context.Add(lodging1);
