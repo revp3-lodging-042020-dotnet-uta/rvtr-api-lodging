@@ -98,13 +98,14 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
-        switch (queryParams.SortKey)
+        switch (queryParams.SortKey.ToLower())
         {
-          case "Id": return (e => e.Id);
-          case "AccountId": return (e => e.AccountId);
-          case "Comment": return (e => e.Comment);
-          case "DateCreated": return (e => e.DateCreated);
-          case "Rating": return (e => e.Rating);
+          case "id": return (e => e.Id);
+          case "accountid": return (e => e.AccountId);
+          case "lodgingid": return (e => e.LodgingId);
+          case "comment": return (e => e.Comment);
+          case "datecreated": return (e => e.DateCreated);
+          case "rating": return (e => e.Rating);
         }
       }
       return null;

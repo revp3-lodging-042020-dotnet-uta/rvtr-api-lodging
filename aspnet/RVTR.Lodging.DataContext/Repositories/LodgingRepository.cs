@@ -133,32 +133,32 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
-        switch (queryParams.SortKey)
+        switch (queryParams.SortKey.ToLower())
         {
-          case "Id": return (e => e.Id);
-          case "Name": return (e => e.Name);
-          case "Description": return (e => e.Description);
+          case "id": return (e => e.Id);
+          case "name": return (e => e.Name);
+          case "description": return (e => e.Description);
 
-          case "Location.Id": return (e => e.Location.Id);
-          case "Location.Latitude": return (e => e.Location.Latitude);
-          case "Location.Longitude": return (e => e.Location.Longitude);
-          case "Location.Locale": return (e => e.Location.Locale);
+          case "location.id": return (e => e.Location.Id);
+          case "location.latitude": return (e => e.Location.Latitude);
+          case "location.longitude": return (e => e.Location.Longitude);
+          case "location.locale": return (e => e.Location.Locale);
 
-          case "Location.Address.Id": return (e => e.Location.Address.Id);
-          case "Location.Address.City": return (e => e.Location.Address.City);
-          case "Location.Address.Country": return (e => e.Location.Address.Country);
-          case "Location.Address.PostalCode": return (e => e.Location.Address.PostalCode);
-          case "Location.Address.StateProvince": return (e => e.Location.Address.StateProvince);
-          case "Location.Address.Street": return (e => e.Location.Address.Street);
+          case "location.address.id": return (e => e.Location.Address.Id);
+          case "location.address.city": return (e => e.Location.Address.City);
+          case "location.address.country": return (e => e.Location.Address.Country);
+          case "location.address.postalcode": return (e => e.Location.Address.PostalCode);
+          case "location.address.stateprovince": return (e => e.Location.Address.StateProvince);
+          case "location.address.street": return (e => e.Location.Address.Street);
 
-          case "Rentals": return (e => e.Rentals.Count());
-          case "Beds": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount)));
-          case "Bedrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
-          case "Bathrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bathrooms.Count()));
-          case "Occupancy": return (e => e.Rentals.Sum(u => u.RentalUnit.Occupancy));
+          case "rentals": return (e => e.Rentals.Count());
+          case "beds": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount)));
+          case "bedrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bedrooms.Count()));
+          case "bathrooms": return (e => e.Rentals.Sum(u => u.RentalUnit.Bathrooms.Count()));
+          case "occupancy": return (e => e.Rentals.Sum(u => u.RentalUnit.Occupancy));
 
-          case "ReviewCount": return (e => e.Reviews.Count());
-          case "ReviewAverageRating": return (e => e.Reviews.Average(r => r.Rating));
+          case "reviewcount": return (e => e.Reviews.Count());
+          case "reviewaveragerating": return (e => e.Reviews.Average(r => r.Rating));
         }
       }
       return null;

@@ -112,17 +112,17 @@ namespace RVTR.Lodging.DataContext.Repositories
     {
       if (!String.IsNullOrEmpty(queryParams.SortKey))
       {
-        switch (queryParams.SortKey)
+        switch (queryParams.SortKey.ToLower())
         {
-          case "Id": return (e => e.Id);
-          case "Name": return (e => e.Name);
-          case "Description": return (e => e.Description);
+          case "id": return (e => e.Id);
+          case "name": return (e => e.Name);
+          case "description": return (e => e.Description);
 
-          case "Beds": return (u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount));
-          case "Bedrooms": return (u => u.RentalUnit.Bedrooms.Count());
-          case "Bathrooms": return (u => u.RentalUnit.Bathrooms.Count());
+          case "beds": return (u => u.RentalUnit.Bedrooms.Sum(b => b.BedCount));
+          case "bedrooms": return (u => u.RentalUnit.Bedrooms.Count());
+          case "bathrooms": return (u => u.RentalUnit.Bathrooms.Count());
 
-          case "Occupancy": return (u => u.RentalUnit.Occupancy);
+          case "occupancy": return (u => u.RentalUnit.Occupancy);
         }
       }
       return null;
