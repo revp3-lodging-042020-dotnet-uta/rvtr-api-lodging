@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.DataContext", "RVTR.Lodging.DataContext\RVTR.Lodging.DataContext.csproj", "{9389A610-C55D-4B2D-B5DA-5D91AB354CFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RVTR.Lodging.DataContext", "RVTR.Lodging.DataContext\RVTR.Lodging.DataContext.csproj", "{9389A610-C55D-4B2D-B5DA-5D91AB354CFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.ObjectModel", "RVTR.Lodging.ObjectModel\RVTR.Lodging.ObjectModel.csproj", "{75990F44-3406-4625-B733-24D53599094A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RVTR.Lodging.ObjectModel", "RVTR.Lodging.ObjectModel\RVTR.Lodging.ObjectModel.csproj", "{75990F44-3406-4625-B733-24D53599094A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.UnitTesting", "RVTR.Lodging.UnitTesting\RVTR.Lodging.UnitTesting.csproj", "{A0CF8191-7FC0-4CE6-BEA6-F7FA9C68E529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RVTR.Lodging.UnitTesting", "RVTR.Lodging.UnitTesting\RVTR.Lodging.UnitTesting.csproj", "{A0CF8191-7FC0-4CE6-BEA6-F7FA9C68E529}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.WebApi", "RVTR.Lodging.WebApi\RVTR.Lodging.WebApi.csproj", "{2B255725-C53A-4E74-852E-41F72AE675FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RVTR.Lodging.WebApi", "RVTR.Lodging.WebApi\RVTR.Lodging.WebApi.csproj", "{2B255725-C53A-4E74-852E-41F72AE675FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.WebRpc", "RVTR.Lodging.WebRpc\RVTR.Lodging.WebRpc.csproj", "{C2A4941E-2216-4F8A-9DCB-72C7FF2C116B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RVTR.Lodging.WebRpc", "RVTR.Lodging.WebRpc\RVTR.Lodging.WebRpc.csproj", "{C2A4941E-2216-4F8A-9DCB-72C7FF2C116B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9389A610-C55D-4B2D-B5DA-5D91AB354CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -86,5 +85,23 @@ Global
 		{C2A4941E-2216-4F8A-9DCB-72C7FF2C116B}.Release|x64.Build.0 = Release|Any CPU
 		{C2A4941E-2216-4F8A-9DCB-72C7FF2C116B}.Release|x86.ActiveCfg = Release|Any CPU
 		{C2A4941E-2216-4F8A-9DCB-72C7FF2C116B}.Release|x86.Build.0 = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|x64.Build.0 = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Debug|x86.Build.0 = Debug|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|x64.ActiveCfg = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|x64.Build.0 = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|x86.ActiveCfg = Release|Any CPU
+		{C1B9D31A-4C2D-49E1-9E09-AE8ADCC43657}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF7369E3-E796-4A55-9712-059D36B1E724}
 	EndGlobalSection
 EndGlobal
