@@ -49,7 +49,7 @@ public class CustomWebApplicationFactoryInMemDB<TStartup>
         try
         {
           // Seed the database with test data.
-          Utilities.InitializeDbForTests(db);
+          Seed.SeedDatabase(db);
         }
         catch (Exception ex)
         {
