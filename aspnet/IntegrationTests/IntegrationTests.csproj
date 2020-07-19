@@ -8,14 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0-preview.6.20312.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RVTR.Lodging.DataContext\RVTR.Lodging.DataContext.csproj" />
+    <ProjectReference Include="..\RVTR.Lodging.ObjectModel\RVTR.Lodging.ObjectModel.csproj" />
+    <ProjectReference Include="..\RVTR.Lodging.WebApi\RVTR.Lodging.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
