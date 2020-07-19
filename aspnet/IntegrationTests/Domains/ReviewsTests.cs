@@ -9,6 +9,7 @@ using Xunit;
 
 namespace IntegrationTests.Domains
 {
+  [CollectionDefinition("Client collection")]
   [TestClass]
   public class ReviewsTests : AbstractAPIControllerTester, IDelete, IGet, IPost, IPut
   {
