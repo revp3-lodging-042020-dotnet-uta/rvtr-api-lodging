@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -48,7 +49,7 @@ namespace IntegrationTests.Domains
 
       //Assert
       response.EnsureSuccessStatusCode();
-      Xunit.Assert.Equal("text/html; charset=utf-8",
+      Xunit.Assert.Equal("application/json; charset=utf-8",
         response.Content.Headers.ContentType.ToString());
     }
 
@@ -62,7 +63,7 @@ namespace IntegrationTests.Domains
 
       //Assert
       response.EnsureSuccessStatusCode();
-      Xunit.Assert.Equal("200", response.IsSuccessStatusCode.ToString());
+      Xunit.Assert.Equal("OK", response.StatusCode.ToString());
     }
 
     [Theory]
@@ -75,7 +76,7 @@ namespace IntegrationTests.Domains
 
       //Assert
       response.EnsureSuccessStatusCode();
-      Xunit.Assert.Equal("200", response.IsSuccessStatusCode.ToString());
+      Xunit.Assert.Equal("200", response.StatusCode.ToString());
 
     }
 
@@ -90,7 +91,7 @@ namespace IntegrationTests.Domains
 
       //Assert
       response.EnsureSuccessStatusCode();
-      Xunit.Assert.Equal("201", response.IsSuccessStatusCode.ToString());
+      Xunit.Assert.Equal("201", response.StatusCode.ToString());
     }
   }
 }

@@ -18,6 +18,7 @@ public class CustomWebApplicationFactoryInMemDB<TStartup>
   {
     return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder => builder.UseStartup<Startup>());
   }
+
   protected override void ConfigureWebHost(IWebHostBuilder builder)
   {
     builder.ConfigureServices(services =>
