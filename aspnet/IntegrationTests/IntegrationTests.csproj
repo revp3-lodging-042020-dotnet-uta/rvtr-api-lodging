@@ -29,7 +29,4 @@
     <ProjectReference Include="..\RVTR.Lodging.WebApi\RVTR.Lodging.WebApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utilities\Interfaces\" />
-  </ItemGroup>
 </Project>
