@@ -8,10 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using RVTR.Lodging.WebApi;
+using Microsoft.Extensions.Hosting;
 
 public class CustomWebApplicationFactoryInMemDB<TStartup>
     : WebApplicationFactory<TStartup> where TStartup : class
 {
+
+  protected override IHostBuilder CreateHostBuilder()
+  {
+    return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder => builder.UseStartup<Startup>());
+  }
   protected override void ConfigureWebHost(IWebHostBuilder builder)
   {
     builder.ConfigureServices(services =>
