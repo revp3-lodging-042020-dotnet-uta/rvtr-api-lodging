@@ -28,15 +28,18 @@ namespace IntegrationTests.Domains
         });
     }
 
-    //public Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
-    //{
-    //  //Arrange
+    //Arrange
+    [Theory]
+    [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
+    public async Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
+    {
+      //Act
+      HttpContent content;
+      var response = await _client.PostAsync(url, content);
 
-    //  //Act
-
-    //  //Assert
-
-    //}
+      //Assert
+      Xunit.Assert.True();
+    }
 
     [Theory]
     [InlineData("api/v0.0/lodging")]
