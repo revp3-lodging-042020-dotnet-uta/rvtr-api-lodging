@@ -105,3 +105,4 @@ on:
   pull_request:
     branches:
       - master
+      - IntegrationTests
