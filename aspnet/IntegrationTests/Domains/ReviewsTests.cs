@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using IntegrationTests.Utilities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xunit;
 
 namespace IntegrationTests.Domains
@@ -23,7 +23,7 @@ namespace IntegrationTests.Domains
     public void CanPost(string url)
     {
       //Act
-     
+
       //Assert
 
     }
@@ -44,7 +44,7 @@ namespace IntegrationTests.Domains
     [InlineData()]
     public void CanPut(int id)
     {
-      
+
 
       //Act
 
@@ -56,14 +56,14 @@ namespace IntegrationTests.Domains
     [InlineData()]
     public void CanDelete(int id)
     {
-      
+
 
       //Act
 
       //Assert
     }
-    public ReviewsTests(HttpClient c): base(c)
+    public ReviewsTests(HttpClient c) : base(c)
     {
     }
   }
-  }
+}

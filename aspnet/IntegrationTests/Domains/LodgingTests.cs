@@ -8,12 +8,11 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-//using Xunit;
+using Xunit;
 
 namespace IntegrationTests.Domains
 {
 
-  [TestClass]
   public class LodgingTests : IClassFixture<CustomWebApplicationFactoryInMemDB<Startup>>
   {
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
@@ -38,8 +37,9 @@ namespace IntegrationTests.Domains
 
     //}
 
-    [TestMethod]
-    public async Task Get_EndpointsReturnSuccess(string url = "api/v0.0/lodging")
+    [Theory]
+    [InlineData("api/v0.0/lodging")]
+    public async Task Get_EndpointsReturnSuccess(string url)
     {
       //Arrange
       var response = await _client.GetAsync(url);
@@ -48,37 +48,49 @@ namespace IntegrationTests.Domains
 
       //Assert
       response.EnsureSuccessStatusCode();
-      Assert.Equals("text/html; charset=utf-8",
+      Xunit.Assert.Equal("text/html; charset=utf-8",
         response.Content.Headers.ContentType.ToString());
     }
 
-    //[Fact]
-    //public async Task Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
-    //{
+    [Fact]
+    public async Task Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
+    {
+      //Arrange
+      var response = await _client.GetAsync("api/v0.0/lodging");
 
-    //  //Arrange
+      //Act
 
-    //  //Act
+      //Assert
+      response.EnsureSuccessStatusCode();
+      Xunit.Assert.Equal("200", response.IsSuccessStatusCode.ToString());
+    }
 
-    //  //Assert
-    //}
+    [Theory]
+    [InlineData(0)]
+    public async Task Get_RetrievesLodgingFromId(int id)
+    {
+      //Arrange
+      var response = await _client.GetAsync($"api/v0.0/lodging/{id}");
+      //Act
 
-    //public Task Get_RetrievesLodgingFromId(int id)
-    //{
-    //  //Arrange
+      //Assert
+      response.EnsureSuccessStatusCode();
+      Xunit.Assert.Equal("200", response.IsSuccessStatusCode.ToString());
 
-    //  //Act
+    }
 
-    //  //Assert
-    //}
+    [Theory]
+    [InlineData(0)]
+    public async Task Delete_SuccessfullyRemovesLodgingFromDb(int id)
+    {
+      //Arrange
+      var response = await _client.GetAsync($"api/v0.0/lodging/delete/{id}");
 
-    //public Task Delete_SuccessfullyRemovesLodgingFromDb(int id)
-    //{
-    //  //Arrange
+      //Act
 
-    //  //Act
-
-    //  //Assert
-    //}
+      //Assert
+      response.EnsureSuccessStatusCode();
+      Xunit.Assert.Equal("201", response.IsSuccessStatusCode.ToString());
+    }
   }
 }

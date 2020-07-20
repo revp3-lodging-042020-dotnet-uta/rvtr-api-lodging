@@ -9,7 +9,7 @@ namespace IntegrationTests
     [TestMethod]
     public void passing()
     {
-      Assert.IsTrue(true);
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue(true);
     }
   }
 }
