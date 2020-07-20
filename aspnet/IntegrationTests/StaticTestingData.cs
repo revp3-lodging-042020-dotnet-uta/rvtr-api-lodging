@@ -11,7 +11,9 @@ namespace IntegrationTests
             new object[] { "api/v0.0/review" },
             new object[] { "api/v0.0/review/1" },
             new object[] { "api/v0.0/lodging" },
+            new object[] { "api/v0.0/lodging/1" },
             new object[] { "api/v0.0/rental" },
+            new object[] { "api/v0.0/rental/1" },
         };
     }
   }

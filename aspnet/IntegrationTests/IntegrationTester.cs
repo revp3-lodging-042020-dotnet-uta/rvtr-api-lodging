@@ -19,6 +19,7 @@ namespace IntegrationTests
       public async void CheckGetResponse(string url)
       {
       var r = await _client.GetAsync(url);
+      Console.WriteLine(await r.Content.ReadAsStringAsync());
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.OK);
       }
       public bool CheckPutResponse(HttpResponseMessage r)
