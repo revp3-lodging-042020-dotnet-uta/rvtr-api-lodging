@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using RVTR.Lodging.WebApi;
 using Microsoft.AspNetCore.Mvc.Testing;
-using IntegrationTests.Utilities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Xunit;
