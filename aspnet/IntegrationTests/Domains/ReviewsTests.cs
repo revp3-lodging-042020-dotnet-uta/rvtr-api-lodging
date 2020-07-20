@@ -10,9 +10,13 @@ using Xunit;
 namespace IntegrationTests.Domains
 {
   [CollectionDefinition("Client collection")]
-  [TestClass]
   public class ReviewsTests : AbstractAPIControllerTester, IDelete, IGet, IPost, IPut
   {
+    [Fact]
+    public void PassingTest()
+    {
+      Assert.Equals(4, 4);
+    }
     //Arrange
     [Theory]
     [InlineData()]
