@@ -31,11 +31,10 @@ namespace IntegrationTests.Domains
     //Arrange
     [Theory]
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
-    public async Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
+    public async Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url, HttpContent data)
     {
       //Act
-      HttpContent content;
-      var response = await _client.PostAsync(url, content);
+      var response = await _client.PostAsync(url, data);
 
       //Assert
       Xunit.Assert.True();
