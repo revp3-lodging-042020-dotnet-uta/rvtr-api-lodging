@@ -8,7 +8,7 @@ namespace IntegrationTests
 {
   public static class StaticTestingData
   {
-    public static List<object[]> GetRequests=>
+    public static List<object[]> GetRequests =>
         new List<object[]>
         {
             new object[] { "api/v0.0/review" },
@@ -19,13 +19,13 @@ namespace IntegrationTests
             new object[] { "api/v0.0/rental/1" },
         };
 
-      public static List<object[]> DeleteRequests =>
-        new List<object[]>
-        {
+    public static List<object[]> DeleteRequests =>
+      new List<object[]>
+      {
             new object[] { "api/v0.0/review/1" },
             new object[] { "api/v0.0/lodging/1" },
             new object[] { "api/v0.0/rental/1" },
-        };
+      };
     public static List<object[]> PostRequests =>
       new List<object[]>
       {
@@ -37,6 +37,20 @@ namespace IntegrationTests
             DateCreated=DateTime.Now,
             Rating=5,
             LodgingId=1
+          }),
+            new object[] {"/api/v0.0/rental", JObject.FromObject(new RentalModel()
+          {
+           Description = "Lodge in the Adirondaks",
+           Id = 1,
+           LodgingId = 1,
+           Name = "Lodge Rental",
+            RentalUnit = new RentalUnitModel() {
+                            Name = "Rental Unit 1",
+                            Description = "Unit description",
+                            Occupancy = 4,
+                            RentalUnitType = "Rental unit", }
+            
+
           })
           },
           new object[] {"/api/v0.0/lodging", JObject.FromObject(new LodgingModel()
@@ -217,6 +231,7 @@ namespace IntegrationTests
               }
           })
           }
-      };
-    }
+      }
+    };
   }
+}
