@@ -28,8 +28,6 @@ namespace IntegrationTests.Domains
         });
     }
 
-    //[Theory]
-    //[InlineData()]
     //public Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
     //{
     //  //Arrange
@@ -40,27 +38,31 @@ namespace IntegrationTests.Domains
 
     //}
 
-    [Fact]
-    public async Task Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
+    [TestMethod]
+    public async Task Get_EndpointsReturnSuccess(string url = "api/v0.0/lodging")
     {
-
       //Arrange
-      var uri = "api/lodging";
-      var defaultPage = await _client.GetAsync(uri);
+      var response = await _client.GetAsync(url);
 
       //Act
-      //var response = await _client.SendAsync(
-      //  );
 
       //Assert
-      Assert.Equals(HttpStatusCode.OK, defaultPage.StatusCode);
-      //Assert.Equals(uri, response.Headers.Location.OriginalString);
+      response.EnsureSuccessStatusCode();
+      Assert.Equals("text/html; charset=utf-8",
+        response.Content.Headers.ContentType.ToString());
     }
 
-    //[Theory]
-    //[InlineData(0)]
-    //[InlineData(1)]
-    //[InlineData(3)]
+    //[Fact]
+    //public async Task Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
+    //{
+
+    //  //Arrange
+
+    //  //Act
+
+    //  //Assert
+    //}
+
     //public Task Get_RetrievesLodgingFromId(int id)
     //{
     //  //Arrange
@@ -70,8 +72,6 @@ namespace IntegrationTests.Domains
     //  //Assert
     //}
 
-    //[Theory]
-    //[InlineData()]
     //public Task Delete_SuccessfullyRemovesLodgingFromDb(int id)
     //{
     //  //Arrange
