@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using RVTR.Lodging.ObjectModel.Models;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace IntegrationTests
 {
@@ -23,5 +26,19 @@ namespace IntegrationTests
             new object[] { "api/v0.0/lodging/1" },
             new object[] { "api/v0.0/rental/1" },
         };
+    public static List<object[]> PostRequests =>
+      new List<object[]>
+      {
+          new object[] {"/api/v0.0/review", JObject.FromObject(new ReviewModel()
+          {
+            Id=1,
+            AccountId=1,
+            Comment="Test Comment",
+            DateCreated=DateTime.Now,
+            Rating=5,
+            LodgingId=1
+          })
+          }
+      };
     }
   }
