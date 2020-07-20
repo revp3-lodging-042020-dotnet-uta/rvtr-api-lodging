@@ -19,15 +19,20 @@ namespace IntegrationTests
       public async void CheckGetResponse(string url)
       {
       var r = await _client.GetAsync(url);
+      Console.WriteLine(await r.Content.ReadAsStringAsync());
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.OK);
       }
       public bool CheckPutResponse(HttpResponseMessage r)
       {
         throw new NotImplementedException();
       }
-      public bool CheckDeleteResponse(HttpResponseMessage r)
+      [Theory]
+      [MemberData(nameof(StaticTestingData.DeleteRequests), MemberType = typeof(StaticTestingData))]
+      public async void CheckDeleteResponse(string url)
       {
-        throw new NotImplementedException();
+      var r = await _client.DeleteAsync(url);
+      //All deletes return OK, not proper but acceptable?
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Accepted || r.StatusCode == System.Net.HttpStatusCode.NoContent || r.StatusCode == System.Net.HttpStatusCode.OK);
       }
       public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
       {
