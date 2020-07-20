@@ -18,23 +18,21 @@ namespace IntegrationTests.Domains
     [InlineData()]
     public void CanPost(string url)
     {
-
-
       //Act
-
+     
       //Assert
-      
+
     }
 
     //Arrange
-    [Fact]
-    public void  CanGet(string url)
+    [Theory]
+    //[InlineData]
+    public async void CanGet(string url)
     {
-      
-
       //Act
-
+      var r = await _client.GetAsync(url);
       //Assert
+      Assert.IsTrue(CheckGetResponse(r));
     }
 
     //Arrange

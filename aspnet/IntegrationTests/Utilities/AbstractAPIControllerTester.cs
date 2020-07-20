@@ -7,19 +7,19 @@ namespace IntegrationTests.Domains
 public abstract class AbstractAPIControllerTester
 {
     protected readonly HttpClient _client;
-    public bool CheckPostResponse(ActionResult r)
+    public bool CheckPostResponse(HttpResponseMessage r)
     {
       throw new NotImplementedException();
     }
-    public bool CheckGetResponse(ActionResult r)
+    public bool CheckGetResponse(HttpResponseMessage r)
+    {
+      return r.StatusCode == System.Net.HttpStatusCode.OK;
+    }
+    public bool CheckPutResponse(HttpResponseMessage r)
     {
       throw new NotImplementedException();
     }
-    public bool CheckPutResponse(ActionResult r)
-    {
-      throw new NotImplementedException();
-    }
-    public bool CheckDeleteResponse(ActionResult r)
+    public bool CheckDeleteResponse(HttpResponseMessage r)
     {
       throw new NotImplementedException();
     }

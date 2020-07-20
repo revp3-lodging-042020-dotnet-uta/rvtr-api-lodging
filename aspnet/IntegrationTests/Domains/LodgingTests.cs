@@ -20,7 +20,7 @@ namespace IntegrationTests.Domains
 
     [Theory]
     [InlineData()]
-    public Task Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
+    public void Post_LodgingControllerSuccessfullyCreatesDbEntry(string url)
     {
       //Arrange
 
@@ -31,7 +31,7 @@ namespace IntegrationTests.Domains
     }
 
     [Fact]
-    public Task Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
+    public void Get_SuccessfullyRetrievesAllLodgingFromDbEntries()
     {
       //Arrange
 
@@ -42,7 +42,7 @@ namespace IntegrationTests.Domains
 
     [Theory]
     [InlineData()]
-    public Task Get_RetrievesLodgingFromId(int id)
+    public void Get_RetrievesLodgingFromId(int id)
     {
       //Arrange
 
@@ -53,7 +53,7 @@ namespace IntegrationTests.Domains
 
     [Theory]
     [InlineData()]
-    public Task Delete_SuccessfullyRemovesLodgingFromDb(int id)
+    public void Delete_SuccessfullyRemovesLodgingFromDb(int id)
     {
       //Arrange
 
