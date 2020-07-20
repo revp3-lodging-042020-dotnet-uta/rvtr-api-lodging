@@ -37,7 +37,7 @@ namespace IntegrationTests
             DateCreated=DateTime.Now,
             Rating=5,
             LodgingId=1
-          }),
+          }) },
             new object[] {"/api/v0.0/rental", JObject.FromObject(new RentalModel()
           {
            Description = "Lodge in the Adirondaks",
@@ -55,10 +55,13 @@ namespace IntegrationTests
           },
           new object[] {"/api/v0.0/lodging", JObject.FromObject(new LodgingModel()
           {
+              Id = 1,
               Name = "Quiet Forest Lodge",
               Description = "A quiet lodge with a nearby forest. Great for outdoor activities.",
-              Location = new LocationModel() {
-                  Address = new AddressModel() {
+              Location = new LocationModel()
+              {
+                  Address = new AddressModel()
+                  {
                       City = "Buena Vista",
                       Country = "United States",
                       PostalCode = "81211",
@@ -68,12 +71,14 @@ namespace IntegrationTests
                   Latitude = 0,
                   Longitude = 0,
               },
-              Amenities = new List<AmenityModel>() {
+              Amenities = new List<AmenityModel>()
+              {
                   new AmenityModel() { Amenity = "Wifi" },
                   new AmenityModel() { Amenity = "Coffee" },
                   new AmenityModel() { Amenity = "Pool" },
               },
-              Images = new List<ImageModel>() {
+              Images = new List<ImageModel>()
+              {
                   new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/lodge-12.jpg" },
                   new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-01.jpg" },
                   new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-02.jpg" },
@@ -82,14 +87,17 @@ namespace IntegrationTests
                   new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-05.jpg" },
                   new ImageModel() { Image = "https://p3lodging.blob.core.windows.net/p3lodging/seed/cabin-06.jpg" },
               },
-              Rentals = new List<RentalModel>() {
+              Rentals = new List<RentalModel>()
+              {
                   new RentalModel() {
-                      RentalUnit = new RentalUnitModel() {
+                      RentalUnit = new RentalUnitModel()
+                      {
                           Name = "Rental Unit 1",
                           Description = "Unit for rent",
                           Occupancy = 3,
                           RentalUnitType = "Rental unit",
-                          Bedrooms = new List<BedroomModel>() {
+                          Bedrooms = new List<BedroomModel>()
+                          {
                               new BedroomModel() {
                                   BedType = new BedTypeModel() { BedType = "King" },
                                   BedCount = 2,
@@ -229,9 +237,7 @@ namespace IntegrationTests
                       Rating = 5,
                   }
               }
-          })
-          }
-      }
+          })}
     };
   }
 }
