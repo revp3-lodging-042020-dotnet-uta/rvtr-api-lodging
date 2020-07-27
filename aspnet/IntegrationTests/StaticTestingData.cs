@@ -13,7 +13,7 @@ namespace IntegrationTests
       {
         new object[] { "api/v0.0/review" },
         new object[] { "api/v0.0/lodging" },
-        new object[] { "api/v0.0/rentals" }
+        new object[] { "api/v0.0/rental" }
       };
     public static List<object[]> Get409Requests =>
       new List<object[]>
