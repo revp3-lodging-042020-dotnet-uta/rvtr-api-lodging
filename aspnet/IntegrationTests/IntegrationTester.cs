@@ -40,11 +40,11 @@ namespace IntegrationTests
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity, $"Invalid Post Data Should return Status Code 422, not :{r.StatusCode}");
 
     }
-
+    */
     [Theory]
     [MemberData(nameof(StaticTestingData.Get409Requests), MemberType = typeof(StaticTestingData))]
 
-    public async void CheckInvalid409PostResponse(string url)
+    public async void CheckInvalid400PostResponse(string url)
     {
       var alteredURL = url[0..^2];
       var re = await _client.GetAsync(url);
@@ -52,9 +52,9 @@ namespace IntegrationTests
       var httpContent = new StringContent(body.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(alteredURL, httpContent);
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Conflict, $"Conflicting Post Data Should return Status Code 409, not :{r.StatusCode}");
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.BadRequest, $"Conflicting Post Data Should return Status Code 400, not :{r.StatusCode}");
     }
-    */
+
 
     [Theory]
     [MemberData(nameof(StaticTestingData.Get404Requests), MemberType = typeof(StaticTestingData))]
