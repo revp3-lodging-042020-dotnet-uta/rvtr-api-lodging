@@ -22,30 +22,14 @@ jobs:
         run: dotnet restore
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
-  build:
-    name: build_aspnet
-    needs: restore
-    runs-on: ubuntu-18.04
-    steps:
-      - name: actions_checkout
-        uses: actions/checkout@v2.1.0
-      
-      - name: dotnet_cache
-        uses: actions/cache@v1.1.2
-        with:
-          path: ~/.nuget/packages
-          key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
-      
-      - name: dotnet_build
-        run: dotnet build
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-
   test:
     continue-on-error: true
     name: test_aspnet
     needs: restore
     runs-on: ubuntu-18.04
     steps:
+      - name: sonar_install
+        run: dotnet tool install --global dotnet-sonarscanner
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
       - name: dotnet_cache
@@ -78,7 +62,7 @@ jobs:
 
   analyze:
     name: analyze_aspnet
-    needs: [build, test]
+    needs: [ test]
     runs-on: ubuntu-18.04
     steps:
       - name: actions_checkout
@@ -98,9 +82,6 @@ jobs:
         with:
           name: test_coverage
           path: ${{ env.WORKING_DIRECTORY }}/test_coverage
-      
-      - name: sonar_install
-        run: dotnet tool install --global dotnet-sonarscanner
       
       - name: dotnet_cache
         uses: actions/cache@v1.1.2
