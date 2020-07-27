@@ -28,8 +28,7 @@ jobs:
     needs: restore
     runs-on: ubuntu-18.04
     steps:
-      - name: sonar_install
-        run: dotnet tool install --global dotnet-sonarscanner
+     
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
       - name: dotnet_cache
@@ -65,6 +64,8 @@ jobs:
     needs: [ test]
     runs-on: ubuntu-18.04
     steps:
+      - name: sonar_install
+        run: dotnet tool install --global dotnet-sonarscanner
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
       
