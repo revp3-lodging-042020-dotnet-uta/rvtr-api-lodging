@@ -11,11 +11,13 @@ jobs:
     steps:
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
+      
       - name: dotnet_cache
         uses: actions/cache@v1.1.2
         with:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
+      
       - name: dotnet_restore
         run: dotnet restore
         working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -27,16 +29,19 @@ jobs:
     steps:
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
+      
       - name: dotnet_cache
         uses: actions/cache@v1.1.2
         with:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
+      
       - name: dotnet_build
         run: dotnet build
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
   test:
+    continue-on-error: true
     name: test_aspnet
     needs: restore
     runs-on: ubuntu-18.04
@@ -48,6 +53,7 @@ jobs:
         with:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
+      
       - name: dotnet_test
         run: |
           dotnet test \
@@ -57,11 +63,13 @@ jobs:
           --logger trx \
           --results-directory ./test_coverage/
         working-directory: ${{ env.WORKING_DIRECTORY }}
+      
       - name: opencover_upload
         uses: actions/upload-artifact@v1.0.0
         with:
           name: code_coverage
           path: ${{ env.WORKING_DIRECTORY }}/code_coverage
+      
       - name: trx_upload
         uses: actions/upload-artifact@v1.0.0
         with:
@@ -75,34 +83,37 @@ jobs:
     steps:
       - name: actions_checkout
         uses: actions/checkout@v2.1.0
+      
       - name: git_fetch
         run: git fetch --unshallow
+      
       - name: opencover_download
         uses: actions/download-artifact@v1.0.0
         with:
           name: code_coverage
           path: ${{ env.WORKING_DIRECTORY }}/code_coverage
+      
       - name: trx_download
         uses: actions/download-artifact@v1.0.0
         with:
           name: test_coverage
           path: ${{ env.WORKING_DIRECTORY }}/test_coverage
+      
       - name: sonar_install
         run: dotnet tool install --global dotnet-sonarscanner
+      
       - name: dotnet_cache
         uses: actions/cache@v1.1.2
         with:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
+      
       - name: sonar_scan
         run: |
-          dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:2006-jun15-net -s:$(pwd)/sonar.analysis.xml
+          dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:2006-jun15-net
           dotnet build
           dotnet sonarscanner end
         working-directory: ${{ env.WORKING_DIRECTORY }}
-
-name: build
-
 
 on:
   pull_request:
