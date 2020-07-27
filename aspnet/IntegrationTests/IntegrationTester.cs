@@ -14,6 +14,7 @@ namespace IntegrationTests
     private readonly HttpClient _client;
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
 
+    /*
     [Theory]
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
 
@@ -26,7 +27,7 @@ namespace IntegrationTests
       //adding stricter rules-assuring it is created 
       Assert.True(r.Content.Headers.ContentLocation != null, $"error posting: {httpContent.ToString()}");
     }
-
+    
     [Theory]
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
 
@@ -53,6 +54,7 @@ namespace IntegrationTests
       var r = await _client.PostAsync(alteredURL, httpContent);
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.Conflict, $"Conflicting Post Data Should return Status Code 409, not :{r.StatusCode}");
     }
+    */
 
     [Theory]
     [MemberData(nameof(StaticTestingData.Get404Requests), MemberType = typeof(StaticTestingData))]
@@ -75,7 +77,7 @@ namespace IntegrationTests
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.NotFound);
     }
 
-
+    /*
     [Theory]
     [MemberData(nameof(StaticTestingData.DeleteRequests), MemberType = typeof(StaticTestingData))]
     public async void CheckDeleteResponse(string url)
@@ -83,7 +85,7 @@ namespace IntegrationTests
       var r = await _client.DeleteAsync(url);
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.Accepted || r.StatusCode == System.Net.HttpStatusCode.NoContent);
     }
-
+    */
 
     public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
     {
