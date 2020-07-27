@@ -8,6 +8,13 @@ namespace IntegrationTests
 {
   public static class StaticTestingData
   {
+    public static List<object[]> Get404Requests =>
+      new List<object[]>
+      {
+        new object[] { "api/v0.0/review" },
+        new object[] { "api/v0.0/lodging" },
+        new object[] { "api/v0.0/rentals" }
+      };
     public static List<object[]> Get409Requests =>
       new List<object[]>
       {
@@ -25,9 +32,6 @@ namespace IntegrationTests
             new object[] { "api/v0.0/rental" },
             new object[] { "api/v0.0/rental/1" },
         };
-
-
-
     public static List<object[]> DeleteRequests =>
       new List<object[]>
       {
@@ -58,7 +62,7 @@ namespace IntegrationTests
                             Description = "Unit description",
                             Occupancy = 4,
                             RentalUnitType = "Rental unit", }
-            
+
 
           })
           },
