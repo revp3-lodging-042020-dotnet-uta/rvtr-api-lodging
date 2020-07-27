@@ -1,6 +1,9 @@
 using System;
+using System.Data;
 using System.Net.Http;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using RVTR.Lodging.WebApi;
 using Xunit;
 
@@ -10,6 +13,8 @@ namespace IntegrationTests
   {
     private readonly HttpClient _client;
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
+
+
     [Theory]
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
     public async void CheckPostResponse(string url, object data)
@@ -17,28 +22,65 @@ namespace IntegrationTests
       var httpContent = new StringContent(data.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(url, httpContent);
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Created || r.StatusCode == System.Net.HttpStatusCode.OK);
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Created);
+      //adding stricter rules-assuring it is created 
+      Assert.True(r.Content.Headers.ContentLocation != null);
     }
-      [Theory]
+
+    [Theory]
+    [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
+    public async void CheckInvalid422PostResponse(string url, object data)
+    {
+      var httpContent = new StringContent(data.ToString()+ "auidsf");
+      httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+      var r = await _client.PostAsync(url, httpContent);
+      //we want 422 and 409
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity);
+     
+    }
+
+    [Theory]
+    [MemberData(nameof(StaticTestingData.Get409Requests), MemberType = typeof(StaticTestingData))]
+    public async void CheckInvalid409PostResponse(string url)
+    {
+      var alteredURL = url[0..^2];
+      var re = await _client.GetAsync(url);
+      var body = re.Content;
+      var httpContent = new StringContent(body.ToString());
+      httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+      var r = await _client.PostAsync(alteredURL, httpContent);
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Conflict);
+    }
+
+    [Theory]
       [MemberData(nameof(StaticTestingData.GetRequests), MemberType = typeof(StaticTestingData))]
       public async void CheckGetResponse(string url)
       {
       var r = await _client.GetAsync(url);
-      Console.WriteLine(await r.Content.ReadAsStringAsync());
+      //Console.WriteLine(await r.Content.ReadAsStringAsync());
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.OK);
-      }
-      public bool CheckPutResponse(HttpResponseMessage r)
-      {
-        throw new NotImplementedException();
-      }
+        }
+
+
+    [Theory]
+    [MemberData(nameof(StaticTestingData.GetRequests), MemberType = typeof(StaticTestingData))]
+    public async void CheckGetNotFoundResponse(string url)
+    {
+      var r = await _client.GetAsync(url + "alskdfn");
+      Console.WriteLine(await r.Content.ReadAsStringAsync());
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.NotFound);
+    }
+
+
       [Theory]
       [MemberData(nameof(StaticTestingData.DeleteRequests), MemberType = typeof(StaticTestingData))]
       public async void CheckDeleteResponse(string url)
       {
       var r = await _client.DeleteAsync(url);
-      //All deletes return OK, not proper but acceptable?
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Accepted || r.StatusCode == System.Net.HttpStatusCode.NoContent || r.StatusCode == System.Net.HttpStatusCode.OK);
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.Accepted || r.StatusCode == System.Net.HttpStatusCode.NoContent);
       }
+
+
 
       public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
       {
