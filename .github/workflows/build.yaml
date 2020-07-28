@@ -96,6 +96,17 @@ jobs:
           dotnet build
           dotnet sonarscanner end
         working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: dotnet-sonarcloud
+        uses: NazmiAltun/dotnet-sonarscanner-action@1.0.6-beta
+        with:
+        # SonarQube/SonarCloud project key
+          project-key: rvtr_api_lodging 
+          # Organization name on SonarQube/SonarCloud
+          organization: rvtr
+          # Pattern for code coverage exclusion
+          opencover-report-paths: $(pwd)/sonar.analysis.xml
+          # Relative path of sln file
+          solution-path: $(pwd)/RVTR.Lodging.sln
 
 on:
   pull_request:
