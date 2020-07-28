@@ -84,12 +84,22 @@ jobs:
           name: test_coverage
           path: ${{ env.WORKING_DIRECTORY }}/test_coverage
       
-      - name: sonar_scan
-        run: |
-          dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:rvtr -s:$(pwd)/sonar.analysis.xml
-          dotnet build
-          dotnet sonarscanner end
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: dotnet-sonarcloud
+        uses: NazmiAltun/dotnet-sonarscanner-action@1.0.6-beta
+        with:
+          # SonarQube/SonarCloud project key
+          project-key: 2006-jun15-net_rvtr-api-lodging 
+          # SonarQube/SonarCloud project name
+          project-name: rvtr-api-lodging 
+          # Organization name on SonarQube/SonarCloud
+          organization: 2006-jun15-net
+          # Pattern for code coverage exclusion
+          opencover-report-paths: ${{ env.WORKING_DIRECTORY }}/code_coverage
+          # Pattern for code coverage exclusion
+          url: https://sonarcloud.io
+          # Relative path of sln file
+          solution-path: ${{ env.WORKING_DIRECTORY }}/
+
 on:
   pull_request:
     branches: 
