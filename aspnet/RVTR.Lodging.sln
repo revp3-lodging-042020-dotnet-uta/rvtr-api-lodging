@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.WebApi", "RVTR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.WebRpc", "RVTR.Lodging.WebRpc\RVTR.Lodging.WebRpc.csproj", "{0A0591FF-E588-4953-A270-099E1F8D6E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.IntegrationTesting", "IntegrationTests\RVTR.Lodging.IntegrationTesting.csproj", "{7FFBCFA5-1A1D-44E9-8F32-410DE1F60E82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RVTR.Lodging.IntegrationTesting", "RVTR.Lodging.IntegrationTests\RVTR.Lodging.IntegrationTesting.csproj", "{7FFBCFA5-1A1D-44E9-8F32-410DE1F60E82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
