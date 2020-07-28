@@ -44,8 +44,10 @@ jobs:
           node-version: '12.x'
           # Set this option if you want the action to check for the latest available version that satisfies the version spec
 
+        
       - name: Install Dependencies
         run: npm ci
+        working-directory: ../${{ env.WORKING_DIRECTORY }}
       - name: Build
         run: npm run build:ci
       - name: Run Angular Tests
