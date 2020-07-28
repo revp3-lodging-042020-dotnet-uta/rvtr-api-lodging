@@ -47,10 +47,7 @@ jobs:
       - name: Build and Test Angular
         run: |
           npm ci
-          npx ng test
-          --browsers ChromeHeadless
-          --no-watch
-          --code-coverage
+          npm run build:ci
         working-directory: ${{ env.ANGULAR_DIRECTORY }}
       
       - name: dotnet_test
