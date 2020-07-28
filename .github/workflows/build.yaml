@@ -87,7 +87,7 @@ jobs:
       - name: sonar_scan
         run: |
           dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:2006-jun15-net -s:$(pwd)/sonar.analysis.xml
-          dotnet build 
+          dotnet build ./RVTR.Lodging.sln
           dotnet sonarscanner end
         working-directory: ${{ env.WORKING_DIRECTORY }}
 on:
