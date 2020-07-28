@@ -37,6 +37,11 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
       
+      - name: Angular run Karma tests
+        uses: ahmedrizwan/angular-karma-test-action@v1.0.8
+        with:
+          path: ../Angular
+      
       - name: dotnet_test
         run: |
           dotnet test \
