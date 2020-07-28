@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RVTR.Lodging.DataContext;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using RVTR.Lodging.WebApi;

@@ -13,11 +13,9 @@ namespace IntegrationTests
   {
     private readonly HttpClient _client;
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
-
-    /*
-    [Theory]
+    
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
-
+    [Theory(Skip = "Failing")]
     public async void CheckPostResponse(string url, object data)
     {
       var httpContent = new StringContent(data.ToString());
@@ -28,9 +26,8 @@ namespace IntegrationTests
       Assert.True(r.Content.Headers.ContentLocation != null, $"error posting: {httpContent.ToString()}");
     }
     
-    [Theory]
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
-
+    [Theory(Skip = "Failing")]
     public async void CheckInvalid422PostResponse(string url, object data)
     {
       var httpContent = new StringContent(data.ToString() + "auidsf");
@@ -39,7 +36,7 @@ namespace IntegrationTests
       //we want 422 and 409
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity, $"Invalid Post Data Should return Status Code 422, not :{r.StatusCode}");
     }
-    */
+  
     [Theory]
     [MemberData(nameof(StaticTestingData.Get409Requests), MemberType = typeof(StaticTestingData))]
 
@@ -76,15 +73,14 @@ namespace IntegrationTests
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.NotFound);
     }
 
-    /*
-    [Theory]
+    
     [MemberData(nameof(StaticTestingData.DeleteRequests), MemberType = typeof(StaticTestingData))]
+    [Theory(Skip = "Failing")]
     public async void CheckDeleteResponse(string url)
     {
       var r = await _client.DeleteAsync(url);
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.Accepted || r.StatusCode == System.Net.HttpStatusCode.NoContent);
     }
-    */
 
     public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
     {
