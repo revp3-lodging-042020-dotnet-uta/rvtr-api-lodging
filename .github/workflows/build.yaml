@@ -48,6 +48,9 @@ jobs:
         run: |
           npm ci
           npx ng test
+          --browsers ChromeHeadless
+          --no-watch
+          --code-coverage
         working-directory: ${{ env.ANGULAR_DIRECTORY }}
       
       - name: dotnet_test
