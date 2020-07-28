@@ -84,28 +84,13 @@ jobs:
           name: test_coverage
           path: ${{ env.WORKING_DIRECTORY }}/test_coverage
       
-      - name: dotnet-sonarscanner
-        uses: Secbyte/dotnet-sonarscanner@v2.3
-        with:
-          # Command to invoke build
-          buildCommand: dotnet build
-          # Command to invoke tests
-          testCommand: dotnet test
-          # Specifies the key of the analyzed project in SonarQube
-          projectKey: rvtr_api_lodging
-          # The server URL
-          sonarOrganisation: rvtr
-      - name: dotnet-sonarcloud-analysis
-        uses: spoland/dotnet-sonarcloud-analysis@v1.0
-        with:
-          # Specifies the key of the analyzed project in SonarCloud
-          project-key: rvtr_api_lodging
-          # Specifies the SonarCloud organization
-          sonar-organization: rvtr
-          # Path to OpenCover coverage reports
-          opencover-reports-paths: ${{ env.WORKING_DIRECTORY }}/code_coverage
-          # Relative path of sln file
-          solution-path: ${{ env.WORKING_DIRECTORY }}/*.sln
+      - name: sonar_scan
+        run: |
+          pwd
+          ls
+          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -s:$(pwd)/sonar.analysis.xml
+          dotnet build
+          dotnet sonarscanner end
 
 on:
   pull_request:
