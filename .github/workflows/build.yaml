@@ -88,9 +88,9 @@ jobs:
         run: |
           pwd
           ls
-          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -d:sonar.login="${{ env.SONAR_TOKEN }}" -d:sonar.host.url=https://sonarcloud.io/
+          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -d:sonar.login=${{ env.SONAR_TOKEN }} -d:sonar.host.url=https://sonarcloud.io/
           dotnet build
-          dotnet sonarscanner end -d:sonar.login="${{ env.SONAR_TOKEN }}"
+          dotnet sonarscanner end -d:sonar.login=${{ env.SONAR_TOKEN }}
         working-directory: ${{ env.WORKING_DIRECTORY }}
 on:
   pull_request:
