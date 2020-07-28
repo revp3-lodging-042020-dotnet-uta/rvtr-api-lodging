@@ -88,10 +88,10 @@ jobs:
         run: |
           pwd
           ls
-          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -s:${{ env.WORKING_DIRECTORY }}/test_coverage/sonar.analysis.xml
+          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -s:-s:$(pwd)/sonar.analysis.xml
           dotnet build
           dotnet sonarscanner end
-
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 on:
   pull_request:
     branches: 
