@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using RVTR.Lodging.WebApi;
 using Xunit;
-
 namespace IntegrationTests
 {
   public class IntegrationTester : IClassFixture<CustomWebApplicationFactoryInMemDB<Startup>>
@@ -53,8 +52,7 @@ namespace IntegrationTests
 
 
     [Theory]
-    [MemberData(nameof(StaticTestingData.Get404Requests), MemberType = typeof(StaticTestingData))]
-
+    [MemberData(nameof(StaticTestingData.GetRequests), MemberType = typeof(StaticTestingData))]
     public async void CheckGetResponse(string url)
     {
       var r = await _client.GetAsync(url);
@@ -64,11 +62,10 @@ namespace IntegrationTests
 
 
     [Theory]
-    [MemberData(nameof(StaticTestingData.GetRequests), MemberType = typeof(StaticTestingData))]
-
-    public async void CheckGetNotFoundResponse(string url)
+    [MemberData(nameof(StaticTestingData.Get404Requests), MemberType = typeof(StaticTestingData))]
+    public async void Check404Response(string url)
     {
-      var r = await _client.GetAsync(url + "1111111");
+      var r = await _client.GetAsync(url);
       Console.WriteLine(await r.Content.ReadAsStringAsync());
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.NotFound);
     }

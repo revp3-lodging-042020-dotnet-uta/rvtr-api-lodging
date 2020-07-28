@@ -1,18 +1,23 @@
-/*
 using System;
 using System.Collections;
 
-namespace IntegrationTests
+namespace IntegrationTests.Utils
 {
   public static class Utils
   {
-    private static Random random = new Random();
-    public static string RandomString(int length)
+    public static Random rand = new Random();
+
+    public const string Alphabet =
+    "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    public static string GenerateString(int size)
     {
-      const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      return new string(Enumerable.Repeat(chars, length)
-        .Select(s => s[random.Next(s.Length)]).ToArray());
+      char[] chars = new char[size];
+      for (int i = 0; i < size; i++)
+      {
+        chars[i] = Alphabet[rand.Next(Alphabet.Length)];
+      }
+      return new string(chars);
     }
   }
 }
-*/
