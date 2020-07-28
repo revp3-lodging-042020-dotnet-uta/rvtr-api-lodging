@@ -3,7 +3,7 @@ env:
   WORKING_DIRECTORY: aspnet
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONARCLOUDKEY }}
-
+  ANGULAR_DIRECTORY: Angular
 jobs:
   restore:
     name: restore_aspnet
@@ -44,14 +44,11 @@ jobs:
           node-version: '12.x'
           # Set this option if you want the action to check for the latest available version that satisfies the version spec
 
-        
-      - name: Install Dependencies
-        run: npm ci
-        working-directory: ../${{ env.WORKING_DIRECTORY }}
-      - name: Build
-        run: npm run build:ci
-      - name: Run Angular Tests
-        run: npm run test:ci
+      - name: Build and Test Angular
+        run: |
+          npm ci
+          npx ng test
+        working-directory: ${{ env.ANGULAR_DIRECTORY }}
       
       - name: dotnet_test
         run: |
