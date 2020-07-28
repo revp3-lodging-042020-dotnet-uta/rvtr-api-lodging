@@ -37,10 +37,19 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
       
-      - name: Angular run Karma tests
-        uses: ahmedrizwan/angular-karma-test-action@v1.0.8
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.1
         with:
-          path: ../Angular
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: '12.x'
+          # Set this option if you want the action to check for the latest available version that satisfies the version spec
+
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build:ci
+      - name: Run Angular Tests
+        run: npm run test:ci
       
       - name: dotnet_test
         run: |
