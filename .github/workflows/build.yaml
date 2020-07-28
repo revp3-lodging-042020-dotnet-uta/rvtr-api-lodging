@@ -104,6 +104,8 @@ jobs:
           sonar-organization: rvtr
           # Path to OpenCover coverage reports
           opencover-reports-paths: ${{ env.WORKING_DIRECTORY }}/code_coverage
+          # Relative path of sln file
+          solution-path: ${{ env.WORKING_DIRECTORY }}/*.sln
 
 on:
   pull_request:
