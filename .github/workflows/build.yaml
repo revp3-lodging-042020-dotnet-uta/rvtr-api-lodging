@@ -88,7 +88,7 @@ jobs:
         run: |
           pwd
           ls
-          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -s:./asp.net
+          dotnet sonarscanner begin -k:rvtr_api_lodging -o:rvtr -s:./aspnet/*.sln
           dotnet build
           dotnet sonarscanner end
 
