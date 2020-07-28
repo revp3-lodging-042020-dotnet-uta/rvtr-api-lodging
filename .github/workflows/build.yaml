@@ -86,7 +86,7 @@ jobs:
       
       - name: sonar_scan
         run: |
-          dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:2006-jun15-net
+          dotnet sonarscanner begin -k:2006-jun15-net_rvtr-api-lodging -o:2006-jun15-net -Dsonar.host.url:https://sonarcloud.io/
           dotnet build 
           dotnet sonarscanner end
         working-directory: ${{ env.WORKING_DIRECTORY }}
