@@ -95,6 +95,15 @@ jobs:
           projectKey: rvtr_api_lodging
           # The server URL
           sonarOrganisation: rvtr
+      - name: dotnet-sonarcloud-analysis
+        uses: spoland/dotnet-sonarcloud-analysis@v1.0
+        with:
+          # Specifies the key of the analyzed project in SonarCloud
+          project-key: rvtr_api_lodging
+          # Specifies the SonarCloud organization
+          sonar-organization: rvtr
+          # Path to OpenCover coverage reports
+          opencover-reports-paths: ${{ env.WORKING_DIRECTORY }}/code_coverage
 
 on:
   pull_request:
