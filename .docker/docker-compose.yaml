@@ -15,6 +15,14 @@ services:
       - locally
     ports:
       - 8000:80
+  frontend:
+    build:
+      context: ../Angular
+      dockerfile: ../.docker/angular.dockerfile
+    networks:
+      - locally
+    ports:
+      - 4200:4200
 
   data:
     environment:
