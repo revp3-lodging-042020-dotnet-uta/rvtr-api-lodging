@@ -20,9 +20,11 @@ namespace IntegrationTests
       var httpContent = new StringContent(data.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(url, httpContent);
+      //assert equal
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.Created);
-      //adding stricter rules-assuring it is created 
-      Assert.True(r.Content.Headers.ContentLocation != null, $"error posting: {httpContent.ToString()}");
+      //adding stricter rules-assuring it is created
+      //assert not null
+      Assert.True(r.Content.Headers.ContentLocation != null, $"error posting: {httpContent}");
     }
     
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
@@ -32,7 +34,7 @@ namespace IntegrationTests
       var httpContent = new StringContent(data.ToString() + "auidsf");
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(url, httpContent);
-      //we want 422 and 409
+      //assert equal
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity, $"Invalid Post Data Should return Status Code 422, not :{r.StatusCode}");
     }
   
@@ -57,6 +59,7 @@ namespace IntegrationTests
     {
       var r = await _client.GetAsync(url);
       //Console.WriteLine(await r.Content.ReadAsStringAsync());
+      //look at what the body is as well
       Assert.True(r.StatusCode == System.Net.HttpStatusCode.OK);
     }
 
