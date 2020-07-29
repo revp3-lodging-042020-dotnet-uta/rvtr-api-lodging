@@ -1,9 +1,5 @@
 using System;
-using System.Data;
 using System.Net.Http;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using RVTR.Lodging.WebApi;
 using Xunit;
 namespace IntegrationTests
@@ -35,7 +31,7 @@ namespace IntegrationTests
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(url, httpContent);
       //assert equal
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity, $"Invalid Post Data Should return Status Code 422, not :{r.StatusCode}");
+      Assert.True(r.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity);
     }
   
     [Theory]
@@ -49,7 +45,7 @@ namespace IntegrationTests
       var httpContent = new StringContent(body.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
       var r = await _client.PostAsync(alteredURL, httpContent);
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.BadRequest, $"Conflicting Post Data Should return Status Code 400, not :{r.StatusCode}");
+      Assert.Equal(System.Net.HttpStatusCode.BadRequest, r.StatusCode);
     }
 
 
@@ -58,9 +54,9 @@ namespace IntegrationTests
     public async void CheckGetResponse(string url)
     {
       var r = await _client.GetAsync(url);
-      //Console.WriteLine(await r.Content.ReadAsStringAsync());
       //look at what the body is as well
-      Assert.True(r.StatusCode == System.Net.HttpStatusCode.OK);
+      Assert.Equal(System.Net.HttpStatusCode.OK, r.StatusCode);
+      Assert.Equal("application/json", r.Content.Headers.ContentType.ToString());
     }
 
 
