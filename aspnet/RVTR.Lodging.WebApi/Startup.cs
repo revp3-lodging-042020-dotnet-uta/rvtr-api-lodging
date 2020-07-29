@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -90,13 +91,13 @@ namespace RVTR.Lodging.WebApi
                           IWebHostEnvironment hostEnvironment,
                           LodgingContext context)
     {
+      //Not properly 
       if (hostEnvironment.IsDevelopment())
       {
         applicationBuilder.UseDeveloperExceptionPage();
-
-        Seed.SeedDatabase(context);
       }
-
+      Console.WriteLine("Seeding DB");
+      Seed.SeedDatabase(context);
       applicationBuilder.UseZipkin();
       applicationBuilder.UseTracing("lodgingapi.rest");
 

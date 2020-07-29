@@ -14,15 +14,23 @@ services:
     networks:
       - locally
     ports:
-      - 8000:80
-
+      - "8000:80"
   data:
     environment:
       POSTGRES_PASSWORD: LodgingData@2020
     image: postgres:12
     networks:
       - locally
-
+  DBAdmin:
+    environment:
+      POSTGRES_PASSWORD: LodgingData@2020
+      image: dpage/pgadmin4
+      depends_on:
+        - data
+      networks:
+        - locally
+      ports:
+        - 8089:80
   trace:
     image: openzipkin/zipkin-slim
     networks:
