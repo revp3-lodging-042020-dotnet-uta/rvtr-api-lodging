@@ -84,6 +84,7 @@ namespace RVTR.Lodging.WebApi.Controllers
         public async Task<IActionResult> Post([FromQuery] LodgingQueryParamsModel queryParams, LodgingModel lodging)
         {
             if (lodging == null) return BadRequest();
+            //would 404 be more appropriate?
 
             var ExistingEntry = await _unitOfWork.Lodging.GetAsync(lodging.Id, queryParams);
 
@@ -94,6 +95,7 @@ namespace RVTR.Lodging.WebApi.Controllers
               await _unitOfWork.CommitAsync();
 
               return Ok(obj);
+              //we want created
             }
             else
             {
