@@ -46,14 +46,15 @@ jobs:
           --results-directory ./test_coverage/
         working-directory: ${{ env.WORKING_DIRECTORY }}
         
-        if: ${{ always() }}
       - name: opencover_upload
+        if: always()
         uses: actions/upload-artifact@v1.0.0
         with:
           name: code_coverage
           path: ${{ env.WORKING_DIRECTORY }}/code_coverage
       
       - name: trx_upload
+        if: always()
         uses: actions/upload-artifact@v1.0.0
         with:
           name: test_coverage
