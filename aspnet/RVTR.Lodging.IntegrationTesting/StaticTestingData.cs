@@ -31,7 +31,7 @@ namespace IntegrationTests
       {
         for (int i = 1; i < 5; i++)
         {
-          r.Add(new object[] { root + s + i.ToString() });
+          r.Add(new object[] { root + s + '/' + i.ToString() });
         }
        }
        return r;

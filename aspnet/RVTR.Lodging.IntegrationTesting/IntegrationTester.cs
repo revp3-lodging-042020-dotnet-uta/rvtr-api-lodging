@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using RVTR.Lodging.WebApi;
 using Xunit;
-//using Utils.Utils;
+using Xunit.Abstractions;
 namespace IntegrationTests
 {
   public class IntegrationTester : IClassFixture<CustomWebApplicationFactoryInMemDB<Startup>>
@@ -19,15 +19,20 @@ namespace IntegrationTests
 
       //act
       var r = await _client.PostAsync(url, httpContent);
-
       //assert
-           //Status Code Created
+
+      //Status Code Created
       Assert.Equal(System.Net.HttpStatusCode.Created, r.StatusCode);
-          //LocationHeader Exists
+
+      //LocationHeader Exists
       Assert.NotNull(r.Content.Headers.ContentLocation);
-          //LocationHeader Is Valid url
+
+      //Make Get Request to LocationHeader URL
       var LocationExists = await _client.GetAsync(r.Content.Headers.ContentLocation);
+
+      //LocationHeader Is Valid url
       Assert.Equal(System.Net.HttpStatusCode.OK, LocationExists.StatusCode);
+
     }
     
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
@@ -35,21 +40,20 @@ namespace IntegrationTests
     public async void CheckInvalid422PostResponse(string url, object data)
     {
       //arrange
-      var httpContent = new StringContent(data.ToString() + Utils.Utils.GenerateString(6));
+      var httpContent = new StringContent(data.ToString() + Utils.GenerateString(6));
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
       //act
       var r = await _client.PostAsync(url, httpContent);
 
       //assert
-          //seeing if the response status code is equal to 422
+          //response status code is equal to 422
       Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, r.StatusCode);
     }
   
     [Theory]
     [MemberData(nameof(StaticTestingData.Get409Requests), MemberType = typeof(StaticTestingData))]
-
-    public async void CheckInvalid400PostResponse(string url)
+    public async void CheckInvalid409PostResponse(string url)
     {
       //arange
           //adding a randomly generated char string to the url for an invalid post
@@ -63,8 +67,8 @@ namespace IntegrationTests
       var r = await _client.PostAsync(alteredURL, httpContent);
 
       //assert
-          //seeing if the response's status code is 400
-      Assert.Equal(System.Net.HttpStatusCode.BadRequest, r.StatusCode);
+          //seeing if the response's status code is 409
+      Assert.Equal(System.Net.HttpStatusCode.Conflict, r.StatusCode);
     }
 
 
@@ -77,8 +81,8 @@ namespace IntegrationTests
 
       //assert
           //seeing if the response's status code is OK
-          //seeing if the response body is present/has the desired content type
       Assert.Equal(System.Net.HttpStatusCode.OK, r.StatusCode);
+          //seeing if the response body is present/has the desired content type
       Assert.NotNull(r.Content);
       Assert.Equal("application/json; charset=utf-8", r.Content.Headers.ContentType.ToString()); 
     }
@@ -93,7 +97,6 @@ namespace IntegrationTests
       Console.WriteLine(await r.Content.ReadAsStringAsync());
       //assert
         //response status code is 404
-      
       Assert.Equal(System.Net.HttpStatusCode.NotFound, r.StatusCode);
       
     }
@@ -109,11 +112,12 @@ namespace IntegrationTests
 
       //assert
           //response status code 202
-      Assert.Equal(System.Net.HttpStatusCode.Accepted, r.StatusCode);
+      Assert.Equal(System.Net.HttpStatusCode.NoContent, r.StatusCode);
     }
 
     public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
     {
+      _factory = factory;
       var c = _factory.CreateClient();
       this._client = c;
     }

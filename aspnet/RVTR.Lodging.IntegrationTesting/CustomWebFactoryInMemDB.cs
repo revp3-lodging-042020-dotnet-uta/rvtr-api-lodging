@@ -12,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 public class CustomWebApplicationFactoryInMemDB<TStartup>
     : WebApplicationFactory<TStartup> where TStartup : class
 {
-
   protected override IHostBuilder CreateHostBuilder()
   {
     return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder => builder.UseStartup<Startup>());
