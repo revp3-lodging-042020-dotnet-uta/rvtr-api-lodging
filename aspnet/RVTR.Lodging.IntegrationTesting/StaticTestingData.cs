@@ -3,29 +3,40 @@ using System.Collections.Generic;
 using RVTR.Lodging.ObjectModel.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using IntegrationTests.Utils;
 namespace IntegrationTests
 {
   public static class StaticTestingData
   {
+    public static string root = "api/v0.0/";
+    public static List<string> Routes = new List<string>()
+    {
+      "review",
+      "lodging",
+      "rental"
+    };
     public static List<object[]> Get404Requests()
     {
-      var root = "api/v0.0/";
       var r = new List<object[]>();
       for (int i = 0; i < 5; i++)
       {
-        r.Add(new object[] { root + Utils.Utils.GenerateString(5) });
+        r.Add(new object[] { root + Utils.GenerateString(5) });
       }
       return r;
     }
 
-    public static List<object[]> Get409Requests =>
-      new List<object[]>
+    public static List<object[]> Get409Requests()
+    {
+      var r = new List<object[]>();
+      foreach (var s in Routes)
       {
-        new object[] { "api/v0.0/review/1" },
-        new object[] { "api/v0.0/lodging/1" },
-        new object[] { "api/v0.0/rental/1" }
-      };
+        for (int i = 1; i < 5; i++)
+        {
+          r.Add(new object[] { root + s + i.ToString() });
+        }
+       }
+       return r;
+    }
+
     public static List<object[]> GetRequests =>
         new List<object[]>
         {

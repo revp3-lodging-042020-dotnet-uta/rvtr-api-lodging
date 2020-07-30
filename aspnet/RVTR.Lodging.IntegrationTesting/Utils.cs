@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace IntegrationTests.Utils
+namespace IntegrationTests
 {
   public static class Utils
   {

@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using RVTR.Lodging.WebApi;
 using Xunit;
+//using Utils.Utils;
 namespace IntegrationTests
 {
   public class IntegrationTester : IClassFixture<CustomWebApplicationFactoryInMemDB<Startup>>
@@ -10,9 +11,9 @@ namespace IntegrationTests
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
     
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
-    [Theory(Skip = "Failing")]
+    [Theory]
     public async void CheckPostResponse(string url, object data)
-    {//arrange
+    {
       var httpContent = new StringContent(data.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
@@ -20,19 +21,21 @@ namespace IntegrationTests
       var r = await _client.PostAsync(url, httpContent);
 
       //assert
-           //adding stricter rules-assuring it is created
-           //assert not null
+           //Status Code Created
       Assert.Equal(System.Net.HttpStatusCode.Created, r.StatusCode);
-      //Assert.True(r.Content.Headers.ContentLocation != null, $"error posting: {httpContent}");
-      Assert.NotNull(r.Content.Headers);
+          //LocationHeader Exists
+      Assert.NotNull(r.Content.Headers.ContentLocation);
+          //LocationHeader Is Valid url
+      var LocationExists = await _client.GetAsync(r.Content.Headers.ContentLocation);
+      Assert.Equal(System.Net.HttpStatusCode.OK, LocationExists.StatusCode);
     }
     
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
-    [Theory(Skip = "Failing")]
+    [Theory]
     public async void CheckInvalid422PostResponse(string url, object data)
     {
       //arrange
-      var httpContent = new StringContent(data.ToString() + "auidsf");
+      var httpContent = new StringContent(data.ToString() + Utils.Utils.GenerateString(6));
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
       //act
@@ -77,9 +80,7 @@ namespace IntegrationTests
           //seeing if the response body is present/has the desired content type
       Assert.Equal(System.Net.HttpStatusCode.OK, r.StatusCode);
       Assert.NotNull(r.Content);
-      Assert.Equal("application/json; charset=utf-8", r.Content.Headers.ContentType.ToString());
-      
-      
+      Assert.Equal("application/json; charset=utf-8", r.Content.Headers.ContentType.ToString()); 
     }
 
 
@@ -91,7 +92,7 @@ namespace IntegrationTests
       var r = await _client.GetAsync(url);
       Console.WriteLine(await r.Content.ReadAsStringAsync());
       //assert
-        //asserting that the response's status code is 404
+        //response status code is 404
       
       Assert.Equal(System.Net.HttpStatusCode.NotFound, r.StatusCode);
       
@@ -99,20 +100,20 @@ namespace IntegrationTests
 
     
     [MemberData(nameof(StaticTestingData.DeleteRequests), MemberType = typeof(StaticTestingData))]
-    [Theory(Skip = "Failing")]
+    [Theory]
     public async void CheckDeleteResponse(string url)
     {
+      
       //act
       var r = await _client.DeleteAsync(url);
 
       //assert
-          //asserting that the response status code could be either 202 or 204
+          //response status code 202
       Assert.Equal(System.Net.HttpStatusCode.Accepted, r.StatusCode);
     }
 
     public IntegrationTester(CustomWebApplicationFactoryInMemDB<Startup> factory)
     {
-      _factory = factory;
       var c = _factory.CreateClient();
       this._client = c;
     }
