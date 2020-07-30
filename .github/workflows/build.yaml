@@ -45,7 +45,8 @@ jobs:
           --logger trx \
           --results-directory ./test_coverage/
         working-directory: ${{ env.WORKING_DIRECTORY }}
-        if: always()
+        
+        if: ${{ always() }}
       - name: opencover_upload
         uses: actions/upload-artifact@v1.0.0
         with:
