@@ -9,17 +9,33 @@ namespace IntegrationTests
 {
   public static class StaticTestingData
   {
+    //Arbitrary number used to limit num
+    //of loops during url creation
     private const int IdIterations = 5;
+
+    // Another arbitrary number for limiting
+    // length of string generation
     private const int RandomStringLength = 5;
+
+    // Root to be prepended to each url request
     public static string root = "api/v0.0/";
+
+    //Dep for fake data
     private static Fixture _fixture = new Fixture();
+    //Routes for the app
     public static List<string> Routes = new List<string>()
     {
       "review",
       "lodging",
       "rental"
     };
-
+    /*
+     * <summary>
+     * returns List<string baseurl+route>
+     *         ex: "api/v0.0/" + "review"
+     *              baseurl        route
+     *</summary> 
+     */
     public static List<object[]> BaseUrls()
     {
       var r = new List<object[]>();
@@ -29,7 +45,13 @@ namespace IntegrationTests
       }
       return r;
     }
-
+    /*
+     * <summary>
+     * returns List<string baseurl+(xNum of gibberish strings)>
+     *         ex: "api/v0.0/" + nonsense
+     *              baseurl        route
+     *</summary> 
+     */
     public static List<object[]> Get404Requests()
     {
       var r = new List<object[]>();
@@ -39,7 +61,12 @@ namespace IntegrationTests
       }
       return r;
     }
-
+    /*
+     * <summary>
+     * returns List< ex: ["api/v0.0/" + /route/ + id, "api/v0.0/" + route]>
+     * Gets a valid object from url and tries to post it as is to the server
+     * </summary>
+     */
     public static List<object[]> Get409Requests()
     {
       var r = new List<object[]>();
@@ -53,7 +80,12 @@ namespace IntegrationTests
       }
       return r;
     }
-
+    /*
+    * <summary>
+    * Returns a list of urls to each route with an id x IdIterations times
+    *\/base/route/id
+    * </summary>
+    */
     public static List<object[]> GetRequests()
     {
       var _ = new List<object[]>();
@@ -68,7 +100,12 @@ namespace IntegrationTests
       }
       return _;
     }
-
+    /*
+    * <summary>
+    * Returns a list of urls to each route with an id x IdIterations times
+    *\/base/route/id
+    * </summary>
+    */
     public static List<object[]> DeleteRequests()
     {
       var _ = new List<object[]>();
@@ -81,7 +118,26 @@ namespace IntegrationTests
       }
       return _;
     }
-
+    /*
+    * <summary>
+    * Returns a list of valid post url and damaged json string as payload
+    * </summary>
+    */
+    public static List<object[]> Post422Requests()
+    {
+      var _ = new List<object[]>();
+      _.AddRange(PostRequests());
+        foreach(var z in _)
+        {
+        z[1] = z[1].ToString() + Utils.GenerateString(RandomStringLength);
+        }
+      return _;
+    }
+    /*
+    * <summary>
+    * Returns a list of [valid post urls, post content]
+    * </summary>
+    */
     public static List<object[]> PostRequests() {
       _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
       _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
