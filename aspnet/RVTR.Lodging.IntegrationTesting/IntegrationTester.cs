@@ -9,7 +9,7 @@ namespace IntegrationTests
   {
     private readonly HttpClient _client;
     private readonly CustomWebApplicationFactoryInMemDB<Startup> _factory;
-    
+
     [MemberData(nameof(StaticTestingData.PostRequests), MemberType = typeof(StaticTestingData))]
     [Theory]
     public async void CheckPostResponse(string url, object data)
@@ -50,24 +50,23 @@ namespace IntegrationTests
           //response status code is equal to 422
       Assert.Equal(System.Net.HttpStatusCode.UnprocessableEntity, r.StatusCode);
     }
-  
+
     [Theory]
     [MemberData(nameof(StaticTestingData.Get409Requests), MemberType = typeof(StaticTestingData))]
-    public async void CheckInvalid409PostResponse(string url)
+    public async void CheckInvalid409PostResponse(string GetUrl, string PostUrl)
     {
       //arange
           //adding a randomly generated char string to the url for an invalid post
-      var alteredURL = url[0..^2];
-      var re = await _client.GetAsync(url);
+      var re = await _client.GetAsync(GetUrl);
       var body = re.Content;
       var httpContent = new StringContent(body.ToString());
       httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
       //act
-      var r = await _client.PostAsync(alteredURL, httpContent);
+      var r = await _client.PostAsync(PostUrl, httpContent);
 
       //assert
-          //seeing if the response's status code is 409
+          //response status code is 409
       Assert.Equal(System.Net.HttpStatusCode.Conflict, r.StatusCode);
     }
 
@@ -80,9 +79,9 @@ namespace IntegrationTests
       var r = await _client.GetAsync(url);
 
       //assert
-          //seeing if the response's status code is OK
+          //response status code is OK
       Assert.Equal(System.Net.HttpStatusCode.OK, r.StatusCode);
-          //seeing if the response body is present/has the desired content type
+          //response body is present/has the desired content type
       Assert.NotNull(r.Content);
       Assert.Equal("application/json; charset=utf-8", r.Content.Headers.ContentType.ToString()); 
     }

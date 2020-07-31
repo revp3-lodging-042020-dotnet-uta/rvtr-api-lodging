@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using System;
 using System.Linq;
 using RVTR.Lodging.WebApi;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 public class CustomWebApplicationFactoryInMemDB<TStartup>
     : WebApplicationFactory<TStartup> where TStartup : class
