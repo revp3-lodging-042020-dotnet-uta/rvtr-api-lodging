@@ -3,7 +3,6 @@ env:
   WORKING_DIRECTORY: aspnet
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONARCLOUDKEY }}
-  ANGULAR_DIRECTORY: Angular
 jobs:
   restore:
     name: restore_aspnet
@@ -37,19 +36,6 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ env.CACHE_KEY_PREFIX }}-${{ hashFiles('**/packages.lock.json') }}
       
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.1
-        with:
-          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-          node-version: '12.x'
-          # Set this option if you want the action to check for the latest available version that satisfies the version spec
-
-      - name: Build and Test Angular
-        run: |
-          npm ci
-          npm run build:ci
-        working-directory: ${{ env.ANGULAR_DIRECTORY }}
-      
       - name: dotnet_test
         run: |
           dotnet test \
@@ -59,14 +45,16 @@ jobs:
           --logger trx \
           --results-directory ./test_coverage/
         working-directory: ${{ env.WORKING_DIRECTORY }}
-      
+        
       - name: opencover_upload
+        if: always()
         uses: actions/upload-artifact@v1.0.0
         with:
           name: code_coverage
           path: ${{ env.WORKING_DIRECTORY }}/code_coverage
       
       - name: trx_upload
+        if: always()
         uses: actions/upload-artifact@v1.0.0
         with:
           name: test_coverage
