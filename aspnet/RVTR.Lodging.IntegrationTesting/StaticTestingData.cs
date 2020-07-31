@@ -4,12 +4,7 @@ using RVTR.Lodging.ObjectModel.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-using RandomTestValues;
 using AutoFixture;
-using My.Hydrator;
-using AutoFixture.Kernel;
-using FizzWare.NBuilder;
-using FakeItEasy;
 namespace IntegrationTests
 {
   public static class StaticTestingData
